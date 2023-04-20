@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screen-definitions xmlns="http://www.cyberlogitec.com/screen-definitions">
+	<!-- Nhat Nguyen : 2023-04-19 start -->
+    <screen name="CLV_TRAINING_001">
+        <parameter key="title"    value="Error Message Management" direct="true"/>
+        <parameter key="body"     value="apps/opus/esm/clv/clvtraining/errmsgmgmt/jsp/CLV_TRAINING_001.jsp"/>
+    </screen>
+	<!-- Nhat Nguyen : 2023-04-19 end -->
+
+</screen-definitions>
