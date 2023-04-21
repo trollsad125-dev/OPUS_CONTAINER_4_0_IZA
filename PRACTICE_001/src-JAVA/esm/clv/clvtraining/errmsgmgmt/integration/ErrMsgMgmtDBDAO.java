@@ -26,7 +26,7 @@ import com.clt.framework.support.db.ISQLTemplate;
 import com.clt.framework.support.db.RowSetUtil;
 import com.clt.framework.support.db.SQLExecuter;
 import com.clt.framework.support.layer.integration.DBDAOSupport;
-import com.clt.syscommon.common.table.ComErrMsgVO;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 
 
 /**

@@ -21,7 +21,7 @@ import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.integration.DAOException;
 import com.clt.framework.support.layer.basic.BasicCommandSupport;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.syscommon.common.table.ComErrMsgVO;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 
 /**
  * ALPS-CLVTraining Business Logic Command Interface<br>
@@ -74,7 +74,7 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 			List<ComErrMsgVO> deleteVoList = new ArrayList<ComErrMsgVO>();
 			for ( int i=0; i<comErrMsgVO .length; i++ ) {
 				if ( comErrMsgVO[i].getIbflag().equals("I")){
-					comErrMsgVO[i].setCreUsrId(account.getUsr_id());
+ 					comErrMsgVO[i].setUpdUsrId(account.getUsr_id());
 					insertVoList.add(comErrMsgVO[i]);
 				} else if ( comErrMsgVO[i].getIbflag().equals("U")){
 					comErrMsgVO[i].setUpdUsrId(account.getUsr_id());
@@ -88,7 +88,7 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 				dbDao.addmultiErrMsgS(insertVoList);
 			}
 			
-			if ( updateVoList.size() > 0 ) {
+			if ( updateVoList.size() > 0 ) {	
 				dbDao.modifymultiErrMsgS(updateVoList);
 			}
 			

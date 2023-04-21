@@ -4,10 +4,10 @@
 *@FileTitle : Error Message Management
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.04.19
+*@LastModifyDate : 2023.04.20
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.04.19 
+* 2023.04.20 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration;
@@ -34,12 +34,63 @@ public class ErrMsgMgmtDBDAOComErrMsgVOCSQL implements ISQLTemplate{
 	
 	/**
 	  * <pre>
-	  * 
+	  *    
 	  * </pre>
 	  */
 	public ErrMsgMgmtDBDAOComErrMsgVOCSQL(){
 		setQuery();
 		params = new HashMap<String,String[]>();
+		String tmp = null;
+		String[] arrTmp = null;
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("err_msg",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("err_tp_cd",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("err_lvl_cd",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("err_msg_cd",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("upd_usr_id",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("err_desc",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("cre_usr_id",new String[]{arrTmp[0],arrTmp[1]});
+
 		query.append("/*").append("\n"); 
 		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration").append("\n"); 
 		query.append("FileName : ErrMsgMgmtDBDAOComErrMsgVOCSQL").append("\n"); 
@@ -58,6 +109,29 @@ public class ErrMsgMgmtDBDAOComErrMsgVOCSQL implements ISQLTemplate{
 	 * Query 생성
 	 */
 	public void setQuery(){
-		
+		query.append("INSERT INTO com_err_msg (                                             " ).append("\n"); 
+		query.append(" err_msg_cd                                        ,                   " ).append("\n"); 
+		query.append(" lang_tp_cd                                        ,  " ).append("\n"); 
+		query.append(" err_lvl_cd                                         ,                   " ).append("\n"); 
+		query.append(" err_tp_cd                                         ,                   " ).append("\n"); 
+		query.append(" err_msg                                           ,                   " ).append("\n"); 
+		query.append(" err_desc                                          ,                   " ).append("\n"); 
+		query.append(" cre_usr_id                                        ,                   " ).append("\n"); 
+		query.append(" cre_dt                                            ,                   " ).append("\n"); 
+		query.append(" upd_usr_id                                        ,                   " ).append("\n"); 
+		query.append(" upd_dt                                                                " ).append("\n"); 
+		query.append("  ) VALUES (                                                           " ).append("\n"); 
+		query.append(" @[err_msg_cd]                                                 ,                   " ).append("\n"); 
+		query.append(" 'ENG'                                                 ,         " ).append("\n"); 
+		query.append(" @[err_lvl_cd]                                                 ,                " ).append("\n"); 
+		query.append(" @[err_tp_cd]                                                 ,                   " ).append("\n"); 
+		query.append(" @[err_msg]                                                 ,                   " ).append("\n"); 
+		query.append(" @[err_desc]                                                 ,                   " ).append("\n"); 
+		query.append(" @[cre_usr_id]                                                 ,                   " ).append("\n"); 
+		query.append(" sysdate                                           ,                   " ).append("\n"); 
+		query.append(" @[upd_usr_id]                                                 ,                   " ).append("\n"); 
+		query.append(" sysdate                                                               " ).append("\n"); 
+		query.append(" )" ).append("\n"); 
+
 	}
 }

@@ -35,13 +35,15 @@
 
 	String strUsr_id		= "";
 	String strUsr_nm		= "";
+	String strUsr_auth_tp_cd = "";
 	Logger log = Logger.getLogger("com.clt.apps.CLVTraining.ErrMsgMgmt");
 
 	try {
 	   	SignOnUserAccount account=(SignOnUserAccount)session.getAttribute(CommonWebKeys.SIGN_ON_USER_ACCOUNT);
+
 		strUsr_id =	account.getUsr_id();
 		strUsr_nm = account.getUsr_nm();
-
+		strUsr_auth_tp_cd = account.getUsr_auth_tp_cd();
 
 		event = (ClvTraining001Event)request.getAttribute("Event");
 		serverException = (Exception)request.getAttribute(CommonWebKeys.EXCEPTION_OBJECT);
@@ -57,10 +59,6 @@
 		out.println(e.toString());
 	}
 %>
-<html>
-<head>
-<title>Error Message Management</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script language="javascript">
 	function setupPage(){
@@ -71,12 +69,13 @@
 		loadPage();
 	}
 </script>
-</head>
 
-<body  onLoad="setupPage();">
+
+
 <form name="form">
 <input type="hidden" name="f_cmd">
 <input type="hidden" name="pagerows">
+<input type="hidden" name="lang_tp_cd" value="ENG">
 <!-- 개발자 작업	-->
 		<div class="page_title_area clear">
 			<h2 class="page_title">
@@ -126,5 +125,3 @@
 
 		<!-- 개발자 작업  끝 -->
 </form>
-</body>
-</html>
