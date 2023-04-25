@@ -12,7 +12,9 @@
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration;
 
+import java.sql.BatchUpdateException;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
@@ -194,10 +196,13 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 						throw new DAOException("Fail to insert No"+ i + " SQL");
 				}
 			}
-		} catch(SQLException se) {
+		
+		}
+		catch(SQLException se) {
 			log.error(se.getMessage(),se);
 			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
+		} 
+		catch(Exception ex) {
 			log.error(ex.getMessage(),ex);
 			throw new DAOException(new ErrorHandler(ex).getMessage());
 		}

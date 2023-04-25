@@ -15,7 +15,7 @@ package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.basic;
 import java.util.List;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.syscommon.common.table.ComErrMsgVO;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 
 /**
  * ALPS-Clvtraining Business Logic Command Interface<br>

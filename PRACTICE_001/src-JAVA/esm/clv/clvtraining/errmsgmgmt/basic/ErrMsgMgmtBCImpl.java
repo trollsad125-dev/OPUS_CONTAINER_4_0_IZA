@@ -74,6 +74,7 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 			List<ComErrMsgVO> deleteVoList = new ArrayList<ComErrMsgVO>();
 			for ( int i=0; i<comErrMsgVO .length; i++ ) {
 				if ( comErrMsgVO[i].getIbflag().equals("I")){
+					comErrMsgVO[i].setCreUsrId(account.getUsr_id());
  					comErrMsgVO[i].setUpdUsrId(account.getUsr_id());
 					insertVoList.add(comErrMsgVO[i]);
 				} else if ( comErrMsgVO[i].getIbflag().equals("U")){

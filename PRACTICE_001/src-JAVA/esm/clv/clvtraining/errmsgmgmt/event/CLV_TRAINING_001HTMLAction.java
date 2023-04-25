@@ -13,13 +13,14 @@
 package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.event;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.clt.framework.component.util.JSPUtil;
 import com.clt.framework.core.controller.html.HTMLActionException;
 import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventResponse;
 import com.clt.framework.support.controller.HTMLActionSupport;
 import com.clt.framework.support.controller.html.FormCommand;
-
-import com.clt.syscommon.common.table.ComErrMsgVO;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 
 /**
  * HTTP Parser<br>
@@ -55,7 +56,7 @@ public class CLV_TRAINING_001HTMLAction extends HTMLActionSupport {
 			event.setComErrMsgVOS((ComErrMsgVO[])getVOs(request, ComErrMsgVO .class,""));
 		}
 		else if(command.isCommand(FormCommand.SEARCH)) {
-			event.setComErrMsgVO((ComErrMsgVO)getVO(request, ComErrMsgVO .class));
+			event.setComErrMsgVO((ComErrMsgVO)getVO(request, ComErrMsgVO.class));
 		}
 
 		return  event;
@@ -72,14 +73,5 @@ public class CLV_TRAINING_001HTMLAction extends HTMLActionSupport {
 		request.setAttribute("EventResponse", eventResponse);
 	}
 
-	/**
-	 * HttpRequest의 attribute에 HttpRequest 파싱 수행결과 값 저장<br>
-	 * HttpRequest 파싱 수행결과 값 request에 셋팅<br>
-	 * 
-	 * @param request HttpServletRequest HttpRequest
-	 * @param event Event interface를 구현한 객체
-	 */
-	public void doEnd(HttpServletRequest request, Event event) {
-		request.setAttribute("Event", event);
-	}
+
 }

@@ -24,7 +24,7 @@ import com.clt.framework.core.layer.event.GeneralEventResponse;
 import com.clt.framework.support.controller.html.FormCommand;
 import com.clt.framework.support.layer.service.ServiceCommandSupport;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.syscommon.common.table.ComErrMsgVO;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 
 
 /**
@@ -124,10 +124,10 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		try{
 			begin();
 			command.multiErrMsg(event.getComErrMsgVOS(),account);
-			eventResponse.setUserMessage(new ErrorHandler("XXXXXXXXX").getUserMessage());
 			commit();
 		} catch(EventException ex) {
 			rollback();
+			
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		} catch(Exception ex) {
 			rollback();

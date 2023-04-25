@@ -13,7 +13,7 @@
 package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.event;
 
 import com.clt.framework.support.layer.event.EventSupport;
-import com.clt.syscommon.common.table.ComErrMsgVO;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 
 
 /**

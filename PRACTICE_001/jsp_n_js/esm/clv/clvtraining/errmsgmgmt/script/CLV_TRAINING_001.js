@@ -26,16 +26,7 @@
      * @extends 
      * @class CLV_TRAINING_001 : CLV_TRAINING_001 생성을 위한 화면에서 사용하는 업무 스크립트를 정의한다.
      */
-    function CLV_TRAINING_001() {
-    	this.processButtonClick		= tprocessButtonClick;
-    	this.setSheetObject 		= setSheetObject;
-    	this.loadPage 				= loadPage;
-    	this.initSheet 				= initSheet;
-    	this.initControl            = initControl;
-    	this.doActionIBSheet 		= doActionIBSheet;
-    	this.setTabObject 			= setTabObject;
-    	this.validateForm 			= validateForm;
-    }
+
     
    	/* 개발자 작업	*/
 	var tabObjects=new Array();
@@ -188,11 +179,11 @@
         }
 	}
      function sheet1_OnChange(sheetObj,Row,Col){
-    	 if(Col == 2){
+/*    	 if(Col == 2){
 			var code=sheetObj.GetCellValue(Row, Col);
     	    for(var int=1; int < sheetObj.RowCount(); int++) {
 			var orlcode=sheetObj.GetCellValue(int, Col);
-			/* null 인 경우와 자기 자신은 비교할 필요가 없음 */
+			 null 인 경우와 자기 자신은 비교할 필요가 없음 
 				if(code != '' && int != Row && code == orlcode){
     				 //ComShowMessage("동일한 Message Code가 존재합니다.");
     				 ComShowCodeMessage('COM131302',code);
@@ -200,7 +191,7 @@
     				 return;
     			 }
     		 }
-    	 }
+    	 }*/
      }
-
+     
 	/* 개발자 작업  끝 */
