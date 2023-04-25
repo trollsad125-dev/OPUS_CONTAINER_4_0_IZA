@@ -28,7 +28,7 @@ INSERT INTO com_err_msg (
  sysdate                                                               
  )			]]></sql>
 			<params>
-				<param name="err_msg_cd" type="12" value="" out="N"/>
+				<param name="err_msg_cd" type="12" value="ERR12356" out="N"/>
 				<param name="err_lvl_cd" type="12" value="" out="N"/>
 				<param name="err_tp_cd" type="12" value="" out="N"/>
 				<param name="err_msg" type="12" value="" out="N"/>

@@ -54,7 +54,7 @@
 
 		// 초기화면 로딩시 서버로부터 가져온 데이터 추출하는 로직추가 ..
 		GeneralEventResponse eventResponse = (GeneralEventResponse) request.getAttribute("EventResponse");
-
+		
 	}catch(Exception e) {
 		out.println(e.toString());
 	}
@@ -104,10 +104,10 @@
 						<tr>
 							<th width="40">Message Code</th>
 							<td width="120"><input type="text" style="width: 100px;"
-								class="input" value="" name="s_err_msg_cd" id="s_err_msg_cd"></td>
+								class="input" value="" name="err_msg_cd" id="err_msg_cd"></td>
 							<th width="40">Message</th>
 							<td><input type="text" style="width: 100px;" class="input"
-								value="" name="s_err_msg" id="s_err_msg"></td>
+								value="" name="err_msg" id="err_msg"></td>
 						</tr>
 					</tbody>
 				</table>
