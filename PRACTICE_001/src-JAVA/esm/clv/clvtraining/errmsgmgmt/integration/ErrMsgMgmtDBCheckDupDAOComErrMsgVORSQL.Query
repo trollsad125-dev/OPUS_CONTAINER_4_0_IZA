@@ -4,10 +4,17 @@
 		<query name="ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL">
 			<desc><![CDATA[te]]></desc>
 			<sql><![CDATA[
+<<<<<<< HEAD
 SELECT                                                                
    	1                                                          
 FROM com_err_msg                                                      
 WHERE lang_tp_cd = 'ENG' AND
+=======
+SELECT                                                                
+   	1                                                          
+FROM com_err_msg                                                      
+WHERE lang_tp_cd = 'ENG' AND
+>>>>>>> 159bd18fa674173bc8ecd373840ec047ae09d86d
       err_msg_cd LIKE '%'||@[err_msg_cd]||'%'			]]></sql>
 			<params>
 				<param name="err_msg_cd" type="12" value="" out="N"/>

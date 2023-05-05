@@ -16,6 +16,7 @@ SELECT
 ,	ERR_TP_CD
 ,	LANG_TP_CD
 ,	ERR_MSG_CD
+<<<<<<< HEAD
 FROM COM_ERR_MSG
 WHERE lang_tp_cd = 'ENG'
 #if (${err_msg_cd} != '') 
@@ -23,6 +24,15 @@ AND   err_msg_cd LIKE '%'||@[err_msg_cd]||'%'
 #end
 #if (${err_msg} != '') 
 and	UPPER(err_msg) like '%'||UPPER(@[err_msg])|| '%'
+=======
+FROM COM_ERR_MSG
+WHERE lang_tp_cd = 'ENG'
+#if (${err_msg_cd} != '') 
+AND   err_msg_cd LIKE '%'||@[err_msg_cd]||'%'
+#end
+#if (${err_msg} != '') 
+and	UPPER(err_msg) like '%'||UPPER(@[err_msg])|| '%'
+>>>>>>> 159bd18fa674173bc8ecd373840ec047ae09d86d
 #end			]]></sql>
 			<params>
 				<param name="err_msg_cd" type="12" value="" out="N"/>
