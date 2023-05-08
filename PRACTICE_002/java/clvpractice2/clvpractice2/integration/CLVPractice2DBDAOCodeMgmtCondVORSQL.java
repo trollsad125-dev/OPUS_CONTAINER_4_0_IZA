@@ -1,13 +1,13 @@
 /*=========================================================
 *Copyright(c) 2023 CyberLogitec
 *@FileName : CLVPractice2DBDAOCodeMgmtCondVORSQL.java
-*@FileTitle : CLV Practice 2
+*@FileTitle : FW_Practice_004
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.04
+*@LastModifyDate : 2023.05.08
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.04 
+* 2023.05.08 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration;
@@ -47,7 +47,7 @@ public class CLVPractice2DBDAOCodeMgmtCondVORSQL implements ISQLTemplate{
 		if(arrTmp.length !=2){
 			throw new IllegalArgumentException();
 		}
-		params.put("searchCdTp",new String[]{arrTmp[0],arrTmp[1]});
+		params.put("code_val",new String[]{arrTmp[0],arrTmp[1]});
 
 		tmp = java.sql.Types.VARCHAR + ",N";
 		arrTmp = tmp.split(",");
@@ -55,13 +55,6 @@ public class CLVPractice2DBDAOCodeMgmtCondVORSQL implements ISQLTemplate{
 			throw new IllegalArgumentException();
 		}
 		params.put("subsystem",new String[]{arrTmp[0],arrTmp[1]});
-
-		tmp = java.sql.Types.VARCHAR + ",N";
-		arrTmp = tmp.split(",");
-		if(arrTmp.length !=2){
-			throw new IllegalArgumentException();
-		}
-		params.put("codeVal",new String[]{arrTmp[0],arrTmp[1]});
 
 		query.append("/*").append("\n"); 
 		query.append("Path : com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration").append("\n"); 
@@ -98,19 +91,15 @@ public class CLVPractice2DBDAOCodeMgmtCondVORSQL implements ISQLTemplate{
 		query.append("WHERE 1=1" ).append("\n"); 
 		query.append("AND INTG_CD_TP_CD IN ('G','T')" ).append("\n"); 
 		query.append("" ).append("\n"); 
-		query.append("#if (${searchCdTp} != '')" ).append("\n"); 
-		query.append("AND INTG_CD_TP_CD = @[searchCdTp]" ).append("\n"); 
-		query.append("#end" ).append("\n"); 
-		query.append("" ).append("\n"); 
 		query.append("#if (${subsystem} != '')" ).append("\n"); 
 		query.append("AND OWNR_SUB_SYS_CD = @[subsystem]" ).append("\n"); 
 		query.append("#end" ).append("\n"); 
 		query.append("  " ).append("\n"); 
-		query.append("#if (${codeVal} != '')" ).append("\n"); 
+		query.append("#if (${code_val} != '')" ).append("\n"); 
 		query.append("#if (${searchtype} == '0')" ).append("\n"); 
-		query.append("AND INTG_CD_ID = @[codeVal]" ).append("\n"); 
+		query.append("AND INTG_CD_ID = @[code_val]" ).append("\n"); 
 		query.append("#else" ).append("\n"); 
-		query.append("AND UPPER(INTG_CD_NM) LIKE '%'||UPPER(@[codeVal])||'%'" ).append("\n"); 
+		query.append("AND UPPER(INTG_CD_NM) LIKE '%'||UPPER(@[code_val])||'%'" ).append("\n"); 
 		query.append("#end" ).append("\n"); 
 		query.append("#end" ).append("\n"); 
 		query.append("" ).append("\n"); 

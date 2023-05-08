@@ -21,12 +21,17 @@ import java.util.Map;
 import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.basic.CLVPractice2BCImpl;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.component.rowset.DBRowSet;
+import com.clt.framework.component.util.JSPUtil;
 import com.clt.framework.core.layer.integration.DAOException;
 import com.clt.framework.support.db.ISQLTemplate;
 import com.clt.framework.support.db.RowSetUtil;
 import com.clt.framework.support.db.SQLExecuter;
 import com.clt.framework.support.layer.integration.DBDAOSupport;
+import com.clt.syscommon.management.opus.codemanagement.integration.CodeManagementDBDAOsearchDupChkCodeMgmtDtlRSQL;
+import com.clt.syscommon.management.opus.codemanagement.integration.CodeManagementDBDAOsearchDupChkCodeMgmtMstRSQL;
 import com.clt.syscommon.management.opus.codemanagement.integration.CodeManagementDBDAOsearchSubSystemCdRSQL;
+import com.clt.syscommon.management.opus.codemanagement.vo.CodeMgmtDtlVO;
+import com.clt.syscommon.management.opus.codemanagement.vo.CodeMgmtMstVO;
 import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo.CodeMgmtCondVO;
 import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo.CodeMgmtDTLVO;
 
@@ -262,7 +267,14 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 		}
 		return delCnt;
 	}
-	
+	/**
+	 * Search Sub System Code List
+	 *
+	 * @return String[]
+	 * @exception SQLException
+	 * @exception DAOException
+	 * @exception Exception
+	 */
 	public String[] searchSubSystemCodeList() throws DAOException {
 		String[] list = null;
 		try {
@@ -281,8 +293,16 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 		}
 		return list;
 	}
-	 @SuppressWarnings("unchecked")
-	 public List<CodeMgmtDTLVO> searchCodeMgmtDtl(CodeMgmtDTLVO codeMgmtDtlVO) throws DAOException {
+	/**
+	 * Search Sub System Code List
+	 * @param CodeMgmtDTLVO codeMgmtDtlVO
+	 * @return String[]
+	 * @exception SQLException
+	 * @exception DAOException
+	 * @exception Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<CodeMgmtDTLVO> searchCodeMgmtDtl(CodeMgmtDTLVO codeMgmtDtlVO) throws DAOException {
 			DBRowSet dbRowset = null;
 			List<CodeMgmtDTLVO> list = null;
 			//query parameter
@@ -298,7 +318,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 					velParam.putAll(mapVO);
 				}
 				dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice2DBDAOCodeMgmtDTLVORSQL(), param, null);
-				list = (List)RowSetUtil.rowSetToVOs(dbRowset, CodeMgmtDTLVO .class);
+				list = (List)RowSetUtil.rowSetToVOs(dbRowset, CodeMgmtDTLVO.class);
 			} catch(SQLException se) {
 				log.error(se.getMessage(),se);
 				throw new DAOException(new ErrorHandler(se).getMessage());
@@ -307,6 +327,189 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 				throw new DAOException(new ErrorHandler(ex).getMessage());
 			}
 			return list;
+	}
+
+	/**
+	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * 
+	 * @param List
+	 *            <CodeMgmtCondVO> codeMgmtCondVO
+	 * @return int[]
+	 * @exception DAOException
+	 * @exception Exception
+	 */
+	public int[] addmultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO)
+			throws DAOException, Exception {
+		int insCnt[] = null;
+		try {
+			SQLExecuter sqlExe = new SQLExecuter("");
+			if (codeMgmtDtlVO.size() > 0) {
+				insCnt = sqlExe.executeBatch((ISQLTemplate) new CLVPractice2DBDAOCodeMgmtDTLVOCSQL(),codeMgmtDtlVO, null);
+				for (int i = 0; i < insCnt.length; i++) {
+					if (insCnt[i] == Statement.EXECUTE_FAILED)
+						throw new DAOException("Fail to insert No" + i + " SQL");
+				}
+			}
+		} catch (SQLException se) {
+			log.error(se.getMessage(), se);
+			throw new DAOException(new ErrorHandler(se).getMessage());
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new DAOException(new ErrorHandler(ex).getMessage());
 		}
-	
+		return insCnt;
+	}
+
+	/**
+	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * 
+	 * @param List
+	 *            <CodeMgmtCondVO> codeMgmtCondVO
+	 * @return int[]
+	 * @exception DAOException
+	 * @exception Exception
+	 */
+	public int[] modifymultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO)
+			throws DAOException, Exception {
+		int updCnt[] = null;
+		try {
+			SQLExecuter sqlExe = new SQLExecuter("");
+			if (codeMgmtDtlVO.size() > 0) {
+				updCnt = sqlExe.executeBatch((ISQLTemplate) new CLVPractice2DBDAOCodeMgmtDTLVOUSQL(),codeMgmtDtlVO, null);
+				for (int i = 0; i < updCnt.length; i++) {
+					if (updCnt[i] == Statement.EXECUTE_FAILED)
+						throw new DAOException("Fail to insert No" + i + " SQL");
+				}
+			}
+		} catch (SQLException se) {
+			log.error(se.getMessage(), se);
+			throw new DAOException(new ErrorHandler(se).getMessage());
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new DAOException(new ErrorHandler(ex).getMessage());
+		}
+		return updCnt;
+	}
+
+	/**
+	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * 
+	 * @param List
+	 *            <CodeMgmtCondVO> codeMgmtCondVO
+	 * @return int[]
+	 * @exception DAOException
+	 * @exception Exception
+	 */
+	public int[] removemultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO)
+			throws DAOException, Exception {
+		int delCnt[] = null;
+		try {
+			SQLExecuter sqlExe = new SQLExecuter("");
+			if (codeMgmtDtlVO.size() > 0) {
+				delCnt = sqlExe
+						.executeBatch(
+								(ISQLTemplate) new CLVPractice2DBDAOCodeMgmtDTLVODSQL(),
+								codeMgmtDtlVO, null);
+				for (int i = 0; i < delCnt.length; i++) {
+					if (delCnt[i] == Statement.EXECUTE_FAILED)
+						throw new DAOException("Fail to insert No" + i + " SQL");
+				}
+			}
+		} catch (SQLException se) {
+			log.error(se.getMessage(), se);
+			throw new DAOException(new ErrorHandler(se).getMessage());
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new DAOException(new ErrorHandler(ex).getMessage());
+		}
+		return delCnt;
+	}
+
+	/**
+	 * Search Duplicate Code in COM_INTG_CD
+	 * 
+	 * @param CodeMgmtCondVO inputVO
+	 * @return String
+	 * @throws DAOException
+	 * @exception SQLException
+	 * @exception DAOException
+	 * @exception Exception
+	 * 
+	 */
+	public String searchDupChkCodeMgmtCond(CodeMgmtCondVO inputVO) throws DAOException {
+		DBRowSet dbRowset = null;
+		String dupFlg = "";
+		// query parameter
+		Map<String, Object> param = new HashMap<String, Object>();
+		// velocity parameter
+		Map<String, Object> velParam = new HashMap<String, Object>();
+
+		try {
+			if (inputVO != null) {
+				Map<String, String> mapVO = inputVO.getColumnValues();
+
+				param.putAll(mapVO);
+				velParam.putAll(mapVO);
+			}
+			dbRowset = new SQLExecuter("")
+					.executeQuery(
+							(ISQLTemplate) new CLVPractice2DBDAOCheckDuplicateRSQL(),
+							param, velParam);
+			if (dbRowset != null && dbRowset.next()) {
+				dupFlg = dbRowset.getString(1);
+			}
+		} catch (SQLException se) {
+			log.error(se.getMessage(), se);
+			throw new DAOException(new ErrorHandler(se).getMessage());
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new DAOException(new ErrorHandler(ex).getMessage());
+		}
+
+		return dupFlg;
+	}
+
+	/**
+	 * Search Duplicate Code in COM_INTG_CD_DTL
+	 * 
+	 * @param CodeMgmtCondVO inputVO
+	 * @return String
+	 * @throws DAOException
+	 * @exception SQLException
+	 * @exception DAOException
+	 * @exception Exception
+	 * 
+	 */
+	public String searchDupChkCodeMgmtDtl(CodeMgmtDTLVO inputVO) throws DAOException {
+		DBRowSet dbRowset = null;
+		String dupFlg = "";
+		// query parameter
+		Map<String, Object> param = new HashMap<String, Object>();
+		// velocity parameter
+		Map<String, Object> velParam = new HashMap<String, Object>();
+
+		try {
+			if (inputVO != null) {
+				Map<String, String> mapVO = inputVO.getColumnValues();
+
+				param.putAll(mapVO);
+				velParam.putAll(mapVO);
+			}
+			dbRowset = new SQLExecuter("")
+					.executeQuery(
+							(ISQLTemplate) new CLVPractice2DBDAOCheckDuplicateDtlRSQL(),
+							param, velParam);
+			if (dbRowset != null && dbRowset.next()) {
+				dupFlg = dbRowset.getString(1);
+			}
+		} catch (SQLException se) {
+			log.error(se.getMessage(), se);
+			throw new DAOException(new ErrorHandler(se).getMessage());
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new DAOException(new ErrorHandler(ex).getMessage());
+		}
+
+		return dupFlg;
+	}
 }

@@ -193,10 +193,6 @@ document.onclick=processButtonClick;
     					}
     					sheetObjects[1].RemoveAll();
     					formObj.codeid.value='';
-//                    	formObj.f_cmd.value = SEARCH01;
-//                    	sheetObj.DoSearch4Post("ADM_EDM_0001GS.do", FormQueryString(formObj));
-//                    	sheetObjects[1].RemoveAll();
-//                    	formObj.codeid.value = '';
                     } else if ( sheetObj.id == "sheet2" ) {
     					formObj.f_cmd.value=SEARCH02;
     					var arr2=new Array("sheet2_", "");
@@ -205,12 +201,10 @@ document.onclick=processButtonClick;
     					if(sXml2.length>0){
     						sheetObj.LoadSearchData(sXml2,{Sync:1} );
     					}
-//                    	formObj.f_cmd.value = SEARCH02;
-//                      sheetObj.DoSearch4Post("ADM_EDM_0001GS.do", FormQueryString(formObj));
                     }
                 }
                 break;
-            case IBSAVE:        //저장
+            case IBSAVE:        //Save Button
             	if(validateForm(sheetObj,formObj,sAction))
                 formObj.f_cmd.value=MULTI;
                 sheetObj.DoSave("CLV_PRACTICE_002GS.do", FormQueryString(formObj), -1, false);
@@ -248,6 +242,8 @@ document.onclick=processButtonClick;
             	var j=sheetObj.GetSelectRow();
             	sheetObj.SetCellValue(j, sheetprefix+"ibflag","D");
             	sheetObj.SetRowHidden(j,1);
+            	formObj.f_cmd.value=MULTI;
+                sheetObj.DoSave("CLV_PRACTICE_002GS.do", FormQueryString(formObj), -1, false);
             	//sheet1을 삭세하면 sheet2 하위 아이템 역시 삭제 처리함
             	if( sheetObj.id == "sheet1" ){
             		var codeid=sheetObj.GetCellValue(j, "sheet1_intg_cd_id");
@@ -258,6 +254,7 @@ document.onclick=processButtonClick;
             		        }
             		}
             	}
+
 		 	    break; 
         }
     }
@@ -278,12 +275,19 @@ document.onclick=processButtonClick;
     	doActionIBSheet(sheetObjects[1],document.form1,IBSEARCH);
     }
     function sheet1_OnChange(sheetObj,Row,Col) {
-    	if(Col==5){
-    		if(sheetObj.GetCellValue(Row,"sheet1_intg_cd_tp_cd")=="T"){
-    			sheetObj.SetCellEditable(Row,"sheet1_mng_tbl_nm",1);
-    		} else {
-    			sheetObj.SetCellValue(Row, "sheet1_mng_tbl_nm","",0);
-    			sheetObj.SetCellEditable(Row,"sheet1_mng_tbl_nm",0);
-    		}
-    	}
+/*    	 if(Col == 2){
+ 			var code=sheetObj.GetCellValue(Row, Col);
+     	    for(var int=1; int < sheetObj.RowCount(); int++) {
+ 			var orlcode=sheetObj.GetCellValue(int, Col);
+ 			 null 인 경우와 자기 자신은 비교할 필요가 없음 
+ 				if(code != '' && int != Row && code == orlcode){
+     				 //ComShowMessage("동일한 Message Code가 존재합니다.");
+     				 ComShowCodeMessage('COM131302',code);
+     				 sheetObj.SetCellValue(Row, Col,"");
+     				 return;
+     			 }
+     		 }
+     	 }*/
     }
+    
+

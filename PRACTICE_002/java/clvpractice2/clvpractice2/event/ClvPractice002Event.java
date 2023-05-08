@@ -31,15 +31,16 @@ public class ClvPractice002Event extends EventSupport {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String codeid = null;
 	/** Table Value Object 조회 조건 및 단건 처리  */
 	CodeMgmtCondVO codeMgmtCondVO = null;
 	
 	/** Table Value Object Multi Data 처리 */
 	CodeMgmtCondVO[] codeMgmtCondVOs = null;
 	
+	/** Table Value Object */
 	CodeMgmtDTLVO codeMgmtDTLVO = null;
 	
+	/** Table Value Object Multi Data */
 	CodeMgmtDTLVO[] codeMgmtDTLVOs = null;
 
 	public ClvPractice002Event(){}
@@ -75,6 +76,6 @@ public class ClvPractice002Event extends EventSupport {
 	public void setCodeMgmtDTLVOs(CodeMgmtDTLVO[] codeMgmtDTLVOs) {
 		this.codeMgmtDTLVOs = codeMgmtDTLVOs;
 	}
-	
 
+	
 }

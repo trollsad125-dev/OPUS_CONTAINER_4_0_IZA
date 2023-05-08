@@ -4,10 +4,10 @@
 *@FileTitle : CodeMgmtCondVO
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.04
+*@LastModifyDate : 2023.05.08
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.04  
+* 2023.05.08  
 * 1.0 Creation
 =========================================================*/
 
@@ -49,6 +49,8 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 	/* Column Info */
 	private String intgCdDesc = null;
 	/* Column Info */
+	private String searchtype = null;
+	/* Column Info */
 	private String ownrSubSysCd = null;
 	/* Column Info */
 	private String intgCdTpCd = null;
@@ -69,6 +71,10 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 	/* Column Info */
 	private String intgCdNm = null;
 	/* Column Info */
+	private String codeVal = null;
+	/* Column Info */
+	private String subsystem = null;
+	/* Column Info */
 	private String updUsrId = null;
 
 	/*	테이블 컬럼의 값을 저장하는 Hashtable */
@@ -79,10 +85,11 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 	
 	public CodeMgmtCondVO() {}
 
-	public CodeMgmtCondVO(String ibflag, String pagerows, String ownrSubSysCd, String intgCdId, String intgCdNm, String intgCdDesc, String intgCdTpCd, String mngTblNm, String intgCdLen, String intgCdUseFlg, String creUsrId, String creDt, String updUsrId, String updDt) {
+	public CodeMgmtCondVO(String ibflag, String pagerows, String ownrSubSysCd, String intgCdId, String intgCdNm, String intgCdDesc, String intgCdTpCd, String mngTblNm, String intgCdLen, String intgCdUseFlg, String creUsrId, String creDt, String updUsrId, String updDt, String subsystem, String searchtype, String codeVal) {
 		this.updDt = updDt;
 		this.intgCdLen = intgCdLen;
 		this.intgCdDesc = intgCdDesc;
+		this.searchtype = searchtype;
 		this.ownrSubSysCd = ownrSubSysCd;
 		this.intgCdTpCd = intgCdTpCd;
 		this.creDt = creDt;
@@ -93,6 +100,8 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 		this.intgCdUseFlg = intgCdUseFlg;
 		this.creUsrId = creUsrId;
 		this.intgCdNm = intgCdNm;
+		this.codeVal = codeVal;
+		this.subsystem = subsystem;
 		this.updUsrId = updUsrId;
 	}
 	
@@ -104,6 +113,7 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 		this.hashColumns.put("upd_dt", getUpdDt());
 		this.hashColumns.put("intg_cd_len", getIntgCdLen());
 		this.hashColumns.put("intg_cd_desc", getIntgCdDesc());
+		this.hashColumns.put("searchtype", getSearchtype());
 		this.hashColumns.put("ownr_sub_sys_cd", getOwnrSubSysCd());
 		this.hashColumns.put("intg_cd_tp_cd", getIntgCdTpCd());
 		this.hashColumns.put("cre_dt", getCreDt());
@@ -114,6 +124,8 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 		this.hashColumns.put("intg_cd_use_flg", getIntgCdUseFlg());
 		this.hashColumns.put("cre_usr_id", getCreUsrId());
 		this.hashColumns.put("intg_cd_nm", getIntgCdNm());
+		this.hashColumns.put("code_val", getCodeVal());
+		this.hashColumns.put("subsystem", getSubsystem());
 		this.hashColumns.put("upd_usr_id", getUpdUsrId());
 		return this.hashColumns;
 	}
@@ -126,6 +138,7 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 		this.hashFields.put("upd_dt", "updDt");
 		this.hashFields.put("intg_cd_len", "intgCdLen");
 		this.hashFields.put("intg_cd_desc", "intgCdDesc");
+		this.hashFields.put("searchtype", "searchtype");
 		this.hashFields.put("ownr_sub_sys_cd", "ownrSubSysCd");
 		this.hashFields.put("intg_cd_tp_cd", "intgCdTpCd");
 		this.hashFields.put("cre_dt", "creDt");
@@ -136,6 +149,8 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 		this.hashFields.put("intg_cd_use_flg", "intgCdUseFlg");
 		this.hashFields.put("cre_usr_id", "creUsrId");
 		this.hashFields.put("intg_cd_nm", "intgCdNm");
+		this.hashFields.put("code_val", "codeVal");
+		this.hashFields.put("subsystem", "subsystem");
 		this.hashFields.put("upd_usr_id", "updUsrId");
 		return this.hashFields;
 	}
@@ -162,6 +177,14 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 	 */
 	public String getIntgCdDesc() {
 		return this.intgCdDesc;
+	}
+	
+	/**
+	 * Column Info
+	 * @return searchtype
+	 */
+	public String getSearchtype() {
+		return this.searchtype;
 	}
 	
 	/**
@@ -246,6 +269,22 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 	
 	/**
 	 * Column Info
+	 * @return codeVal
+	 */
+	public String getCodeVal() {
+		return this.codeVal;
+	}
+	
+	/**
+	 * Column Info
+	 * @return subsystem
+	 */
+	public String getSubsystem() {
+		return this.subsystem;
+	}
+	
+	/**
+	 * Column Info
 	 * @return updUsrId
 	 */
 	public String getUpdUsrId() {
@@ -275,6 +314,14 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 	 */
 	public void setIntgCdDesc(String intgCdDesc) {
 		this.intgCdDesc = intgCdDesc;
+	}
+	
+	/**
+	 * Column Info
+	 * @param searchtype
+	 */
+	public void setSearchtype(String searchtype) {
+		this.searchtype = searchtype;
 	}
 	
 	/**
@@ -359,6 +406,22 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 	
 	/**
 	 * Column Info
+	 * @param codeVal
+	 */
+	public void setCodeVal(String codeVal) {
+		this.codeVal = codeVal;
+	}
+	
+	/**
+	 * Column Info
+	 * @param subsystem
+	 */
+	public void setSubsystem(String subsystem) {
+		this.subsystem = subsystem;
+	}
+	
+	/**
+	 * Column Info
 	 * @param updUsrId
 	 */
 	public void setUpdUsrId(String updUsrId) {
@@ -381,6 +444,7 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 		setUpdDt(JSPUtil.getParameter(request, prefix + "upd_dt", ""));
 		setIntgCdLen(JSPUtil.getParameter(request, prefix + "intg_cd_len", ""));
 		setIntgCdDesc(JSPUtil.getParameter(request, prefix + "intg_cd_desc", ""));
+		setSearchtype(JSPUtil.getParameter(request, prefix + "searchtype", ""));
 		setOwnrSubSysCd(JSPUtil.getParameter(request, prefix + "ownr_sub_sys_cd", ""));
 		setIntgCdTpCd(JSPUtil.getParameter(request, prefix + "intg_cd_tp_cd", ""));
 		setCreDt(JSPUtil.getParameter(request, prefix + "cre_dt", ""));
@@ -391,6 +455,8 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 		setIntgCdUseFlg(JSPUtil.getParameter(request, prefix + "intg_cd_use_flg", ""));
 		setCreUsrId(JSPUtil.getParameter(request, prefix + "cre_usr_id", ""));
 		setIntgCdNm(JSPUtil.getParameter(request, prefix + "intg_cd_nm", ""));
+		setCodeVal(JSPUtil.getParameter(request, prefix + "code_val", ""));
+		setSubsystem(JSPUtil.getParameter(request, prefix + "subsystem", ""));
 		setUpdUsrId(JSPUtil.getParameter(request, prefix + "upd_usr_id", ""));
 	}
 
@@ -422,6 +488,7 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 			String[] updDt = (JSPUtil.getParameter(request, prefix	+ "upd_dt", length));
 			String[] intgCdLen = (JSPUtil.getParameter(request, prefix	+ "intg_cd_len", length));
 			String[] intgCdDesc = (JSPUtil.getParameter(request, prefix	+ "intg_cd_desc", length));
+			String[] searchtype = (JSPUtil.getParameter(request, prefix	+ "searchtype", length));
 			String[] ownrSubSysCd = (JSPUtil.getParameter(request, prefix	+ "ownr_sub_sys_cd", length));
 			String[] intgCdTpCd = (JSPUtil.getParameter(request, prefix	+ "intg_cd_tp_cd", length));
 			String[] creDt = (JSPUtil.getParameter(request, prefix	+ "cre_dt", length));
@@ -432,6 +499,8 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 			String[] intgCdUseFlg = (JSPUtil.getParameter(request, prefix	+ "intg_cd_use_flg", length));
 			String[] creUsrId = (JSPUtil.getParameter(request, prefix	+ "cre_usr_id", length));
 			String[] intgCdNm = (JSPUtil.getParameter(request, prefix	+ "intg_cd_nm", length));
+			String[] codeVal = (JSPUtil.getParameter(request, prefix	+ "code_val", length));
+			String[] subsystem = (JSPUtil.getParameter(request, prefix	+ "subsystem", length));
 			String[] updUsrId = (JSPUtil.getParameter(request, prefix	+ "upd_usr_id", length));
 			
 			for (int i = 0; i < length; i++) {
@@ -442,6 +511,8 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 					model.setIntgCdLen(intgCdLen[i]);
 				if (intgCdDesc[i] != null)
 					model.setIntgCdDesc(intgCdDesc[i]);
+				if (searchtype[i] != null)
+					model.setSearchtype(searchtype[i]);
 				if (ownrSubSysCd[i] != null)
 					model.setOwnrSubSysCd(ownrSubSysCd[i]);
 				if (intgCdTpCd[i] != null)
@@ -462,6 +533,10 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 					model.setCreUsrId(creUsrId[i]);
 				if (intgCdNm[i] != null)
 					model.setIntgCdNm(intgCdNm[i]);
+				if (codeVal[i] != null)
+					model.setCodeVal(codeVal[i]);
+				if (subsystem[i] != null)
+					model.setSubsystem(subsystem[i]);
 				if (updUsrId[i] != null)
 					model.setUpdUsrId(updUsrId[i]);
 				models.add(model);
@@ -496,6 +571,7 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 		this.updDt = this.updDt .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.intgCdLen = this.intgCdLen .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.intgCdDesc = this.intgCdDesc .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
+		this.searchtype = this.searchtype .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.ownrSubSysCd = this.ownrSubSysCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.intgCdTpCd = this.intgCdTpCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.creDt = this.creDt .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
@@ -506,6 +582,8 @@ public class CodeMgmtCondVO extends AbstractValueObject {
 		this.intgCdUseFlg = this.intgCdUseFlg .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.creUsrId = this.creUsrId .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.intgCdNm = this.intgCdNm .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
+		this.codeVal = this.codeVal .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
+		this.subsystem = this.subsystem .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.updUsrId = this.updUsrId .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 	}
 }

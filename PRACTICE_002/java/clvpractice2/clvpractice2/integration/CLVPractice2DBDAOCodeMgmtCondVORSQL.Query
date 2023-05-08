@@ -21,27 +21,22 @@ FROM COM_INTG_CD A
 WHERE 1=1
 AND INTG_CD_TP_CD IN ('G','T')
 
-#if (${searchCdTp} != '')
-AND INTG_CD_TP_CD = @[searchCdTp]
-#end
-
 #if (${subsystem} != '')
 AND OWNR_SUB_SYS_CD = @[subsystem]
 #end
   
-#if (${codeVal} != '')
+#if (${code_val} != '')
 #if (${searchtype} == '0')
-AND INTG_CD_ID = @[codeVal]
+AND INTG_CD_ID = @[code_val]
 #else
-AND UPPER(INTG_CD_NM) LIKE '%'||UPPER(@[codeVal])||'%'
+AND UPPER(INTG_CD_NM) LIKE '%'||UPPER(@[code_val])||'%'
 #end
 #end
 
 ORDER BY A.INTG_CD_ID			]]></sql>
 			<params>
-				<param name="searchCdTp" type="12" value="" out="N"/>
 				<param name="subsystem" type="12" value="" out="N"/>
-				<param name="codeVal" type="12" value="" out="N"/>
+				<param name="code_val" type="12" value="" out="N"/>
 			</params>
 		</query>
 	</querys>

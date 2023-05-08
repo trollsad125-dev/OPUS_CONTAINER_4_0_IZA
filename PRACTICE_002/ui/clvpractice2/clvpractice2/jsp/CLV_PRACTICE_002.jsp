@@ -33,7 +33,7 @@
 	try {
 		event = (ClvPractice002Event)request.getAttribute("Event");
 		serverException = (Exception)request.getAttribute(CommonWebKeys.EXCEPTION_OBJECT);
-
+		System.out.print(serverException);
 		if (serverException != null) {
 			strErrMsg = new ErrorHandler(serverException).loadPopupMessage();
 		}
@@ -52,7 +52,7 @@
 	function setupPage(){
 		var errMessage = "<%=strErrMsg%>";
 		if (errMessage.length >= 1) {
-			showErrMessage(errMessage);
+			ComShowMessage(errMessage);
 		} // end if
 		loadPage();
 	}
@@ -91,14 +91,7 @@
 	<div class="opus_design_inquiry wFit">   <!-- no TAB  -->
 		<table class="search" border="0" style="width: 100%;">
 			<tr class="h23">
-<!-- 				<th width="70">Code Type</th> -->
-<!-- 				<td width="90"><select name="searchCdTp" style="width: 80;"> -->
-<!-- 					<option value="" selected></option> -->
-<!-- 					<option value="단일코드">단일코드</option> -->
-<!-- 					<option value="목록코드">목록코드</option> -->
-<!-- 				</select></td> -->
 				<th width="70">Subsystem</th>
-				<!-- td width="130"><input name="subsystem" type="text" style="width: 100" onKeyPress="javascript:ComKeyOnlyAlphabet('uppernum');"></td-->
 				<td><script language="javascript">ComComboObject('subsystem', 1, 120, 0);</script></td>
 				<td width="90"><select name="searchtype" style="width: 80;">
 					<option value="0" selected>Cd ID</option>

@@ -13,7 +13,9 @@
 package com.clt.apps.opus.esm.clv.clvpractice2;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.basic.CLVPractice2BC;
 import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.basic.CLVPractice2BCImpl;
@@ -22,6 +24,7 @@ import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.event.EventResponse;
 import com.clt.framework.component.message.ErrorHandler;
+import com.clt.framework.component.util.JSPUtil;
 import com.clt.framework.core.layer.event.GeneralEventResponse;
 import com.clt.framework.support.controller.html.FormCommand;
 import com.clt.framework.support.layer.service.ServiceCommandSupport;
@@ -128,9 +131,16 @@ public class CLVPractice2SC extends ServiceCommandSupport {
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		ClvPractice002Event event = (ClvPractice002Event)e;
 		CLVPractice2BC command = new CLVPractice2BCImpl();
+		
 		try{
 			begin();
-			command.multiCodeMgmt(event.getCodeMgmtCondVOS(),account);
+			if(event.getCodeMgmtCondVOS()!=null){
+				command.multiCodeMgmt(event.getCodeMgmtCondVOS(),account);
+			}
+			if(event.getCodeMgmtDTLVOs()!=null){
+				command.multiCodeMgmtDtl(event.getCodeMgmtDTLVOs(), account);
+			}
+			
 			eventResponse.setUserMessage(new ErrorHandler("XXXXXXXXX").getUserMessage());
 			commit();
 		} catch(EventException ex) {

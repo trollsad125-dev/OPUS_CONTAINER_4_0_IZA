@@ -14,6 +14,7 @@ package com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.event;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.clt.framework.component.util.JSPUtil;
 import com.clt.framework.core.controller.html.HTMLActionException;
 import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventResponse;
@@ -53,12 +54,13 @@ public class CLV_PRACTICE_002HTMLAction extends HTMLActionSupport {
 		ClvPractice002Event event = new ClvPractice002Event();
 		
 		if(command.isCommand(FormCommand.MULTI)) {
-			event.setCodeMgmtCondVOS((CodeMgmtCondVO[])getVOs(request, CodeMgmtCondVO .class,""));
+			event.setCodeMgmtCondVOS((CodeMgmtCondVO[])getVOs(request, CodeMgmtCondVO.class,"sheet1_"));
+			event.setCodeMgmtDTLVOs((CodeMgmtDTLVO[])getVOs(request, CodeMgmtDTLVO.class,"sheet2_"));
 		}
 		else if(command.isCommand(FormCommand.SEARCH01)) {
-			event.setCodeMgmtCondVO((CodeMgmtCondVO)getVO(request, CodeMgmtCondVO .class));
+			event.setCodeMgmtCondVO((CodeMgmtCondVO)getVO(request, CodeMgmtCondVO.class));
 		}else if(command.isCommand(FormCommand.SEARCH02)){
-			event.setCodeMgmtDTLVO((CodeMgmtDTLVO)getVO(request, CodeMgmtDTLVO .class));
+			event.setCodeMgmtDTLVO((CodeMgmtDTLVO)getVO(request, CodeMgmtDTLVO.class));
 		}
 
 		return  event;

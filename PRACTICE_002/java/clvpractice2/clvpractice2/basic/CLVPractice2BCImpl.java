@@ -15,6 +15,7 @@ package com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.basic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bluecast.util.DuplicateKeyException;
 import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration.CLVPractice2DBDAO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.EventException;
@@ -70,6 +71,9 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 	 */
 	public void multiCodeMgmt(CodeMgmtCondVO[] codeMgmtCondVO, SignOnUserAccount account) throws EventException{
 		try {
+			String errFlg = "";
+			String dupFlg = "";
+			String intgCdId = "";
 			List<CodeMgmtCondVO> insertVoList = new ArrayList<CodeMgmtCondVO>();
 			List<CodeMgmtCondVO> updateVoList = new ArrayList<CodeMgmtCondVO>();
 			List<CodeMgmtCondVO> deleteVoList = new ArrayList<CodeMgmtCondVO>();
@@ -86,7 +90,20 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 			}
 			
 			if ( insertVoList.size() > 0 ) {
-				dbDao.addmultiCodeMgmtS(insertVoList);
+				//Checking Duplication
+				for( int i=0; i<insertVoList.size(); i++ ){
+					dupFlg = dbDao.searchDupChkCodeMgmtCond(insertVoList.get(i));
+					if ("Y".equals(dupFlg) ){
+						errFlg = "Y";
+						intgCdId = insertVoList.get(i).getIntgCdId();
+					}
+				}
+				if( !"Y".equals(errFlg) ){
+					dbDao.addmultiCodeMgmtS(insertVoList);
+				}else{
+					throw new DuplicateKeyException(new ErrorHandler("ERR12356",new String[]{intgCdId}).getMessage());
+				}
+				
 			}
 			
 			if ( updateVoList.size() > 0 ) {
@@ -96,12 +113,23 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 			if ( deleteVoList.size() > 0 ) {
 				dbDao.removemultiCodeMgmtS(deleteVoList);
 			}
-		} catch(DAOException ex) {
+		}catch(DuplicateKeyException de) {
+			log.error("err " + de.toString(), de);
+			throw new EventException(new ErrorHandler(de).getMessage(),de);
+		} 
+		catch(DAOException ex) {
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		} catch (Exception ex) {
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}
 	}
+	/**
+	 * Search Sub System Cd in ComboBox Frontend
+	 * 
+	 * @param 
+	 * @return String
+	 * @exception EventException
+	 */
 	public String[] searchSubSystemCodeList() throws EventException {
 
 		try {
@@ -110,6 +138,13 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 			throw new EventException(new ErrorHandler(ex).getMessage());
 		}
 	}
+	/**
+	 * Search Search Code Detail
+	 * 
+	 * @param CodeMgmtDTLVO codeMgmtCondVO
+	 * @return String
+	 * @exception EventException
+	 */
 	@Override
 	public List<CodeMgmtDTLVO> searchCodeMgmtDtl(CodeMgmtDTLVO codeMgmtDtlVO) throws EventException {
 		try {
@@ -118,10 +153,66 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 			throw new EventException(new ErrorHandler(ex).getMessage());
 		}
 	}
+	/**
+	 * Do Insert Delete Update 
+	 * 
+	 * @param CodeMgmtDTLVO[] codeMgmtDtlVO
+	 * @param SignOnUserAccount account
+	 * @exception EventException
+	 */
 	@Override
 	public void multiCodeMgmtDtl(CodeMgmtDTLVO[] codeMgmtDtlVO, SignOnUserAccount account) throws EventException {
-		// TODO Auto-generated method stub
-		
+		try {
+			String errFlg = "";
+			String dupFlg = "";
+			String intgCdId = "";
+			List<CodeMgmtDTLVO> insertVoList = new ArrayList<CodeMgmtDTLVO>();
+			List<CodeMgmtDTLVO> updateVoList = new ArrayList<CodeMgmtDTLVO>();
+			List<CodeMgmtDTLVO> deleteVoList = new ArrayList<CodeMgmtDTLVO>();
+			for ( int i=0; i<codeMgmtDtlVO .length; i++ ) {
+				if ( codeMgmtDtlVO[i].getIbflag().equals("I")){
+					insertVoList.add(codeMgmtDtlVO[i]);
+				} else if ( codeMgmtDtlVO[i].getIbflag().equals("U")){
+					updateVoList.add(codeMgmtDtlVO[i]);
+				} else if ( codeMgmtDtlVO[i].getIbflag().equals("D")){
+					deleteVoList.add(codeMgmtDtlVO[i]);
+				}
+			}
+			
+			if ( insertVoList.size() > 0 ) {
+				//Checking Duplication
+				for( int i=0; i<insertVoList.size(); i++ ){
+					dupFlg = dbDao.searchDupChkCodeMgmtDtl(insertVoList.get(i));
+					if ("Y".equals(dupFlg) ){
+						errFlg = "Y";
+						intgCdId = insertVoList.get(i).getIntgCdValCtnt();
+						break;
+					}
+				}
+				if( !"Y".equals(errFlg) ){
+					dbDao.addmultiCodeDtlS(insertVoList);
+				}else{
+					throw new DuplicateKeyException(new ErrorHandler("ERR12356",new String[]{intgCdId}).getMessage());
+				}
+				
+			}
+			
+			if ( updateVoList.size() > 0 ) {
+				dbDao.modifymultiCodeDtlS(updateVoList);
+			}
+			
+			if ( deleteVoList.size() > 0 ) {
+				dbDao.removemultiCodeDtlS(deleteVoList);
+			}
+		} 
+		catch(DuplicateKeyException de) {
+			log.error("err " + de.toString(), de);
+			throw new EventException(new ErrorHandler(de).getMessage(),de);
+		} catch(DAOException ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		} catch (Exception ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}
 	}
 	
 }
