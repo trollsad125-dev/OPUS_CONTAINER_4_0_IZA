@@ -113,7 +113,7 @@
 			break;
 		case IBDOWNEXCEL:	//Download Excel
 			if(sheetObj.RowCount() < 1){
-				ComShowCodeMessage("Testing");
+				ComShowMessage("No Row");
 			}else{
 				sheetObj.Down2Excel({DownCols: makeHiddenSkipCol(sheetObj), SheetDesign:1, Merge:1});
 			}
