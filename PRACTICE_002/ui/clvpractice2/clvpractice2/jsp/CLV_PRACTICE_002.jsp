@@ -110,8 +110,8 @@
 		<h3 class="title_design">Master</h3>
 		<!-- opus_grid_btn(S) -->
 		<div class="opus_design_btn">
-			<button type="button" class="btn_normal" name="btn_rowadd_mst" id="btn_rowadd_mst">Row Add</button><!-- 
-			 --><button type="button" class="btn_normal" name="btn_rowdelete_mst" id="btn_rowdelete_mst">Row Delete</button>
+			<button type="button" class="btn_normal" name="btn_rowadd_master" id="btn_rowadd_master">Row Add</button><!-- 
+			 --><button type="button" class="btn_normal" name="btn_rowdelete_master" id="btn_rowdelete_master">Row Delete</button>
 		</div>
 		<!-- opus_grid_btn(E) -->
 	</div>

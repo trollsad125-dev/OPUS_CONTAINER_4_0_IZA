@@ -8,23 +8,19 @@
 =========================================================*/
 var sheetObjects=new Array();
 var sheetCnt=0;
-/* 버튼클릭이벤트를 받아 처리하는 이벤트핸들러 정의 */
 document.onclick=processButtonClick;
-/* 버튼 네임으로 구분하여 프로세스를 분기처리하는 이벤트핸들러 */
+
     function processButtonClick(){
-         /***** 탭당 시트가 2개 이상인 경우엔 추가 시트변수 지정하여 사용한 *****/
-         /*******************************************************/
+
          var formObject=document.form1;
     	try {
     		var srcName=ComGetEvent("name");
             switch(srcName) {
         	    case "btn_Retrieve":
     	            doActionIBSheet(sheetObjects[0],formObject,IBSEARCH);
-    	            //doActionIBSheet(sheetObjects[1],formObject,IBSEARCH);
         	        break;
                 case "btn_Save":
                   if(confirm("Do you save selected codes?")){
-                    //doActionIBSheet(sheetObjects[2],formObject,IBSEARCH);
                 	  if((sheetObjects[0].RowCount("I")+sheetObjects[0].RowCount("U")+sheetObjects[0].RowCount("D")) >0 ){
                 		  doActionIBSheet(sheetObjects[0],formObject,IBSAVE);
                 	  } 
@@ -34,10 +30,10 @@ document.onclick=processButtonClick;
                   }
         	        break;
         			/*****************grid button ************************/				
-				case "btn_rowadd_mst": //add row  
+				case "btn_rowadd_master": //add row  
 	                doActionIBSheet(sheetObjects[0],	formObject,	IBINSERT);
 					break;
-				case "btn_rowdelete_mst": //delete row
+				case "btn_rowdelete_master": //delete row
 					doActionIBSheet(sheetObjects[0],	formObject,	MODIFY01);					
 					break;        	        
 				case "btn_rowadd_dtl": //add row  
@@ -55,33 +51,21 @@ document.onclick=processButtonClick;
     		}
     	}
     }
-    /**
-     * IBSheet Object를 배열로 등록
-     * 향후 다른 항목들을 일괄처리할 필요가 있을 때 배열로 담는 프로세스를 추가할 수 있다
-     * 배열은 소스 상단에 정의
-     */
+
     function setSheetObject(sheet_obj){
     	 sheetObjects[sheetCnt++]=sheet_obj;
     }
-    /**
-     * Sheet 기본 설정 및 초기화
-     * body 태그의 onLoad 이벤트핸들러 구현
-     * 화면을 브라우저에서 로딩한 후에 선처리해야 하는 기능을 추가한다
-     */
+
     function loadPage() {
         for(i=0;i<sheetObjects.length;i++){
-        //khlee-시작 환경 설정 함수 이름 변경
             ComConfigSheet(sheetObjects[i]);
             initSheet(sheetObjects[i],i+1);
-        //khlee-마지막 환경 설정 함수 추가
             ComEndConfigSheet(sheetObjects[i]);
         }
         initControl();
 		var tmp=subSysCd.substring(1,subSysCd.length-1).split(", ");
 		with (subsystem) {
 			SetMultiSelect(0);
-			//MultiSeparator = ",";
-			//DropHeight = 140;
 			for ( var i=0; i<tmp.length; i++) {
 				InsertItem(i, tmp[i], tmp[i]);
 			}
@@ -94,15 +78,10 @@ document.onclick=processButtonClick;
     }
     function initControl() {
       	var formObject=document.form1;
-          //Axon 이벤트 처리1. 이벤트catch(개발자변경)
           axon_event.addListenerFormat('keypress', 'keypressFormat', formObject);
           axon_event.addListener ('keydown', 'ComKeyEnter', 'form1');
     }
-    /**
-     * 시트 초기설정값, 헤더 정의
-     * param : sheetObj ==> 시트오브젝트, sheetNo ==> 시트오브젝트 태그의 아이디에 붙인 일련번호
-     * 시트가 다수일 경우 시트 수만큼 case를 추가하여 시트 초기화모듈을 구성한다
-     */
+
     function initSheet(sheetObj,sheetNo) {
         var cnt=0;
         switch(sheetNo) {
@@ -167,7 +146,6 @@ document.onclick=processButtonClick;
                 InitColumns(cols);
 
                 SetEditable(1);
-//	            SetSheetHeight(150);
 	            resizeSheet();
     		}
             break;
@@ -176,13 +154,11 @@ document.onclick=processButtonClick;
     function resizeSheet(){
         ComResizeSheet(sheetObjects[1]);
     }
-
-  // Sheet관련 프로세스 처리
+    
     function doActionIBSheet(sheetObj,formObj,sAction) {
         sheetObj.ShowDebugMsg(false);
         switch(sAction) {
-           case IBSEARCH:      //조회
-                if(validateForm(sheetObj,formObj,sAction)){
+           case IBSEARCH: //Search
                     if ( sheetObj.id == "sheet1" ) {
     					formObj.f_cmd.value=SEARCH01;
     					var arr1=new Array("sheet1_", "");
@@ -202,17 +178,13 @@ document.onclick=processButtonClick;
     						sheetObj.LoadSearchData(sXml2,{Sync:1} );
     					}
                     }
-                }
+                
                 break;
-            case IBSAVE:        //Save Button
-            	if(validateForm(sheetObj,formObj,sAction))
+            case IBSAVE:  //Save Button
                 formObj.f_cmd.value=MULTI;
                 sheetObj.DoSave("CLV_PRACTICE_002GS.do", FormQueryString(formObj), -1, false);
                 break;
 	 		case IBINSERT: // Row Add	
-	 			if (!validateForm(sheetObj,formObj,sAction)) {
-	 				return false;
-	 			}	
 	 			with (sheetObj) {
 		 			sheetObj.DataInsert(-1);
 		 			if ( sheetObj.id == "sheet1" ) {
@@ -258,36 +230,22 @@ document.onclick=processButtonClick;
 		 	    break; 
         }
     }
-   /**
-     * 화면 폼입력값에 대한 유효성검증 프로세스 처리
-     */
-    function validateForm(sheetObj,formObj,sAction){
-        with(formObj){
-//            if (!isNumber(iPage)) {
-//
-//                return false;
-//            }
-        }
-        return true;
-    }
+
     function sheet1_OnDblClick(sheetObj, Row, Col) {
     	ComSetObjValue(document.form1.codeid, sheetObj.GetCellValue(Row, "sheet1_intg_cd_id"));
     	doActionIBSheet(sheetObjects[1],document.form1,IBSEARCH);
     }
     function sheet1_OnChange(sheetObj,Row,Col) {
-/*    	 if(Col == 2){
+  	 if(Col == 2){
  			var code=sheetObj.GetCellValue(Row, Col);
      	    for(var int=1; int < sheetObj.RowCount(); int++) {
  			var orlcode=sheetObj.GetCellValue(int, Col);
- 			 null 인 경우와 자기 자신은 비교할 필요가 없음 
  				if(code != '' && int != Row && code == orlcode){
-     				 //ComShowMessage("동일한 Message Code가 존재합니다.");
      				 ComShowCodeMessage('COM131302',code);
      				 sheetObj.SetCellValue(Row, Col,"");
      				 return;
      			 }
      		 }
-     	 }*/
+     	 }
     }
     
-
