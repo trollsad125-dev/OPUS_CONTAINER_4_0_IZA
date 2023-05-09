@@ -10,7 +10,7 @@
 * 2023.05.04 
 * 1.0 Creation
 =========================================================*/
-package com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration;
+package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,22 +18,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.basic.CLVPractice2BCImpl;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.basic.CLVPractice2BCImpl;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.component.rowset.DBRowSet;
-import com.clt.framework.component.util.JSPUtil;
 import com.clt.framework.core.layer.integration.DAOException;
 import com.clt.framework.support.db.ISQLTemplate;
 import com.clt.framework.support.db.RowSetUtil;
 import com.clt.framework.support.db.SQLExecuter;
 import com.clt.framework.support.layer.integration.DBDAOSupport;
-import com.clt.syscommon.management.opus.codemanagement.integration.CodeManagementDBDAOsearchDupChkCodeMgmtDtlRSQL;
-import com.clt.syscommon.management.opus.codemanagement.integration.CodeManagementDBDAOsearchDupChkCodeMgmtMstRSQL;
-import com.clt.syscommon.management.opus.codemanagement.integration.CodeManagementDBDAOsearchSubSystemCdRSQL;
-import com.clt.syscommon.management.opus.codemanagement.vo.CodeMgmtDtlVO;
-import com.clt.syscommon.management.opus.codemanagement.vo.CodeMgmtMstVO;
-import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo.CodeMgmtCondVO;
-import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo.CodeMgmtDTLVO;
 
 
 /**
@@ -47,7 +41,7 @@ import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo.CodeMgmtDTLVO;
 public class CLVPractice2DBDAO extends DBDAOSupport {
 
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Search Code Management
 	 * 
 	 * @param CodeMgmtCondVO codeMgmtCondVO
 	 * @return List<CodeMgmtCondVO>
@@ -82,7 +76,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Add Code Management
 	 * 
 	 * @param CodeMgmtCondVO codeMgmtCondVO
 	 * @exception DAOException
@@ -113,7 +107,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Update Code Management
 	 * 
 	 * @param CodeMgmtCondVO codeMgmtCondVO
 	 * @return int
@@ -148,7 +142,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Delete Code Management
 	 * 
 	 * @param CodeMgmtCondVO codeMgmtCondVO
 	 * @return int
@@ -183,7 +177,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	}
 
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Insert Array Code Management
 	 * 
 	 * @param List<CodeMgmtCondVO> codeMgmtCondVO
 	 * @return int[]
@@ -211,7 +205,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 		return insCnt;
 	}
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Update Array Code Management
 	 * 
 	 * @param List<CodeMgmtCondVO> codeMgmtCondVO
 	 * @return int[]
@@ -240,7 +234,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Delete Array Code Management
 	 * 
 	 * @param List<CodeMgmtCondVO> codeMgmtCondVO
 	 * @return int[]
@@ -294,7 +288,8 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 		return list;
 	}
 	/**
-	 * Search Sub System Code List
+	 * Search Code Management Detail
+	 * 
 	 * @param CodeMgmtDTLVO codeMgmtDtlVO
 	 * @return String[]
 	 * @exception SQLException
@@ -330,10 +325,9 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	}
 
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Insert Array Code Management Detail
 	 * 
-	 * @param List
-	 *            <CodeMgmtCondVO> codeMgmtCondVO
+	 * @param List <CodeMgmtCondVO> codeMgmtCondVO
 	 * @return int[]
 	 * @exception DAOException
 	 * @exception Exception
@@ -361,16 +355,14 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	}
 
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Update Code Management Detail
 	 * 
-	 * @param List
-	 *            <CodeMgmtCondVO> codeMgmtCondVO
+	 * @param List <CodeMgmtCondVO> codeMgmtCondVO
 	 * @return int[]
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] modifymultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO)
-			throws DAOException, Exception {
+	public int[] modifymultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO) throws DAOException, Exception {
 		int updCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
@@ -392,10 +384,9 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	}
 
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Delete Code Management Detail
 	 * 
-	 * @param List
-	 *            <CodeMgmtCondVO> codeMgmtCondVO
+	 * @param List <CodeMgmtCondVO> codeMgmtCondVO
 	 * @return int[]
 	 * @exception DAOException
 	 * @exception Exception

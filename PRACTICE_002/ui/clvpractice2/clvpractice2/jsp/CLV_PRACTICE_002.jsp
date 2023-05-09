@@ -20,7 +20,7 @@
 <%@ page import="com.clt.framework.core.layer.event.GeneralEventResponse"%>
 <%@ page import="com.clt.framework.support.controller.html.CommonWebKeys"%>
 <%@ page import="com.clt.framework.support.view.signon.SignOnUserAccount"%>
-<%@ page import="com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.event.ClvPractice002Event"%>
+<%@ page import="com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.event.ClvPractice002Event"%>
 <%
 	ClvPractice002Event event = null; //PDTO(Data Transfer Object including Parameters)
 	Exception serverException = null; //서버에서 발생한 에러

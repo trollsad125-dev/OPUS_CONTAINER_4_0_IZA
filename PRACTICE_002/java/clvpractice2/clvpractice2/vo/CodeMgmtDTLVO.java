@@ -11,7 +11,7 @@
 * 1.0 Creation
 =========================================================*/
 
-package com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo;
+package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

@@ -129,7 +129,6 @@
 			var code=sheetObj.GetCellValue(Row, Col);
     	    for(var int=1; int < sheetObj.RowCount(); int++) {
 			var orlcode=sheetObj.GetCellValue(int, Col);
-			 null 인 경우와 자기 자신은 비교할 필요가 없음 
 				if(code != '' && int != Row && code == orlcode){
     				 ComShowCodeMessage('COM131302',code);
     				 sheetObj.SetCellValue(Row, Col,"");

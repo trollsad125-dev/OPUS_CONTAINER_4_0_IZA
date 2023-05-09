@@ -10,7 +10,7 @@
 * 2023.05.04 
 * 1.0 Creation
 =========================================================*/
-package com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.event;
+package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.event;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,8 +20,8 @@ import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventResponse;
 import com.clt.framework.support.controller.HTMLActionSupport;
 import com.clt.framework.support.controller.html.FormCommand;
-import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo.CodeMgmtCondVO;
-import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo.CodeMgmtDTLVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
 
 /**
  * HTTP Parser<br>

@@ -10,14 +10,14 @@
 * 2023.05.04 
 * 1.0 Creation
 =========================================================*/
-package com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.basic;
+package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.basic;
 
 import java.util.List;
 
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo.CodeMgmtCondVO;
-import com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.vo.CodeMgmtDTLVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
 
 /**
  * ALPS-Clvpractice2 Business Logic Command Interface<br>

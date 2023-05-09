@@ -10,7 +10,7 @@
 * 2023.05.04 
 * 1.0 Creation
 =========================================================*/
-package com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration;
+package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration;
 
 import java.util.HashMap;
 import org.apache.log4j.Logger;
