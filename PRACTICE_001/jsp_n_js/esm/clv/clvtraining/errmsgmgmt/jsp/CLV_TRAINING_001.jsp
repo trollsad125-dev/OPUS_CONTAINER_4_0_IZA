@@ -70,29 +70,34 @@
 	}
 </script>
 
-
-
 <form name="form">
 <input type="hidden" name="f_cmd">
 <input type="hidden" name="pagerows">
 <input type="hidden" name="lang_tp_cd" value="ENG">
-<!-- 개발자 작업	-->
+		<!-- page_title_area(S)	-->
 		<div class="page_title_area clear">
+			<!-- page_title(S)	-->
 			<h2 class="page_title">
-				<button type="button">
-					<span id="title"></span>
-				</button>
+				<button type="button"> <span id="title"></span></button>
 			</h2>
+			<!-- page_title(E)	-->
+			<!-- opus_design_btn(S)	-->
 			<div class="opus_design_btn">
 				<button type="button" class="btn_accent" name="btn_Retrieve" id="btn_Retrieve">Retrieve</button><!-- 
 				 --><button type="button" class="btn_normal" name="btn_Save" id="btn_Save">Save</button><!-- 
 				 --><button type="button" class="btn_normal" name="btn_DownExcel" id="btn_DownExcel">Down Excel</button>
 			</div>
+			<!-- opus_design_btn(E)	-->
+			<!-- location(S)	-->
 			<div class="location">
 				<span id="navigation"></span>
 			</div>
+			<!-- location(E)	-->
 		</div>
+		<!-- page_title_area(E)	-->
+		<!-- wrap_search(S)	-->
 		<div class="wrap_search">
+			<!-- opus_design_inquiry(S)	-->
 			<div class="opus_design_inquiry">
 				<table>
 					<tbody>
@@ -106,15 +111,22 @@
 					</tbody>
 				</table>
 			</div>
+			<!-- opus_design_inquiry(E)	-->
 		</div>
+		<!-- wrap_search(E)	-->
+		<!-- wrap_result(S)	-->
 		<div class="wrap_result">
+			<!-- opus_design_grid(S)	-->
 			<div class="opus_design_grid">
+				<!-- opus_design_btn(S)	-->
 				<div class="opus_design_btn">
 					<button type="button" class="btn_accent" name="btn_Add" id="btn_Add">Row Add</button>
 				</div>
+				<!-- opus_design_btn(E)	-->
 				<script language="javascript">ComSheetObject('sheet1');</script>
 			</div>
+			<!-- opus_design_grid(E)	-->
 		</div>
-
+		<!-- wrap_result(E)	-->
 		<!-- 개발자 작업  끝 -->
 </form>
