@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://www.cyberlogitec.com/mappings">
+	<!-- Nhat Nguyen : 2023-04-19 start -->
+    <url-mapping url="CLV_TRAINING_001.do" screen="CLV_TRAINING_001.screen" >
+        <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.event.CLV_TRAINING_001HTMLAction</web-action-class>
+    </url-mapping>
+
+    <url-mapping url="CLV_TRAINING_001GS.do" screen="com.clt.framework.core.controller.DefaultViewAdapter" >
+        <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.event.CLV_TRAINING_001HTMLAction</web-action-class>
+    </url-mapping>
+
+    <event-mapping>
+        <event-class>com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.event.ClvTraining001Event</event-class>
+        <service-action-class>com.clt.apps.opus.esm.clv.clvtraining.CLVTrainingSC</service-action-class>
+    </event-mapping>
+	
+	<!-- Nhat Nguyen : 2023-05-04 start -->
+    <url-mapping url="CLV_PRACTICE_002.do" screen="CLV_PRACTICE_002.screen" >
+        <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.event.CLV_PRACTICE_002HTMLAction</web-action-class>
+    </url-mapping>
+
+    <url-mapping url="CLV_PRACTICE_002GS.do" screen="com.clt.framework.core.controller.DefaultViewAdapter" >
+        <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.event.CLV_PRACTICE_002HTMLAction</web-action-class>
+    </url-mapping>
+
+    <event-mapping>
+        <event-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.event.ClvPractice002Event</event-class>
+        <service-action-class>com.clt.apps.opus.esm.clv.clvtraining.CLVTrainingSC</service-action-class>
+    </event-mapping>
+	<!-- Nhat Nguyen : 2023-05-04 end -->
+
+	<!-- Nhat Nguyen : 2023-05-08 start -->
+    <url-mapping url="CLV_Practice_004.do" screen="CLV_Practice_004.screen" >
+        <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.event.CLV_PRACTICE_004HTMLAction</web-action-class>
+    </url-mapping>
+
+    <url-mapping url="CLV_Practice_004GS.do" screen="com.clt.framework.core.controller.DefaultViewAdapter" >
+        <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.event.CLV_PRACTICE_004HTMLAction</web-action-class>
+    </url-mapping>
+
+    <event-mapping>
+        <event-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.event.ClvPractice004Event</event-class>
+        <service-action-class>com.clt.apps.opus.esm.clv.clvtraining.CLVTrainingSC</service-action-class>
+    </event-mapping>
+	<!-- Nhat Nguyen : 2023-05-08 end -->
+
+</mappings>
