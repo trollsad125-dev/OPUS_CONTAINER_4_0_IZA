@@ -75,6 +75,7 @@ public class CLVPractice4BCImpl extends BasicCommandSupport implements CLVPracti
 			for ( int i=0; i<jooCarrierVO .length; i++ ) {
 				if ( jooCarrierVO[i].getIbflag().equals("I")){
 					jooCarrierVO[i].setCreUsrId(account.getUsr_id());
+					jooCarrierVO[i].setUpdUsrId(account.getUsr_id());
 					insertVoList.add(jooCarrierVO[i]);
 				} else if ( jooCarrierVO[i].getIbflag().equals("U")){
 					jooCarrierVO[i].setUpdUsrId(account.getUsr_id());

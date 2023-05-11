@@ -4,10 +4,10 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.09
+*@LastModifyDate : 2023.05.11
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.09 
+* 2023.05.11 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.integration;
@@ -40,6 +40,36 @@ public class CLVPractice4DBDAOJooCarrierVORSQL implements ISQLTemplate{
 	public CLVPractice4DBDAOJooCarrierVORSQL(){
 		setQuery();
 		params = new HashMap<String,String[]>();
+		String tmp = null;
+		String[] arrTmp = null;
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("vndr_seq",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("rlane_cd",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("cre_dt_to",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("cre_dt_fr",new String[]{arrTmp[0],arrTmp[1]});
+
 		query.append("/*").append("\n"); 
 		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.integration").append("\n"); 
 		query.append("FileName : CLVPractice4DBDAOJooCarrierVORSQL").append("\n"); 
@@ -105,7 +135,7 @@ public class CLVPractice4DBDAOJooCarrierVORSQL implements ISQLTemplate{
 		query.append("" ).append("\n"); 
 		query.append("#if (${cre_dt_fr} != '' && ${cre_dt_to} != '')" ).append("\n"); 
 		query.append("and cre_dt between to_date(@[cre_dt_fr],'YYYY-MM-DD') and to_date(@[cre_dt_to],'YYYY-MM-DD') " ).append("\n"); 
-		query.append("#end	" ).append("\n"); 
+		query.append("#end" ).append("\n"); 
 
 	}
 }

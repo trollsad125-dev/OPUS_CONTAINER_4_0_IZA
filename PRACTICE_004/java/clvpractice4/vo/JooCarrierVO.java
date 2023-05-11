@@ -1,5 +1,19 @@
+/*=========================================================
+*Copyright(c) 2023 CyberLogitec
+*@FileName : JooCarrierVO.java
+*@FileTitle : JooCarrierVO
+*Open Issues :
+*Change history :
+*@LastModifyDate : 2023.05.11
+*@LastModifier : 
+*@LastVersion : 1.0
+* 2023.05.11  
+* 1.0 Creation
+=========================================================*/
+
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,7 +27,16 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.clt.framework.component.common.AbstractValueObject;
 import com.clt.framework.component.util.JSPUtil;
 
-public class JooCarrierVO extends AbstractValueObject{
+/**
+ * Table Value Ojbect<br>
+ * 관련 Event 에서 생성, 서버실행요청시 Data 전달역할을 수행하는 Value Object
+ *
+ * @author 
+ * @since J2EE 1.6
+ * @see AbstractValueObject
+ */
+
+public class JooCarrierVO extends AbstractValueObject {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -36,6 +59,8 @@ public class JooCarrierVO extends AbstractValueObject{
 	/* Column Info */
 	private String joStlOptCd = null;
 	/* Column Info */
+	private String creDtTo = null;
+	/* Column Info */
 	private String custSeq = null;
 	/* Page Number */
 	private String pagerows = null;
@@ -47,6 +72,8 @@ public class JooCarrierVO extends AbstractValueObject{
 	private String vndrSeq = null;
 	/* Column Info */
 	private String modiCostCtrCd = null;
+	/* Column Info */
+	private String creDtFr = null;
 	/* Column Info */
 	private String custCntCd = null;
 	/* Column Info */
@@ -60,7 +87,7 @@ public class JooCarrierVO extends AbstractValueObject{
 	
 	public JooCarrierVO() {}
 
-	public JooCarrierVO(String ibflag, String pagerows, String modiCostCtrCd, String edwUpdDt, String updUsrId, String updDt, String creUsrId, String creDt, String deltFlg, String joStlOptCd, String trdCd, String custSeq, String custCntCd, String vndrSeq, String rlaneCd, String joCrrCd) {
+	public JooCarrierVO(String ibflag, String pagerows, String modiCostCtrCd, String edwUpdDt, String updUsrId, String updDt, String creUsrId, String creDt, String deltFlg, String joStlOptCd, String trdCd, String custSeq, String custCntCd, String vndrSeq, String rlaneCd, String joCrrCd, String creDtFr, String creDtTo) {
 		this.updDt = updDt;
 		this.deltFlg = deltFlg;
 		this.creDt = creDt;
@@ -69,12 +96,14 @@ public class JooCarrierVO extends AbstractValueObject{
 		this.rlaneCd = rlaneCd;
 		this.edwUpdDt = edwUpdDt;
 		this.joStlOptCd = joStlOptCd;
+		this.creDtTo = creDtTo;
 		this.custSeq = custSeq;
 		this.pagerows = pagerows;
 		this.ibflag = ibflag;
 		this.creUsrId = creUsrId;
 		this.vndrSeq = vndrSeq;
 		this.modiCostCtrCd = modiCostCtrCd;
+		this.creDtFr = creDtFr;
 		this.custCntCd = custCntCd;
 		this.updUsrId = updUsrId;
 	}
@@ -92,12 +121,14 @@ public class JooCarrierVO extends AbstractValueObject{
 		this.hashColumns.put("rlane_cd", getRlaneCd());
 		this.hashColumns.put("edw_upd_dt", getEdwUpdDt());
 		this.hashColumns.put("jo_stl_opt_cd", getJoStlOptCd());
+		this.hashColumns.put("cre_dt_to", getCreDtTo());
 		this.hashColumns.put("cust_seq", getCustSeq());
 		this.hashColumns.put("pagerows", getPagerows());
 		this.hashColumns.put("ibflag", getIbflag());
 		this.hashColumns.put("cre_usr_id", getCreUsrId());
 		this.hashColumns.put("vndr_seq", getVndrSeq());
 		this.hashColumns.put("modi_cost_ctr_cd", getModiCostCtrCd());
+		this.hashColumns.put("cre_dt_fr", getCreDtFr());
 		this.hashColumns.put("cust_cnt_cd", getCustCntCd());
 		this.hashColumns.put("upd_usr_id", getUpdUsrId());
 		return this.hashColumns;
@@ -116,12 +147,14 @@ public class JooCarrierVO extends AbstractValueObject{
 		this.hashFields.put("rlane_cd", "rlaneCd");
 		this.hashFields.put("edw_upd_dt", "edwUpdDt");
 		this.hashFields.put("jo_stl_opt_cd", "joStlOptCd");
+		this.hashFields.put("cre_dt_to", "creDtTo");
 		this.hashFields.put("cust_seq", "custSeq");
 		this.hashFields.put("pagerows", "pagerows");
 		this.hashFields.put("ibflag", "ibflag");
 		this.hashFields.put("cre_usr_id", "creUsrId");
 		this.hashFields.put("vndr_seq", "vndrSeq");
 		this.hashFields.put("modi_cost_ctr_cd", "modiCostCtrCd");
+		this.hashFields.put("cre_dt_fr", "creDtFr");
 		this.hashFields.put("cust_cnt_cd", "custCntCd");
 		this.hashFields.put("upd_usr_id", "updUsrId");
 		return this.hashFields;
@@ -193,6 +226,14 @@ public class JooCarrierVO extends AbstractValueObject{
 	
 	/**
 	 * Column Info
+	 * @return creDtTo
+	 */
+	public String getCreDtTo() {
+		return this.creDtTo;
+	}
+	
+	/**
+	 * Column Info
 	 * @return custSeq
 	 */
 	public String getCustSeq() {
@@ -237,6 +278,14 @@ public class JooCarrierVO extends AbstractValueObject{
 	 */
 	public String getModiCostCtrCd() {
 		return this.modiCostCtrCd;
+	}
+	
+	/**
+	 * Column Info
+	 * @return creDtFr
+	 */
+	public String getCreDtFr() {
+		return this.creDtFr;
 	}
 	
 	/**
@@ -322,6 +371,14 @@ public class JooCarrierVO extends AbstractValueObject{
 	
 	/**
 	 * Column Info
+	 * @param creDtTo
+	 */
+	public void setCreDtTo(String creDtTo) {
+		this.creDtTo = creDtTo;
+	}
+	
+	/**
+	 * Column Info
 	 * @param custSeq
 	 */
 	public void setCustSeq(String custSeq) {
@@ -370,6 +427,14 @@ public class JooCarrierVO extends AbstractValueObject{
 	
 	/**
 	 * Column Info
+	 * @param creDtFr
+	 */
+	public void setCreDtFr(String creDtFr) {
+		this.creDtFr = creDtFr;
+	}
+	
+	/**
+	 * Column Info
 	 * @param custCntCd
 	 */
 	public void setCustCntCd(String custCntCd) {
@@ -405,12 +470,14 @@ public class JooCarrierVO extends AbstractValueObject{
 		setRlaneCd(JSPUtil.getParameter(request, prefix + "rlane_cd", ""));
 		setEdwUpdDt(JSPUtil.getParameter(request, prefix + "edw_upd_dt", ""));
 		setJoStlOptCd(JSPUtil.getParameter(request, prefix + "jo_stl_opt_cd", ""));
+		setCreDtTo(JSPUtil.getParameter(request, prefix + "cre_dt_to", ""));
 		setCustSeq(JSPUtil.getParameter(request, prefix + "cust_seq", ""));
 		setPagerows(JSPUtil.getParameter(request, prefix + "pagerows", ""));
 		setIbflag(JSPUtil.getParameter(request, prefix + "ibflag", ""));
 		setCreUsrId(JSPUtil.getParameter(request, prefix + "cre_usr_id", ""));
 		setVndrSeq(JSPUtil.getParameter(request, prefix + "vndr_seq", ""));
 		setModiCostCtrCd(JSPUtil.getParameter(request, prefix + "modi_cost_ctr_cd", ""));
+		setCreDtFr(JSPUtil.getParameter(request, prefix + "cre_dt_fr", ""));
 		setCustCntCd(JSPUtil.getParameter(request, prefix + "cust_cnt_cd", ""));
 		setUpdUsrId(JSPUtil.getParameter(request, prefix + "upd_usr_id", ""));
 	}
@@ -448,12 +515,14 @@ public class JooCarrierVO extends AbstractValueObject{
 			String[] rlaneCd = (JSPUtil.getParameter(request, prefix	+ "rlane_cd", length));
 			String[] edwUpdDt = (JSPUtil.getParameter(request, prefix	+ "edw_upd_dt", length));
 			String[] joStlOptCd = (JSPUtil.getParameter(request, prefix	+ "jo_stl_opt_cd", length));
+			String[] creDtTo = (JSPUtil.getParameter(request, prefix	+ "cre_dt_to", length));
 			String[] custSeq = (JSPUtil.getParameter(request, prefix	+ "cust_seq", length));
 			String[] pagerows = (JSPUtil.getParameter(request, prefix	+ "pagerows", length));
 			String[] ibflag = (JSPUtil.getParameter(request, prefix	+ "ibflag", length));
 			String[] creUsrId = (JSPUtil.getParameter(request, prefix	+ "cre_usr_id", length));
 			String[] vndrSeq = (JSPUtil.getParameter(request, prefix	+ "vndr_seq", length));
 			String[] modiCostCtrCd = (JSPUtil.getParameter(request, prefix	+ "modi_cost_ctr_cd", length));
+			String[] creDtFr = (JSPUtil.getParameter(request, prefix	+ "cre_dt_fr", length));
 			String[] custCntCd = (JSPUtil.getParameter(request, prefix	+ "cust_cnt_cd", length));
 			String[] updUsrId = (JSPUtil.getParameter(request, prefix	+ "upd_usr_id", length));
 			
@@ -475,6 +544,8 @@ public class JooCarrierVO extends AbstractValueObject{
 					model.setEdwUpdDt(edwUpdDt[i]);
 				if (joStlOptCd[i] != null)
 					model.setJoStlOptCd(joStlOptCd[i]);
+				if (creDtTo[i] != null)
+					model.setCreDtTo(creDtTo[i]);
 				if (custSeq[i] != null)
 					model.setCustSeq(custSeq[i]);
 				if (pagerows[i] != null)
@@ -487,6 +558,8 @@ public class JooCarrierVO extends AbstractValueObject{
 					model.setVndrSeq(vndrSeq[i]);
 				if (modiCostCtrCd[i] != null)
 					model.setModiCostCtrCd(modiCostCtrCd[i]);
+				if (creDtFr[i] != null)
+					model.setCreDtFr(creDtFr[i]);
 				if (custCntCd[i] != null)
 					model.setCustCntCd(custCntCd[i]);
 				if (updUsrId[i] != null)
@@ -528,12 +601,14 @@ public class JooCarrierVO extends AbstractValueObject{
 		this.rlaneCd = this.rlaneCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.edwUpdDt = this.edwUpdDt .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.joStlOptCd = this.joStlOptCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
+		this.creDtTo = this.creDtTo .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.custSeq = this.custSeq .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.pagerows = this.pagerows .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.ibflag = this.ibflag .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.creUsrId = this.creUsrId .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.vndrSeq = this.vndrSeq .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.modiCostCtrCd = this.modiCostCtrCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
+		this.creDtFr = this.creDtFr .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.custCntCd = this.custCntCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.updUsrId = this.updUsrId .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 	}

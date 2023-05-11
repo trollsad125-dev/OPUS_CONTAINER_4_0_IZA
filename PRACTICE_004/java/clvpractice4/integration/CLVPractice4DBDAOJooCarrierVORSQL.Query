@@ -51,8 +51,12 @@ and cre_dt <= to_date(@[cre_dt_to],'YYYY-MM-DD')
 
 #if (${cre_dt_fr} != '' && ${cre_dt_to} != '')
 and cre_dt between to_date(@[cre_dt_fr],'YYYY-MM-DD') and to_date(@[cre_dt_to],'YYYY-MM-DD') 
-#end				]]></sql>
+#end			]]></sql>
 			<params>
+				<param name="rlane_cd" type="12" value="" out="N"/>
+				<param name="vndr_seq" type="12" value="" out="N"/>
+				<param name="cre_dt_fr" type="12" value="" out="N"/>
+				<param name="cre_dt_to" type="12" value="" out="N"/>
 			</params>
 		</query>
 	</querys>

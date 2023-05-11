@@ -11,6 +11,9 @@
 * 1.0 Creation
 =========================================================*/
 
+	msgs['PRC00001']="'To date' must be later than 'From date'.";
+    msgs['PRC00002']="{?msg1} code is invalid !";
+    
 // common global variable
 var sheetObjects = new Array();
 var sheetCnt = 0;
@@ -189,8 +192,8 @@ function initSheet(sheetObj, sheetNo) {
 
 			var cols = [ 
 	             { Type : "Status", Hidden : 1, Width : 50, Align : "Center", ColMerge : 0, SaveName : "ibflag" }, 
-	             { Type : "CheckBox", Hidden : 0, Width : 50, Align : "Center", ColMerge : 0, SaveName : "del_chk" }, 
-	             { Type : "Text", Hidden : 0, Width : 70, Align : "Center", ColMerge : 0, SaveName : "jo_crr_cd", KeyField : 1, Format : "", UpdateEdit : 0, InsertEdit : 1, EditLen: 3 }, 
+	             { Type : "DelCheck", Hidden : 0, Width : 50, Align : "Center", ColMerge : 0, SaveName : "del_chk" }, 
+	             { Type : "Combo", Hidden : 0, Width : 70, Align : "Center", ColMerge : 0, SaveName : "jo_crr_cd", KeyField : 1, Format : "", UpdateEdit : 0, InsertEdit : 1, EditLen: 3 }, 
 	             { Type : "Combo", Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "rlane_cd", KeyField : 1, Format : "", UpdateEdit : 0, InsertEdit : 1, EditLen: 5  }, 
 	             { Type : "Text", Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "vndr_seq", KeyField : 1, Format : "", UpdateEdit : 1, InsertEdit : 1 , EditLen: 6 }, 
 	             { Type : "Text", Hidden : 0, Width : 50, Align : "Center", ColMerge : 0, SaveName : "cust_cnt_cd", KeyField : 1, Format : "", UpdateEdit : 1, InsertEdit : 1 , EditLen: 2 }, 
@@ -205,7 +208,7 @@ function initSheet(sheetObj, sheetNo) {
 
 			InitColumns(cols);
 			SetEditable(1);
-			SetColProperty("jo_crr_cd", { AcceptKeys : "E|N", InputCaseSensitive : 1 });
+			SetColProperty("jo_crr_cd", { ComboText : crrComboIns, ComboCode : crrComboIns });
 			SetColProperty("vndr_seq", { AcceptKeys : "N"});
 			SetColProperty("cust_cnt_cd", { AcceptKeys : "E|N", InputCaseSensitive : 1});
 			SetColProperty("cust_seq", { AcceptKeys : "N"});
@@ -241,10 +244,12 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 		sheetObj.DataInsert(-1);
 		break;
 	case IBDELETE: //Row Delete button event
+		formObj.f_cmd.value = MULTI;
 		for( var i = sheetObj.LastRow(); i >= sheetObj.HeaderRows(); i-- ) {
 			if(sheetObj.GetCellValue(i, "del_chk") == 1){
 				sheetObj.SetRowHidden(i, 1);
 				sheetObj.SetRowStatus(i,"D");
+				sheetObj.DoSave("CLV_Practice_004GS.do", FormQueryString(formObj));
 			}
 		}
 		break;
@@ -272,7 +277,7 @@ function validateForm(sheetObj, formObj, sAction) {
 		var creDtFm = form.s_cre_dt_fm;
         var creDtTo = form.s_cre_dt_to;
         if(creDtFm.value != "" && creDtTo.value != "" && creDtFm.value > creDtTo.value) {
-            ComShowCodeMessage("JOO00078");
+            ComShowCodeMessage("PRC00001");
             ComSetFocus(creDtFm);
             return false;
         }
@@ -300,7 +305,7 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 		var sXml 				= sheetObj.GetSearchData("CLV_Practice_004GS.do", sParam, {sync:1});	
 		var flag				= ComGetEtcData(sXml, "ISEXIST");
 		if(flag == 'N'){
-			ComShowCodeMessage("JOO00136",["Carrier"]);
+			ComShowCodeMessage("PRC00002",["Carrier"]);
 			sheetObj.SetCellValue(Row, Col,OldValue,0);
 			sheetObj.SelectCell(Row, Col);
 		}
@@ -310,7 +315,7 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 		var sXml 				= sheetObj.GetSearchData("CLV_Practice_004GS.do", sParam, {sync:1});	
 		var flag				= ComGetEtcData(sXml, "ISEXIST");
 		if(flag == 'N'){
-			ComShowCodeMessage("JOO00136",["Vendor"]);
+			ComShowCodeMessage("PRC00002",["Vendor"]);
 			sheetObj.SetCellValue(Row, Col,OldValue,0);
 			sheetObj.SelectCell(Row, Col);
 		}
@@ -321,7 +326,7 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 			var sXml 				= sheetObj.GetSearchData("CLV_Practice_004GS.do", sParam, {sync:1});	
 			var flag				= ComGetEtcData(sXml, "ISEXIST");
 			if(flag == 'N'){
-				ComShowCodeMessage("JOO00136",["Customer"]);
+				ComShowCodeMessage("PRC00002",["Customer"]);
 				sheetObj.SetCellValue(Row, Col,OldValue,0);
 				sheetObj.SelectCell(Row, Col);
 			}
@@ -332,13 +337,13 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 		var sXml 				= sheetObj.GetSearchData("CLV_Practice_004GS.do", sParam, {sync:1});	
 		var flag				= ComGetEtcData(sXml, "ISEXIST");
 		if(flag == 'N'){
-			ComShowCodeMessage("JOO00136",["Trade"]);
+			ComShowCodeMessage("PRC00002",["Trade"]);
 			sheetObj.SetCellValue(Row, Col,OldValue,0);
 			sheetObj.SelectCell(Row, Col);
 		}
 	}
 	
-	
+/*	
 	if(colName == "jo_crr_cd" || colName == "rlane_cd"){//check duplicate data
 		if(sheetObj.GetCellValue(Row,"jo_crr_cd") != "" && sheetObj.GetCellValue(Row,"rlane_cd") != ""){
 			//check on UI Frist
@@ -363,7 +368,7 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 				sheetObj.SelectCell(Row, Col);
 			}
 		}
-	}
+	}*/
 }
 /**
 * adding data to combo field

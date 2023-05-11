@@ -63,6 +63,7 @@
 <script language="javascript">
 	var rlanCombo = "|<%=rlaneCds%>";
 	var crrCombo = "All|<%=crrCds%>";
+	var crrComboIns = "<%=crrCds%>";
 	function setupPage(){
 		var errMessage = "<%=strErrMsg%>";
 		if (errMessage.length >= 1) {
