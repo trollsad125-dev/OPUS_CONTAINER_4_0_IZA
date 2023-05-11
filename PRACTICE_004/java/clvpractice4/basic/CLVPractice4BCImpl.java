@@ -36,14 +36,14 @@ public class CLVPractice4BCImpl extends BasicCommandSupport implements CLVPracti
 	private transient CLVPractice4DBDAO dbDao = null;
 
 	/**
-	 * CLVPractice4BCImpl 객체 생성<br>
-	 * CLVPractice4DBDAO를 생성한다.<br>
+	 * CLVPractice4BCImpl
+	 * CLVPractice4DBDAO
 	 */
 	public CLVPractice4BCImpl() {
 		dbDao = new CLVPractice4DBDAO();
 	}
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Search Joo Carrier
 	 * 
 	 * @param JooCarrierVO jooCarrierVO
 	 * @return List<JooCarrierVO>
@@ -61,7 +61,7 @@ public class CLVPractice4BCImpl extends BasicCommandSupport implements CLVPracti
 	}
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Insert Update Delete Joo Carrier
 	 * 
 	 * @param JooCarrierVO[] jooCarrierVO
 	 * @param account SignOnUserAccount

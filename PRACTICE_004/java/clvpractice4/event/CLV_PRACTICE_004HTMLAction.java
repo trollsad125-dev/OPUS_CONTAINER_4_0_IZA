@@ -24,9 +24,9 @@ import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 
 /**
  * HTTP Parser<br>
- * - com.clt.apps.opus.esm.clv.clvpractice4 화면을 통해 서버로 전송되는 HTML DOM 객체의 Value를 자바 변수로 Parsing<br>
- * - Parsing 한 정보를 Event로 변환, request에 담아 CLVPractice4SC로 실행요청<br>
- * - CLVPractice4SC에서 View(JSP)로 실행결과를 전송하는 EventResponse를 request에 셋팅<br>
+ * - com.clt.apps.opus.esm.clv.clvpractice4 Parsing the value of HTML DOM object sent to the server through the screen as a Java variable<br>
+ * - Convert the parsed information into an event, put it in a request and request execution to CLVPractice4SC<br>
+ * - Set EventResponse in request that transmits the execution result from CLVPractice4SC to View (JSP)<br>
  * @author Nhat Nguyen
  * @see CLVPractice4Event 참조
  * @since J2EE 1.6
@@ -41,8 +41,9 @@ public class CLV_PRACTICE_004HTMLAction extends HTMLActionSupport {
 	public CLV_PRACTICE_004HTMLAction() {}
 
 	/**
-	 * HTML DOM 객체의 Value를 자바 변수로 Parsing<br>
-	 * HttpRequst의 정보를 CLVPractice4Event로 파싱하여 request에 셋팅<br>
+	 * 
+	 * Parsing Value of HTML DOM object into Java variable<br>
+	 * Parse HttpRequest information into CLVPractice4Event and set it in request
 	 * @param request HttpServletRequest HttpRequest
 	 * @return Event Event interface를 구현한 객체
 	 * @exception HTMLActionException
@@ -72,22 +73,22 @@ public class CLV_PRACTICE_004HTMLAction extends HTMLActionSupport {
 	}
 
 	/**
-	 * HttpRequest의 attribute에 업무시나리오 수행결과 값 저장<br>
-	 * ServiceCommand에서 View(JSP)로 실행결과를 전송하는 ResultSet을 request에 셋팅<br>
+	 * Save the business scenario execution result value in the attribute of HttpRequest<br>
+	 * Set ResultSet in request, which transmits execution results from ServiceCommand to View (JSP)<br>
 	 * 
 	 * @param request HttpServletRequest HttpRequest
-	 * @param eventResponse EventResponse interface를 구현한 객체
+	 * @param eventResponse EventResponse interface
 	 */
 	public void doEnd(HttpServletRequest request, EventResponse eventResponse) {
 		request.setAttribute("EventResponse", eventResponse);
 	}
 
 	/**
-	 * HttpRequest의 attribute에 HttpRequest 파싱 수행결과 값 저장<br>
-	 * HttpRequest 파싱 수행결과 값 request에 셋팅<br>
+	 * Save the result of parsing HttpRequest in the attribute of HttpRequest<br>
+	 * HttpRequest parsing result value set in request<br>
 	 * 
 	 * @param request HttpServletRequest HttpRequest
-	 * @param event Event interface를 구현한 객체
+	 * @param event Event 
 	 */
 	public void doEnd(HttpServletRequest request, Event event) {
 		request.setAttribute("Event", event);

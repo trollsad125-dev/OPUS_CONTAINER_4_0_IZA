@@ -31,7 +31,7 @@ import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 public interface CLVPractice4BC {
 
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Search Joo Carrier
 	 * 
 	 * @param JooCarrierVO	jooCarrierVO
 	 * @return List<JooCarrierVO>
@@ -40,13 +40,14 @@ public interface CLVPractice4BC {
 	public List<JooCarrierVO> searchJooCarrier(JooCarrierVO jooCarrierVO) throws EventException;
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Insert Delete Update Joo Carrier
 	 * 
 	 * @param JooCarrierVO[] jooCarrierVO
 	 * @param account SignOnUserAccount
 	 * @exception EventException
 	 */
 	public void multiJooCarrier(JooCarrierVO[] jooCarrierVO,SignOnUserAccount account) throws EventException;
+	
 	/**
 	 * = searching RLane Code list, it's used dropdown list
 	 * 
@@ -55,6 +56,7 @@ public interface CLVPractice4BC {
 	 * @exception EventException
 	 */
 	public List<JooCarrierVO> searchRLaneCd(JooCarrierVO jooCarrierVO) throws EventException;
+	
 	/**
 	 * searching Carrier Code list, it's used dropdownlist
 	 * 
@@ -83,6 +85,7 @@ public interface CLVPractice4BC {
 	 */
 	
 	public List<JooCarrierVO> searchTradeCd(JooCarrierVO jooCarrierVO) throws EventException;
+	
 	/**
 	 * searching vendor Code list, it's used checking invalid data
 	 * 

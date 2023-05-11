@@ -33,7 +33,7 @@ import com.clt.framework.support.layer.integration.DBDAOSupport;
 
 /**
  * ALPS CLVPractice4DBDAO <br>
- * - ALPS-CLVPractice4 system Business Logic을 처리하기 위한 JDBC 작업수행.<br>
+ * - ALPS-CLVPractice4 system Business Logic using JDBC
  * 
  * @author Nhat Nguyen
  * @see CLVPractice4BCImpl 참조
@@ -42,7 +42,7 @@ import com.clt.framework.support.layer.integration.DBDAOSupport;
 public class CLVPractice4DBDAO extends DBDAOSupport {
 
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Search Joo Carrier
 	 * 
 	 * @param JooCarrierVO jooCarrierVO
 	 * @return List<JooCarrierVO>
@@ -79,7 +79,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Insert Update Delete Joo Carrier
 	 * 
 	 * @param JooCarrierVO jooCarrierVO
 	 * @exception DAOException
@@ -110,7 +110,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Update Joo Carrier
 	 * 
 	 * @param JooCarrierVO jooCarrierVO
 	 * @return int
@@ -145,7 +145,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Delete Joo Carrier
 	 * 
 	 * @param JooCarrierVO jooCarrierVO
 	 * @return int
@@ -180,7 +180,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	}
 
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * add List Joo Carrier
 	 * 
 	 * @param List<JooCarrierVO> jooCarrierVO
 	 * @return int[]
@@ -208,7 +208,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 		return insCnt;
 	}
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Update Joo Carrier List
 	 * 
 	 * @param List<JooCarrierVO> jooCarrierVO
 	 * @return int[]
@@ -237,7 +237,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Delete Joo Carrier List
 	 * 
 	 * @param List<JooCarrierVO> jooCarrierVO
 	 * @return int[]
