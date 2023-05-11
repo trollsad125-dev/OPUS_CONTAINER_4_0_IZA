@@ -22,6 +22,8 @@ import java.util.Map;
 
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.basic.CLVPractice4BCImpl;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration.ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.component.rowset.DBRowSet;
 import com.clt.framework.core.layer.integration.DAOException;
@@ -424,4 +426,50 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 		 }
 		 return list;
 	 }
+
+	/**
+	 * Search Duplicate Code in JOO_CARRIER
+	 * 
+	 * @param CodeMgmtCondVO
+	 *            inputVO
+	 * @return String
+	 * @throws DAOException
+	 * @exception SQLException
+	 * @exception DAOException
+	 * @exception Exception
+	 * 
+	 */
+	public String searchDupChkJooCrr(JooCarrierVO inputVO) throws DAOException {
+		DBRowSet dbRowset = null;
+		String dupFlg = "";
+		// query parameter
+		Map<String, Object> param = new HashMap<String, Object>();
+		// velocity parameter
+		Map<String, Object> velParam = new HashMap<String, Object>();
+
+		try {
+			if (inputVO != null) {
+				Map<String, String> mapVO = inputVO.getColumnValues();
+
+				param.putAll(mapVO);
+				velParam.putAll(mapVO);
+			}
+			dbRowset = new SQLExecuter("")
+					.executeQuery(
+							(ISQLTemplate) new CLVPractice4DBDAOCheckDupliJooCarrierRSQL(),
+							param, velParam);
+			if (dbRowset != null && dbRowset.next()) {
+				dupFlg = dbRowset.getString(1);
+			}
+		} catch (SQLException se) {
+			log.error(se.getMessage(), se);
+			throw new DAOException(new ErrorHandler(se).getMessage());
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new DAOException(new ErrorHandler(ex).getMessage());
+		}
+
+		return dupFlg;
+	}
+
 }

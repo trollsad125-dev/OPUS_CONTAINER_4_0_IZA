@@ -15,6 +15,7 @@ package com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.basic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bluecast.util.DuplicateKeyException;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.integration.CLVPractice4DBDAO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.EventException;
@@ -86,7 +87,19 @@ public class CLVPractice4BCImpl extends BasicCommandSupport implements CLVPracti
 			}
 			
 			if ( insertVoList.size() > 0 ) {
-				dbDao.addmultiJooCarrierS(insertVoList);
+				//Checking Duplication
+				String dupFlg="";
+				for( int i=0; i<insertVoList.size(); i++ ){
+					dupFlg = dbDao.searchDupChkJooCrr(insertVoList.get(i));
+					String rLaneCd = insertVoList.get(i).getRlaneCd();
+					String jooCrrCd  = insertVoList.get(i).getJoCrrCd();
+					if ("Y".equals(dupFlg) ){
+						throw new DAOException(new ErrorHandler("ERR12357",new String[]{jooCrrCd,rLaneCd}).getMessage());
+					}else{
+						dbDao.addmultiJooCarrierS(insertVoList);
+					}
+				}
+
 			}
 			
 			if ( updateVoList.size() > 0 ) {
