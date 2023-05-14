@@ -14,6 +14,7 @@ package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,11 @@ import java.util.Map;
 
 
 
+
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.DetailVO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.SummaryVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.integration.CLVPractice4DBDAOSearchCrrCdRSQL;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.component.rowset.DBRowSet;
 import com.clt.framework.core.layer.integration.DAOException;
@@ -486,5 +490,38 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 		}
 		return delCnt;
 	}
-	
+	/**
+	  * search carrier code
+	  * 
+	  * @param JooCarrierVO jooCarrierVO
+	  * @return List<JooCarrierVO>
+	  * @exception DAOException
+	  */
+	 @SuppressWarnings("unchecked")
+	 public List<JooCarrierVO> searchJooCrrCds(SummaryVO jooCarrierVO) throws DAOException {
+		 DBRowSet dbRowset = null;
+		 List<JooCarrierVO> list = new ArrayList();
+		 //query parameter
+		 Map<String, Object> param = new HashMap<String, Object>();
+		 //velocity parameter
+		 Map<String, Object> velParam = new HashMap<String, Object>();
+		 
+		 try{
+			 if(jooCarrierVO != null){
+				Map<String, String> mapVO = jooCarrierVO .getColumnValues();
+				param.putAll(mapVO);
+				
+				velParam.putAll(mapVO);
+			 }
+			 dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAOSearchJooCrrCdsRSQL(), param, velParam);
+			 list = (List)RowSetUtil.rowSetToVOs(dbRowset, JooCarrierVO .class);
+		 } catch(SQLException se) {
+			 log.error(se.getMessage(),se);
+			 throw new DAOException(new ErrorHandler(se).getMessage());
+		 } catch(Exception ex) {
+			 log.error(ex.getMessage(),ex);
+			 throw new DAOException(new ErrorHandler(ex).getMessage());
+		 }
+		 return list;
+	 }
 }

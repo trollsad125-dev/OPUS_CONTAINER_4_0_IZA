@@ -18,6 +18,7 @@ import java.util.List;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration.CLVPractice3DBDAO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.DetailVO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.SummaryVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.integration.DAOException;
@@ -164,5 +165,21 @@ public class CLVPractice3BCImpl extends BasicCommandSupport implements CLVPracti
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}
 	}
-	
+	/**
+	 * searching Carrier Code list, it's used dropdownlist
+	 * 
+	 * @param JooCarrierVO jooCarrierVO
+	 * @return List<JooCarrierVO>
+	 * @exception EventException
+	 */
+	@Override
+	public List<JooCarrierVO> searchJooCrrCds(SummaryVO jooCarrierVO) throws EventException {
+		try {
+			return dbDao.searchJooCrrCds(jooCarrierVO);
+		} catch(DAOException ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		} catch (Exception ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}
+	}
 }

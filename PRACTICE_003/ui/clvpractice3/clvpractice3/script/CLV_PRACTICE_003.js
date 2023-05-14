@@ -22,7 +22,8 @@ var comboCnt = 0;
 var tabObjects=new Array();
 var tabCnt=0 ;
 var beforetab=1;
-
+var ROWMARK = "|";
+var FIELDMARK=",";
 //Event handler processing by button click event */
 document.onclick = processButtonClick;
 // Event handler processing by button name */
@@ -172,7 +173,7 @@ function tab1_OnChange(tabObj , nItem)
  *            Number
  */
 function initCombo(comboObj, comboNo) {
-    /*var formObject = document.form;
+    var formObject = document.form;
     switch (comboObj.options.id) {
         case "jo_crr_cds":
             with (comboObj) {
@@ -209,26 +210,8 @@ function initCombo(comboObj, comboNo) {
                 SetMaxLength(3);
             }
             break;
-        case "auth_ofc_cd":
-            with (comboObj) {
-                SetMultiSelect(0);
-                SetUseAutoComplete(1);
-                SetColAlign(0, "left");
-                // SetColWidth(0, "60");
-                ValidChar(2, 1); // Uppercase
-                SetDropHeight(160);
-                SetMaxLength(3);
-            }
-            var comboItems = gAuthOfcCdComboItems.split("|");
-            addComboItem(comboObj, comboItems);
-            comboObj.SetSelectIndex(0,false);
-            if (comboItems.length == 1){
-                comboObj.SetEnable(0);
-            }else{
-                comboObj.SetEnable(1);
-            }
-            break;
-        case "re_divr_cd": 
+
+        case "rlane_cd": 
             with (comboObj) { 
                 SetMultiSelect(0);
                 SetUseAutoComplete(1);
@@ -243,7 +226,7 @@ function initCombo(comboObj, comboNo) {
             comboObj.InsertItem(1, "EXPENSE","E");
             comboObj.InsertItem(2, "REVENUE","R");
             break;
-    }*/
+    }
 }
 /**
  * initializing sheet implementing onLoad event handler in body tag adding
@@ -407,7 +390,7 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
       case IBSEARCH: // retrieve
           if( !validateForm(sheetObj,formObj,sAction) ){return;}
           if ( sheetID == "t1sheet1"){
-              formObj.f_cmd.value=SEARCH;
+              formObj.f_cmd.value=SEARCH01;
               var param = FormQueryString(formObj);
                   param += "&" + ComGetPrefixParam(sheetID+"_");
               ComOpenWait(true);
@@ -415,7 +398,7 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
               sheetObj.LoadSearchData(sXml,{Sync:1} );
               ComOpenWait(false);
           }else if ( sheetID == "t2sheet1"){
-              formObj.f_cmd.value=SEARCH01;
+              formObj.f_cmd.value=SEARCH02;
               var param = FormQueryString(formObj);
                   param += "&" + ComGetPrefixParam(sheetID+"_");
               ComOpenWait(true);
@@ -431,7 +414,7 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
           var param = FormQueryString(formObj);
               param += "&super_cds1=" + joCrrCds; //북수형
               
-          var sXml = sheetObj.GetSearchData("JOOCommonGS.do", param);
+          var sXml = sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
           ComXml2ComboItem(sXml, trd_cd, "code", "code");
           break;
       case IBINSERT: // insert
@@ -443,7 +426,7 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
               param += "f_cmd="   + SEARCH23;
               param += "&auth_ofc_cd=" + authOfcCd;
           
-          var sXml = sheetObj.GetSearchData("JOOCommonGS.do", param);
+          var sXml = sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
           
           var joCrrCds    = ComGetEtcData(sXml, "jo_crr_cds");
           var trdCds      = ComGetEtcData(sXml, "trd_cds");
@@ -463,37 +446,32 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
 function t1sheet1_OnSearchEnd(sheetObj, ErrMsg) {
   if (sheetObj.RowCount() > 0) {
       var str = "";
+      var nextStr = "";
       var iStRow = sheetObj.HeaderRows();
       var iEdRow = sheetObj.LastRow();
       var prefix = "t1sheet1_";
       for(var i=iStRow;i<=iEdRow;i++){
           str = sheetObj.GetCellText(i, prefix + "jo_crr_cd");   // ITM 항목 읽기
           
-          if(str.indexOf("Total")>-1){
-              sheetObj.SetMergeCell(i,1,1,6); // partner, Lane :6칸 머지
-              
-              var tmpStr = ComReplaceStr(str+"","Total:","");
-              sheetObj.SetCellValue(i, prefix + "jo_crr_cd", tmpStr, 0); // OWN 5칸 머지
-              
-              sheetObj.SetRowBackColor(i,"#FCDCEE");
-              sheetObj.SetCellFontBold(i,  prefix + "jo_crr_cd", 1);
-              sheetObj.SetCellFontBold(i,  prefix + "locl_curr_cd", 1);
-              sheetObj.SetCellFontBold(i,  prefix + "inv_rev_act_amt", 1);
-              sheetObj.SetCellFontBold(i,  prefix + "inv_exp_act_amt", 1);
-              //sheetObj.SetRowHidden(i,1); // OWN 5칸 머지 
-          }else if(str.indexOf("Subtotal")>-1){
-              sheetObj.SetMergeCell(i,1,1,6); // partner, Lane :6칸 머지
-              
-              var tmpStr = ComReplaceStr(str+"","Subtotal:","");
-              sheetObj.SetCellValue(i, prefix + "jo_crr_cd", tmpStr, 0); // OWN 5칸 머지
-              
-              sheetObj.SetRowBackColor(i,"#FEFA91");   
-              sheetObj.SetCellFontBold(i,  prefix + "jo_crr_cd", 1);  
-              sheetObj.SetCellFontBold(i,  prefix + "locl_curr_cd", 1);   
-              sheetObj.SetCellFontBold(i,  prefix + "inv_rev_act_amt", 1);    
-              sheetObj.SetCellFontBold(i,  prefix + "inv_exp_act_amt", 1);         
-              //sheetObj.SetCellText(i, "sheet1_inv_no", "Total", 0);
-          }
+         if(str === nextStr){
+        	  sheetObj.SetMergeCell(i,1,1,6); // partner, Lane :6칸 머지
+             
+             var tmpStr = ComReplaceStr(str+"","Total:","");
+             sheetObj.SetCellValue(i, prefix + "jo_crr_cd", tmpStr, 0); // OWN 5칸 머지
+             
+             sheetObj.SetRowBackColor(i,"#FCDCEE");
+             sheetObj.SetCellFontBold(i,  prefix + "jo_crr_cd", 1);
+             sheetObj.SetCellFontBold(i,  prefix + "locl_curr_cd", 1);
+             sheetObj.SetCellFontBold(i,  prefix + "inv_rev_act_amt", 1);
+             sheetObj.SetCellFontBold(i,  prefix + "inv_exp_act_amt", 1);
+         
+         }else{
+        	 nextStr = sheetObj.GetCellText(i, prefix + "jo_crr_cd");
+        	 sheetObj.DataInsert(i+1);
+        	 i++;
+        	 iEdRow = sheetObj.LastRow();
+         }
+         
       }
   }
 }
@@ -505,11 +483,7 @@ function t1sheet1_OnSaveEnd(sheetObj, Code, Msg, StCode, StMsg) {
 
 function t2sheet1_OnSearchEnd(sheetObj, ErrMsg) {
   if (sheetObj.RowCount() > 0) {
-      //Row 강제머지할 셀의 Row Index
-      //Col 강제머지할 셀의 Column Index 
-      //Rows 강제머지할 셀의 Row 개수
-      //Cols 강제머지할 셀의 Col 개수
-      //ObjId.SetMergeCell(Row, Col, Rows, Cols)
+
 
       var str = "";
       var iStRow = sheetObj.HeaderRows();
@@ -529,19 +503,16 @@ function t2sheet1_OnSearchEnd(sheetObj, ErrMsg) {
               sheetObj.SetCellFontBold(i,  prefix + "locl_curr_cd", 1);
               sheetObj.SetCellFontBold(i,  prefix + "inv_act_amt", 1);
               sheetObj.SetCellFontBold(i,  prefix + "slp_act_amt", 1);
-              //sheetObj.SetRowHidden(i,1); // OWN 5칸 머지 
           }else if(str.indexOf("Subtotal")>-1){
               sheetObj.SetMergeCell(i,1,1,11); // OWN 5칸 머지
               
               var tmpStr = ComReplaceStr(str+"","Subtotal:","");
               sheetObj.SetCellValue(i, prefix + "jo_crr_cd", tmpStr, 0); // OWN 5칸 머지
-              
               sheetObj.SetRowBackColor(i,"#FEFA91");   
               sheetObj.SetCellFontBold(i,  prefix + "jo_crr_cd", 1);  
               sheetObj.SetCellFontBold(i,  prefix + "locl_curr_cd", 1);   
               sheetObj.SetCellFontBold(i,  prefix + "inv_act_amt", 1);    
               sheetObj.SetCellFontBold(i,  prefix + "slp_act_amt", 1);         
-              //sheetObj.SetCellText(i, "sheet1_inv_no", "Total", 0);
           }
       }
   }
@@ -618,27 +589,7 @@ function jo_crr_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex, new
   }
 }
 
-/**
-* 
-* @param comboObj
-* @param value
-* @param text
-*/
-function trd_cd_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex, newText, newCode) {
 
-}
-function auth_ofc_cd_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex, newText, newCode){
-  //변경된 Office cd에 해당하는 Carrier, Trade, lane ComboItem을 재조회 한다.
-  var formObj = document.form;
-  sheetObjects[0].RemoveAll();
-  sheetObjects[1].RemoveAll();
-  jo_crr_cds.RemoveAll();
-  trd_cd.RemoveAll();
-  //rlane_cd.RemoveAll();
-  
-  doActionIBSheet(sheetObjects[0], formObj, IBSEARCH_ASYNC08);
-  
-}
 
 function GetCheckConditionPeriod(){
   var formObj=document.form;
@@ -656,7 +607,4 @@ function resizeSheet() {
       ComResizeSheet(sheetObjects[1]);
   }
   
-/*    for (i = 0; i < sheetObjects.length; i++) {
-      ComResizeSheet(sheetObjects[i]);
-  }*/
 }

@@ -17,8 +17,10 @@ import java.util.List;
 
 
 
+
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.DetailVO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.SummaryVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
 
@@ -67,4 +69,6 @@ public interface CLVPractice3BC {
 	 * @exception EventException
 	 */
 	public void multiDetailVO(DetailVO[] detailVO,SignOnUserAccount account) throws EventException;
+
+	public List<JooCarrierVO> searchJooCrrCds(SummaryVO summaryVO) throws EventException;
 }

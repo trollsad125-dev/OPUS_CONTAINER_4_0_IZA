@@ -36,7 +36,10 @@
 	String strUsr_id		= "";
 	String strUsr_nm		= "";
 	Logger log = Logger.getLogger("com.clt.apps.CLVPractice3.CLVPractice3");
-
+	String joCrrCdComboItems	= "";
+	String acctgCrrCdComboItems	= "";
+	String acctgCrrNmComboItems	= "";
+	String authOfcCdComboItems	= "";
 	try {
 	   	SignOnUserAccount account=(SignOnUserAccount)session.getAttribute(CommonWebKeys.SIGN_ON_USER_ACCOUNT);
 		strUsr_id =	account.getUsr_id();
@@ -52,15 +55,18 @@
 
 		// 초기화면 로딩시 서버로부터 가져온 데이터 추출하는 로직추가 ..
 		GeneralEventResponse eventResponse = (GeneralEventResponse) request.getAttribute("EventResponse");
-
+		joCrrCdComboItems  	= eventResponse.getETCData("jo_crr_cds");
+		//acctgCrrCdComboItems= eventResponse.getETCData("acctg_crr_cds");
+		//acctgCrrNmComboItems= eventResponse.getETCData("acctg_crr_nms");
+		authOfcCdComboItems = eventResponse.getETCData("auth_ofc_cds");
 	}catch(Exception e) {
 		out.println(e.toString());
 	}
 %>
 
 <script type="text/javascript">
-<%-- 	var gJoCrrCdComboItems 		= "<%=joCrrCdComboItems%>";
-	var gAuthOfcCdComboItems	= "<%=authOfcCdComboItems%>"; --%>
+	var gJoCrrCdComboItems 		= "<%=joCrrCdComboItems%>";
+	var gAuthOfcCdComboItems	= "<%=authOfcCdComboItems%>"; 
 	function setupPage(){
 		var errMessage = "<%=strErrMsg%>";
 		if (errMessage.length >= 1) {
