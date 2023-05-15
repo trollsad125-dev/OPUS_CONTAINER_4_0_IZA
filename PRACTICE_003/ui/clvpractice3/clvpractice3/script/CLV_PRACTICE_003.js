@@ -29,7 +29,7 @@ document.onclick = processButtonClick;
 // Event handler processing by button name */
 function processButtonClick() {
 	/** *** setting sheet object **** */
-	var sheetObject1 = sheetObjects[0];
+	var sheetObject1 = getCurrentSheet();
 	/** **************************************************** */
 	var formObj = document.form;
 	try {
@@ -135,7 +135,6 @@ function initTab(tabObj , tabNo) {
      switch(tabNo) {
          case 1:
             with (tabObj) {
-                var cnt=0 ;
                 InsertItem( "Summary" , "");
                 InsertItem( "Detail" , "");
             }
@@ -194,7 +193,6 @@ function initCombo(comboObj, comboNo) {
                     comboItem=comboItems[i].split(FIELDMARK);
                     jo_crr_cds.InsertItem(-1, comboItem[0], comboItem[0]);
                 }
-                jo_crr_cds.SetSelectIndex(0);
             }else{
                 jo_crr_cds.RemoveAll();
             }
@@ -208,23 +206,23 @@ function initCombo(comboObj, comboNo) {
                 ValidChar(2, 1); // Uppercase
                 SetDropHeight(160);
                 SetMaxLength(3);
+                SetEnable(0);
             }
             break;
 
-        case "rlane_cd": 
+        case "rlane_cds": 
             with (comboObj) { 
-                SetMultiSelect(0);
+                SetMultiSelect(false);
                 SetUseAutoComplete(1);
                 SetColAlign(0, "left");
                 SetColWidth(0, "90");
                 SetDropHeight(160);
                 ValidChar(2,1);//only upper case
                 SetMaxLength(7);
+                SetEnable(0);
             }
             comboObj.RemoveAll();
-            comboObj.InsertItem(0, "","");
-            comboObj.InsertItem(1, "EXPENSE","E");
-            comboObj.InsertItem(2, "REVENUE","R");
+
             break;
     }
 }
@@ -277,7 +275,7 @@ function initPeriod(){
 */
 
 
-function s_jo_crr_cd_OnCheckClick(comboObj, index, code) {
+function jo_crr_cd_OnCheckClick(comboObj, index, code) {
     if(index==0) {          
         var bChk=comboObj.GetItemCheck(index);
         if(bChk){
@@ -315,7 +313,7 @@ function initSheet(sheetObj, sheetNo) {
              var HeadTitle1="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Customer/S.Provider|Customer/S.Provider|cust_vndr_cnt_cd|cust_vndr_seq";
              var HeadTitle2="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Code|Name|cust_vndr_cnt_cd|cust_vndr_seq";
              var headCount=ComCountHeadTitle(HeadTitle1);
-             SetConfig( { SearchMode:0, MergeSheet:7, Page:500, DataRowMerge:0 } );
+             SetConfig( { SearchMode:0, MergeSheet:1, Page:500, DataRowMerge:0 } );
              var info    = { Sort:0, ColMove:1, HeaderCheck:1, ColResize:1 };
              var headers = [ { Text:HeadTitle1, Align:"Center"} ,  { Text:HeadTitle2, Align:"Center"}];
 			InitHeaders(headers, info);
@@ -341,7 +339,7 @@ function initSheet(sheetObj, sheetNo) {
 	                SetEditable(1);
 	             }
 		break;
-	 case "t2sheet1": // t1sheet1 init     //t1sheet1 init
+	 case "t2sheet1": // t2sheet1 init     
         with(sheetObj){
         var HeadTitle1="|Partner|Lane|Invoice No|Slip No|Approved|Rev\nExp|Item|Curr.|Revenue|Expense|Customer/S.Provider|Customer/S.Provider";
         var HeadTitle2="|Partner|Lane|Invoice No|Slip No|Approved|Rev\nExp|Item|Curr.|Revenue|Expense|Code|Name";
@@ -360,11 +358,11 @@ function initSheet(sheetObj, sheetNo) {
                {Type:"Text",      Hidden:0, Width:80,   Align:"Center",  ColMerge:1,   SaveName: prefix + "inv_no",             KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
                {Type:"Text",      Hidden:0, Width:120,  Align:"Center",  ColMerge:1,   SaveName: prefix + "csr_no",             KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
                {Type:"Text",      Hidden:0, Width:65,   Align:"Center",  ColMerge:1,   SaveName: prefix + "apro_flg",           KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
-               {Type:"Combo",     Hidden:0, Width:45,   Align:"Center",  ColMerge:0,   SaveName: prefix + "re_divr_cd",         KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
-               {Type:"Text",      Hidden:0, Width:55,   Align:"Center",  ColMerge:0,   SaveName: prefix + "jo_stl_itm_cd",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
+               {Type:"Text",   	  Hidden:0, Width:45,   Align:"Center",  ColMerge:0,   SaveName: prefix + "rev_exp",         	KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
+               {Type:"Text",      Hidden:0, Width:55,   Align:"Center",  ColMerge:0,   SaveName: prefix + "item",      			KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
                {Type:"Text",      Hidden:0, Width:45,   Align:"Center",  ColMerge:0,   SaveName: prefix + "locl_curr_cd",       KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
-               {Type:"Float",     Hidden:0, Width:120,  Align:"Right",   ColMerge:0,   SaveName: prefix + "rev_act_amt",        KeyField:0,   CalcLogic:"",   Format:"NullFloat",   PointCount:2,   UpdateEdit:0,   InsertEdit:0 },
-               {Type:"Float",     Hidden:0, Width:120,  Align:"Right",   ColMerge:0,   SaveName: prefix + "exp_act_amt",        KeyField:0,   CalcLogic:"",   Format:"NullFloat",   PointCount:2,   UpdateEdit:0,   InsertEdit:0 },
+               {Type:"Float",     Hidden:0, Width:120,  Align:"Right",   ColMerge:0,   SaveName: prefix + "inv_rev_act_amt",    KeyField:0,   CalcLogic:"",   Format:"NullFloat",   PointCount:2,   UpdateEdit:0,   InsertEdit:0 },
+               {Type:"Float",     Hidden:0, Width:120,  Align:"Right",   ColMerge:0,   SaveName: prefix + "inv_exp_act_amt",    KeyField:0,   CalcLogic:"",   Format:"NullFloat",   PointCount:2,   UpdateEdit:0,   InsertEdit:0 },
                {Type:"Text",      Hidden:0, Width:80,   Align:"Center",  ColMerge:0,   SaveName: prefix + "prnr_ref_no",        KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
                {Type:"Text",      Hidden:0, Width:150,  Align:"Left",    ColMerge:0,   SaveName: prefix + "cust_vndr_eng_nm",   KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 }
                 ];
@@ -395,6 +393,7 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
                   param += "&" + ComGetPrefixParam(sheetID+"_");
               ComOpenWait(true);
               var sXml=sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
+              allCurrency	  = ComGetEtcData(sXml, "currency_data");
               sheetObj.LoadSearchData(sXml,{Sync:1} );
               ComOpenWait(false);
           }else if ( sheetID == "t2sheet1"){
@@ -408,27 +407,25 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
           }
           break; 
 
-      case IBSEARCH_ASYNC02: // Get List Trade Code By Carrier Code
+      case IBSEARCH_ASYNC02: // Get List Rev Lane Code By Carrier Code
           formObj.f_cmd.value = SEARCH24; //SEARCHLIST06;
           var joCrrCds = jo_crr_cds.GetSelectCode();
           var param = FormQueryString(formObj);
-              param += "&super_cds1=" + joCrrCds; //북수형
-              
+          
           var sXml = sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
-          ComXml2ComboItem(sXml, trd_cd, "code", "code");
+          ComXml2ComboItem(sXml, rlane_cds, "code", "code");
           break;
       case IBINSERT: // insert
           break;
           
       case IBSEARCH_ASYNC08: // Carrier/Trade/RLane Combo Code By Auth Office Code
-          var authOfcCd = auth_ofc_cd.GetSelectCode();
           var param = "";
               param += "f_cmd="   + SEARCH23;
-              param += "&auth_ofc_cd=" + authOfcCd;
           
           var sXml = sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
           
           var joCrrCds    = ComGetEtcData(sXml, "jo_crr_cds");
+          
           var trdCds      = ComGetEtcData(sXml, "trd_cds");
           var rlaneCds    = ComGetEtcData(sXml, "rlane_cds");            
           
@@ -445,34 +442,87 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
 }
 function t1sheet1_OnSearchEnd(sheetObj, ErrMsg) {
   if (sheetObj.RowCount() > 0) {
-      var str = "";
-      var nextStr = "";
+
+	  var index = "";
+      var strPartner = "";
+      var nextStrPartner = "";
+      var strLane = "";
+      var nextStrLane = "";
       var iStRow = sheetObj.HeaderRows();
       var iEdRow = sheetObj.LastRow();
       var prefix = "t1sheet1_";
+      var totalColumnValue=1;
       for(var i=iStRow;i<=iEdRow;i++){
-          str = sheetObj.GetCellText(i, prefix + "jo_crr_cd");   // ITM 항목 읽기
-          
-         if(str === nextStr){
-        	  sheetObj.SetMergeCell(i,1,1,6); // partner, Lane :6칸 머지
-             
-             var tmpStr = ComReplaceStr(str+"","Total:","");
-             sheetObj.SetCellValue(i, prefix + "jo_crr_cd", tmpStr, 0); // OWN 5칸 머지
-             
+    	  //First line in sheet
+          strPartner = sheetObj.GetCellText(i, prefix + "jo_crr_cd"); 
+          strLane = sheetObj.GetCellText(i, prefix + "rlane_cd"); 
+          //Next First Line in Sheet
+          nextStrPartner = sheetObj.GetCellText(i+1, prefix + "jo_crr_cd");
+     	  nextStrLane = sheetObj.GetCellText(i+1, prefix + "rlane_cd");
+         
+         if(strPartner === nextStrPartner && strLane === nextStrLane){
+        	 totalColumnValue++;
+         
+         }else{
+        	 //Insert next row
+        	 sheetObj.DataInsert(i+1);
+        	
+        	 //Get Current total data
+        	 var currentCurr = sheetObj.GetCellText(i, prefix + "locl_curr_cd");
+        	 var totalRevMoney = 0;
+        	 var totalExpenseMoney = 0;
+    	 
+        	 for(var j=0;j<totalColumnValue;j++){
+        		 var revMoney = sheetObj.GetCellValue(i-j, prefix + "inv_rev_act_amt");
+        		 var expenseMoney = sheetObj.GetCellValue(i-j, prefix + "inv_exp_act_amt");
+        		 totalRevMoney=totalRevMoney+ revMoney;
+        		 totalExpenseMoney = totalExpenseMoney + expenseMoney;
+        	 }
+        	 //Handle total value
+        	 i++;
+        	 index += i+ROWMARK;
              sheetObj.SetRowBackColor(i,"#FCDCEE");
+             //Set Last Row again
+        	 iEdRow = sheetObj.LastRow();
              sheetObj.SetCellFontBold(i,  prefix + "jo_crr_cd", 1);
              sheetObj.SetCellFontBold(i,  prefix + "locl_curr_cd", 1);
              sheetObj.SetCellFontBold(i,  prefix + "inv_rev_act_amt", 1);
              sheetObj.SetCellFontBold(i,  prefix + "inv_exp_act_amt", 1);
-         
-         }else{
-        	 nextStr = sheetObj.GetCellText(i, prefix + "jo_crr_cd");
-        	 sheetObj.DataInsert(i+1);
-        	 i++;
-        	 iEdRow = sheetObj.LastRow();
+             //Currency
+             sheetObj.SetCellValue(i,6,currentCurr);
+             //Rev 
+             sheetObj.SetCellValue(i,7,totalRevMoney);
+             //Expense
+             sheetObj.SetCellValue(i,8,totalExpenseMoney);
+             totalColumnValue=1;
          }
          
       }
+      var allCurrencyG=allCurrency.split(ROWMARK);
+      var allIndexAdded = index.split(ROWMARK);
+ 
+      for(var i =0;i<allCurrencyG.length;i++){
+    	  if(allCurrencyG[i] !==""){
+        	  sheetObj.DataInsert(-1);
+        	  this["totalRev"+allCurrencyG[i]]=0;
+        	  this["totalExp"+allCurrencyG[i]]=0;
+        	  for(var j=0;j<allIndexAdded.length;++j){
+        		  if(allCurrencyG[i] == sheetObj.GetCellText(allIndexAdded[j], prefix + "locl_curr_cd")){
+        			  this["totalRev"+allCurrencyG[i]] = this["totalRev"+allCurrencyG[i]] + sheetObj.GetCellValue(allIndexAdded[j], prefix + "inv_rev_act_amt");
+        			  this["totalExp"+allCurrencyG[i]] = this["totalExp"+allCurrencyG[i]] + sheetObj.GetCellValue(allIndexAdded[j], prefix + "inv_exp_act_amt");
+        		  }
+        		 
+        	  }
+        	  sheetObj.SetCellValue(sheetObj.LastRow(),6,allCurrencyG[i]);
+        	  sheetObj.SetCellValue(sheetObj.LastRow(),7,this["totalRev"+allCurrencyG[i]]);
+        	  sheetObj.SetCellValue(sheetObj.LastRow(),8,this["totalExp"+allCurrencyG[i]]);
+        	  sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "locl_curr_cd", 1);
+              sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "inv_rev_act_amt", 1);
+              sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "inv_exp_act_amt", 1);
+              sheetObj.SetRowBackColor(sheetObj.LastRow(),"#FFD700");
+    	  }
+      }
+      
   }
 }
 function t1sheet1_OnSaveEnd(sheetObj, Code, Msg, StCode, StMsg) {
@@ -577,18 +627,12 @@ function jo_crr_cds_OnCheckClick(comboObj, index, code) {
 */
 function jo_crr_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex, newText, newCode) {
   var formObj = document.form;
-  trd_cd.RemoveAll();
-
-  if (comboObj.GetSelectCode() == "") {
-      return;
-  }
-  if (trd_cd.GetItemCount() == 0) {
-      trd_cd.SetEnable(0);
-      doActionIBSheet(sheetObjects[0], formObj, IBSEARCH_ASYNC02);
-      trd_cd.SetEnable(1);
-  }
+ if(comboObj.GetSelectCode()!=null){
+	 doActionIBSheet(getCurrentSheet(), formObj, IBSEARCH_ASYNC02);
+	 rlane_cds.SetEnable(1);
+	
+ }
 }
-
 
 
 function GetCheckConditionPeriod(){

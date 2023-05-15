@@ -1,6 +1,6 @@
 /*=========================================================
 *Copyright(c) 2023 CyberLogitec
-*@FileName : CLVPractice3DBDAOSearchJooCrrCdsRSQL.java
+*@FileName : CLVPractice3DBDAOSearchRLaneCdRSQL.java
 *@FileTitle : 
 *Open Issues :
 *Change history :
@@ -23,7 +23,7 @@ import com.clt.framework.support.db.ISQLTemplate;
  * @since J2EE 1.6
  */
 
-public class CLVPractice3DBDAOSearchJooCrrCdsRSQL implements ISQLTemplate{
+public class CLVPractice3DBDAOSearchRLaneCdRSQL implements ISQLTemplate{
 
 	private StringBuffer query = new StringBuffer();
 	
@@ -34,15 +34,24 @@ public class CLVPractice3DBDAOSearchJooCrrCdsRSQL implements ISQLTemplate{
 	
 	/**
 	  * <pre>
-	  * tét
+	  * Search Rev Lane
 	  * </pre>
 	  */
-	public CLVPractice3DBDAOSearchJooCrrCdsRSQL(){
+	public CLVPractice3DBDAOSearchRLaneCdRSQL(){
 		setQuery();
 		params = new HashMap<String,String[]>();
+		String tmp = null;
+		String[] arrTmp = null;
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("jo_crr_cd",new String[]{arrTmp[0],arrTmp[1]});
+
 		query.append("/*").append("\n"); 
 		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration").append("\n"); 
-		query.append("FileName : CLVPractice3DBDAOSearchJooCrrCdsRSQL").append("\n"); 
+		query.append("FileName : CLVPractice3DBDAOSearchRLaneCdRSQL").append("\n"); 
 		query.append("*/").append("\n"); 
 	}
 	
@@ -58,9 +67,15 @@ public class CLVPractice3DBDAOSearchJooCrrCdsRSQL implements ISQLTemplate{
 	 * Query 생성
 	 */
 	public void setQuery(){
-		query.append("SELECT JO_CRR_CD" ).append("\n"); 
+		query.append("SELECT RLANE_CD RLANE_CD" ).append("\n"); 
 		query.append("FROM JOO_CARRIER" ).append("\n"); 
-		query.append("WHERE delt_flg = 'N'" ).append("\n"); 
+		query.append("WHERE 1=1" ).append("\n"); 
+		query.append("#if (${jo_crr_cd} != '')" ).append("\n"); 
+		query.append("and UPPER(JO_CRR_CD) like UPPER(@[jo_crr_cd])" ).append("\n"); 
+		query.append("#end" ).append("\n"); 
+		query.append("#if (${jo_crr_cd} != 'ALL')" ).append("\n"); 
+		query.append("and UPPER(JO_CRR_CD) like UPPER(@[jo_crr_cd])" ).append("\n"); 
+		query.append("#end" ).append("\n"); 
 
 	}
 }

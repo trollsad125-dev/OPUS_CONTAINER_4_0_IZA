@@ -4,8 +4,8 @@
 		<query name="CLVPractice3DBDAOSearchJooCrrCdsRSQL">
 			<desc><![CDATA[tét]]></desc>
 			<sql><![CDATA[
-SELECT CRR_CD AS JO_CRR_CD
-FROM MDM_CARRIER
+SELECT JO_CRR_CD
+FROM JOO_CARRIER
 WHERE delt_flg = 'N'			]]></sql>
 			<params>
 			</params>

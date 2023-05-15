@@ -173,9 +173,26 @@ public class CLVPractice3BCImpl extends BasicCommandSupport implements CLVPracti
 	 * @exception EventException
 	 */
 	@Override
-	public List<JooCarrierVO> searchJooCrrCds(SummaryVO jooCarrierVO) throws EventException {
+	public List<SummaryVO> searchJooCrrCds(SummaryVO summaryVo) throws EventException {
 		try {
-			return dbDao.searchJooCrrCds(jooCarrierVO);
+			return dbDao.searchJooCrrCds(summaryVo);
+		} catch(DAOException ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		} catch (Exception ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}
+	}
+	/**
+	 * searching Carrier Code list, it's used dropdownlist
+	 * 
+	 * @param JooCarrierVO jooCarrierVO
+	 * @return List<JooCarrierVO>
+	 * @exception EventException
+	 */
+	@Override
+	public List<SummaryVO> searchRevLaneCds(SummaryVO summaryVo) throws EventException {
+		try {
+			return dbDao.searchRevLaneCds(summaryVo);
 		} catch(DAOException ex) {
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		} catch (Exception ex) {

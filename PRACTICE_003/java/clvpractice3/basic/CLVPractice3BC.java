@@ -70,5 +70,6 @@ public interface CLVPractice3BC {
 	 */
 	public void multiDetailVO(DetailVO[] detailVO,SignOnUserAccount account) throws EventException;
 
-	public List<JooCarrierVO> searchJooCrrCds(SummaryVO summaryVO) throws EventException;
+	public List<SummaryVO> searchJooCrrCds(SummaryVO summaryVO) throws EventException;
+	public List<SummaryVO> searchRevLaneCds(SummaryVO summaryVO) throws EventException;
 }

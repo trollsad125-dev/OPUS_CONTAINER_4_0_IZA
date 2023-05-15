@@ -141,7 +141,9 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 			else if (e.getFormCommand().isCommand(FormCommand.MULTI02)) {
 				eventResponse = multiDetailVO(e);
 			} else if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
-				eventResponse = initRLaneCdnCrrCdPrc3(e);
+				eventResponse = initCrrCdPrc3(e);
+			}else if (e.getFormCommand().isCommand(FormCommand.SEARCH24)) {
+				eventResponse = initRevLane(e);
 			}
 		
 		}
@@ -496,6 +498,19 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		try{
 			List<SummaryVO> list = command.searchSummaryVO(event.getSummaryVO());
 			eventResponse.setRsVoList(list);
+			StringBuilder allFilterCurrency = new StringBuilder();
+			if(null != list && list.size() > 0){
+				for(int i =0; i < list.size(); i++){
+					String[] arrayFilter = allFilterCurrency.toString().split("\\|");
+					if(!Arrays.asList(arrayFilter).contains(list.get(i).getLoclCurrCd())){
+						allFilterCurrency.append(list.get(i).getLoclCurrCd());
+						if (i < list.size() - 1){
+							allFilterCurrency.append("|");
+						}
+					}
+				}
+			}
+			eventResponse.setETCData("currency_data",allFilterCurrency.toString());
 		}catch(EventException ex){
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}catch(Exception ex){
@@ -564,7 +579,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 	 * @return EventResponse
 	 * @exception EventException
 	 */
-	private EventResponse initRLaneCdnCrrCdPrc3(Event e) throws EventException {
+	private EventResponse initCrrCdPrc3(Event e) throws EventException {
 		// PDTO(Data Transfer Object including Parameters)
 		GeneralEventResponse eventResponse = new GeneralEventResponse();
 		ClvPractice003Event event = (ClvPractice003Event)e;
@@ -572,7 +587,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 
 		try{
 
-			List<JooCarrierVO> crrCds = command.searchJooCrrCds(event.getSummaryVO());
+			List<SummaryVO> crrCds = command.searchJooCrrCds(event.getSummaryVO());
 			StringBuilder crrCdsBuilder = new StringBuilder();
 			if(null != crrCds && crrCds.size() > 0){
 				for(int i =0; i < crrCds.size(); i++){
@@ -583,6 +598,40 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 				}
 			}
 			eventResponse.setETCData("jo_crr_cds", crrCdsBuilder.toString());
+		}catch(EventException ex){
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}catch(Exception ex){
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}	
+		return eventResponse;
+	}
+	/**
+	 * This method for ComboBox Rev Lane data
+	 * 
+	 * @param Event e
+	 * @return EventResponse
+	 * @exception EventException
+	 */
+	private EventResponse initRevLane(Event e) throws EventException {
+		// PDTO(Data Transfer Object including Parameters)
+		GeneralEventResponse eventResponse = new GeneralEventResponse();
+		ClvPractice003Event event = (ClvPractice003Event)e;
+		CLVPractice3BC command = new CLVPractice3BCImpl();
+
+		try{
+
+			List<SummaryVO> rLaneCds = command.searchRevLaneCds(event.getSummaryVO());
+			StringBuilder rLaneCdsBuilder = new StringBuilder();
+			if(null != rLaneCds && rLaneCds.size() > 0){
+				for(int i =0; i < rLaneCds.size(); i++){
+					rLaneCdsBuilder.append(rLaneCds.get(i).getJoCrrCd());
+					if (i < rLaneCds.size() - 1){
+						rLaneCdsBuilder.append("|");
+					}	
+				}
+			}
+			eventResponse.setETCData("rlane_cds", rLaneCdsBuilder.toString());
+			
 		}catch(EventException ex){
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}catch(Exception ex){

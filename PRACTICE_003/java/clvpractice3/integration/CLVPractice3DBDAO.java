@@ -498,9 +498,9 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 	  * @exception DAOException
 	  */
 	 @SuppressWarnings("unchecked")
-	 public List<JooCarrierVO> searchJooCrrCds(SummaryVO jooCarrierVO) throws DAOException {
+	 public List<SummaryVO> searchJooCrrCds(SummaryVO jooCarrierVO) throws DAOException {
 		 DBRowSet dbRowset = null;
-		 List<JooCarrierVO> list = new ArrayList();
+		 List<SummaryVO> list = new ArrayList<>();
 		 //query parameter
 		 Map<String, Object> param = new HashMap<String, Object>();
 		 //velocity parameter
@@ -514,6 +514,40 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 				velParam.putAll(mapVO);
 			 }
 			 dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAOSearchJooCrrCdsRSQL(), param, velParam);
+			 list = (List)RowSetUtil.rowSetToVOs(dbRowset, SummaryVO .class);
+		 } catch(SQLException se) {
+			 log.error(se.getMessage(),se);
+			 throw new DAOException(new ErrorHandler(se).getMessage());
+		 } catch(Exception ex) {
+			 log.error(ex.getMessage(),ex);
+			 throw new DAOException(new ErrorHandler(ex).getMessage());
+		 }
+		 return list;
+	 }
+		/**
+	  * search carrier code
+	  * 
+	  * @param JooCarrierVO jooCarrierVO
+	  * @return List<JooCarrierVO>
+	  * @exception DAOException
+	  */
+	 @SuppressWarnings("unchecked")
+	 public List<SummaryVO> searchRevLaneCds(SummaryVO jooCarrierVO) throws DAOException {
+		 DBRowSet dbRowset = null;
+		 List<SummaryVO> list = new ArrayList<>();
+		 //query parameter
+		 Map<String, Object> param = new HashMap<String, Object>();
+		 //velocity parameter
+		 Map<String, Object> velParam = new HashMap<String, Object>();
+		 
+		 try{
+			 if(jooCarrierVO != null){
+				Map<String, String> mapVO = jooCarrierVO .getColumnValues();
+				param.putAll(mapVO);
+				
+				velParam.putAll(mapVO);
+			 }
+			 dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAOSearchRLaneCdRSQL(), param, velParam);
 			 list = (List)RowSetUtil.rowSetToVOs(dbRowset, JooCarrierVO .class);
 		 } catch(SQLException se) {
 			 log.error(se.getMessage(),se);
@@ -524,4 +558,5 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 		 }
 		 return list;
 	 }
+	 
 }

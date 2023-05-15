@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.DetailVO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.SummaryVO;
+import com.clt.framework.component.util.JSPUtil;
 import com.clt.framework.core.controller.html.HTMLActionException;
 import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventResponse;
@@ -67,6 +68,9 @@ public class CLV_PRACTICE_003HTMLAction extends HTMLActionSupport {
 		}
 		else if(command.isCommand(FormCommand.SEARCH02)) {
 			event.setDetailVO((DetailVO)getVO(request, DetailVO .class));
+		}else if(command.isCommand(FormCommand.SEARCH24)){
+			event.setSummaryVO((SummaryVO)getVO(request, SummaryVO .class));
+			event.getSummaryVO().setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
 		}
 
 		return  event;

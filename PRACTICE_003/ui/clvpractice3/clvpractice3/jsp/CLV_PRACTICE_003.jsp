@@ -40,6 +40,7 @@
 	String acctgCrrCdComboItems	= "";
 	String acctgCrrNmComboItems	= "";
 	String authOfcCdComboItems	= "";
+	String currencyData 		= "";
 	try {
 	   	SignOnUserAccount account=(SignOnUserAccount)session.getAttribute(CommonWebKeys.SIGN_ON_USER_ACCOUNT);
 		strUsr_id =	account.getUsr_id();
@@ -59,6 +60,7 @@
 		//acctgCrrCdComboItems= eventResponse.getETCData("acctg_crr_cds");
 		//acctgCrrNmComboItems= eventResponse.getETCData("acctg_crr_nms");
 		authOfcCdComboItems = eventResponse.getETCData("auth_ofc_cds");
+		currencyData = eventResponse.getETCData("currency_data");
 	}catch(Exception e) {
 		out.println(e.toString());
 	}
@@ -67,6 +69,7 @@
 <script type="text/javascript">
 	var gJoCrrCdComboItems 		= "<%=joCrrCdComboItems%>";
 	var gAuthOfcCdComboItems	= "<%=authOfcCdComboItems%>"; 
+	var allCurrency				= "<%=currencyData%>";
 	function setupPage(){
 		var errMessage = "<%=strErrMsg%>";
 		if (errMessage.length >= 1) {
@@ -127,7 +130,7 @@
 						<th>Partner</th>
 						<td><script type="text/javascript">ComComboObject('jo_crr_cds', 1, 170, 0, 0);</script></td>
 						<th>Lane</th>
-						<td><script type="text/javascript">ComComboObject('rlane_cd', 1, 170, 0, 0);</script></td>
+						<td><script type="text/javascript">ComComboObject('rlane_cds', 1, 60, 0, 0);</script></td>
 		               	<th>Trade</th>
 						<td><script type="text/javascript">ComComboObject('trd_cd',1,55,0,0);</script></td>
 					</tr> 
