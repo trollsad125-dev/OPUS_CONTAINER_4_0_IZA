@@ -4,10 +4,10 @@
 *@FileTitle : SummaryVO
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.11
+*@LastModifyDate : 2023.05.15
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.11  
+* 2023.05.15  
 * 1.0 Creation
 =========================================================*/
 
@@ -43,21 +43,19 @@ public class SummaryVO extends AbstractValueObject {
 	private Collection<SummaryVO> models = new ArrayList<SummaryVO>();
 	
 	/* Column Info */
-	private String updDt = null;
-	/* Column Info */
 	private String csrNo = null;
 	/* Column Info */
 	private String invRevActAmt = null;
 	/* Column Info */
-	private String dateTo = null;
-	/* Column Info */
 	private String partnercodes = null;
+	/* Column Info */
+	private String dateTo = null;
 	/* Column Info */
 	private String loclCurrCd = null;
 	/* Column Info */
-	private String creDt = null;
-	/* Column Info */
 	private String custVndrSeq = null;
+	/* Column Info */
+	private String trdCd = null;
 	/* Column Info */
 	private String joCrrCd = null;
 	/* Column Info */
@@ -73,8 +71,6 @@ public class SummaryVO extends AbstractValueObject {
 	/* Column Info */
 	private String custVndrEngNm = null;
 	/* Column Info */
-	private String creUsrId = null;
-	/* Column Info */
 	private String invExpActAmt = null;
 	/* VO Data Value( C:Creation, U:Update, D:Delete ) */
 	private String ibflag = null;
@@ -82,8 +78,6 @@ public class SummaryVO extends AbstractValueObject {
 	private String prnrRefNo = null;
 	/* Column Info */
 	private String aproFlg = null;
-	/* Column Info */
-	private String updUsrId = null;
 
 	/*	테이블 컬럼의 값을 저장하는 Hashtable */
 	private HashMap<String, String> hashColumns = new LinkedHashMap<String, String>();
@@ -93,15 +87,14 @@ public class SummaryVO extends AbstractValueObject {
 	
 	public SummaryVO() {}
 
-	public SummaryVO(String ibflag, String pagerows, String joCrrCd, String rlaneCd, String loclCurrCd, String invNo, String csrNo, String aproFlg, String custVndrCntCd, String custVndrSeq, String prnrRefNo, String custVndrEngNm, String invRevActAmt, String invExpActAmt, String partnercodes, String dateTo, String dateFr, String creUsrId, String creDt, String updUsrId, String updDt) {
-		this.updDt = updDt;
+	public SummaryVO(String ibflag, String pagerows, String joCrrCd, String rlaneCd, String loclCurrCd, String invNo, String csrNo, String aproFlg, String custVndrCntCd, String custVndrSeq, String prnrRefNo, String custVndrEngNm, String invRevActAmt, String invExpActAmt, String trdCd, String dateFr, String dateTo, String partnercodes) {
 		this.csrNo = csrNo;
 		this.invRevActAmt = invRevActAmt;
-		this.dateTo = dateTo;
 		this.partnercodes = partnercodes;
+		this.dateTo = dateTo;
 		this.loclCurrCd = loclCurrCd;
-		this.creDt = creDt;
 		this.custVndrSeq = custVndrSeq;
+		this.trdCd = trdCd;
 		this.joCrrCd = joCrrCd;
 		this.rlaneCd = rlaneCd;
 		this.custVndrCntCd = custVndrCntCd;
@@ -109,12 +102,10 @@ public class SummaryVO extends AbstractValueObject {
 		this.pagerows = pagerows;
 		this.invNo = invNo;
 		this.custVndrEngNm = custVndrEngNm;
-		this.creUsrId = creUsrId;
 		this.invExpActAmt = invExpActAmt;
 		this.ibflag = ibflag;
 		this.prnrRefNo = prnrRefNo;
 		this.aproFlg = aproFlg;
-		this.updUsrId = updUsrId;
 	}
 	
 	/**
@@ -122,14 +113,13 @@ public class SummaryVO extends AbstractValueObject {
 	 * @return HashMap
 	 */
 	public HashMap<String, String> getColumnValues(){
-		this.hashColumns.put("upd_dt", getUpdDt());
 		this.hashColumns.put("csr_no", getCsrNo());
 		this.hashColumns.put("inv_rev_act_amt", getInvRevActAmt());
-		this.hashColumns.put("date_to", getDateTo());
 		this.hashColumns.put("partnercodes", getPartnercodes());
+		this.hashColumns.put("date_to", getDateTo());
 		this.hashColumns.put("locl_curr_cd", getLoclCurrCd());
-		this.hashColumns.put("cre_dt", getCreDt());
 		this.hashColumns.put("cust_vndr_seq", getCustVndrSeq());
+		this.hashColumns.put("trd_cd", getTrdCd());
 		this.hashColumns.put("jo_crr_cd", getJoCrrCd());
 		this.hashColumns.put("rlane_cd", getRlaneCd());
 		this.hashColumns.put("cust_vndr_cnt_cd", getCustVndrCntCd());
@@ -137,12 +127,10 @@ public class SummaryVO extends AbstractValueObject {
 		this.hashColumns.put("pagerows", getPagerows());
 		this.hashColumns.put("inv_no", getInvNo());
 		this.hashColumns.put("cust_vndr_eng_nm", getCustVndrEngNm());
-		this.hashColumns.put("cre_usr_id", getCreUsrId());
 		this.hashColumns.put("inv_exp_act_amt", getInvExpActAmt());
 		this.hashColumns.put("ibflag", getIbflag());
 		this.hashColumns.put("prnr_ref_no", getPrnrRefNo());
 		this.hashColumns.put("apro_flg", getAproFlg());
-		this.hashColumns.put("upd_usr_id", getUpdUsrId());
 		return this.hashColumns;
 	}
 	
@@ -151,14 +139,13 @@ public class SummaryVO extends AbstractValueObject {
 	 * @return
 	 */
 	public HashMap<String, String> getFieldNames(){
-		this.hashFields.put("upd_dt", "updDt");
 		this.hashFields.put("csr_no", "csrNo");
 		this.hashFields.put("inv_rev_act_amt", "invRevActAmt");
-		this.hashFields.put("date_to", "dateTo");
 		this.hashFields.put("partnercodes", "partnercodes");
+		this.hashFields.put("date_to", "dateTo");
 		this.hashFields.put("locl_curr_cd", "loclCurrCd");
-		this.hashFields.put("cre_dt", "creDt");
 		this.hashFields.put("cust_vndr_seq", "custVndrSeq");
+		this.hashFields.put("trd_cd", "trdCd");
 		this.hashFields.put("jo_crr_cd", "joCrrCd");
 		this.hashFields.put("rlane_cd", "rlaneCd");
 		this.hashFields.put("cust_vndr_cnt_cd", "custVndrCntCd");
@@ -166,21 +153,11 @@ public class SummaryVO extends AbstractValueObject {
 		this.hashFields.put("pagerows", "pagerows");
 		this.hashFields.put("inv_no", "invNo");
 		this.hashFields.put("cust_vndr_eng_nm", "custVndrEngNm");
-		this.hashFields.put("cre_usr_id", "creUsrId");
 		this.hashFields.put("inv_exp_act_amt", "invExpActAmt");
 		this.hashFields.put("ibflag", "ibflag");
 		this.hashFields.put("prnr_ref_no", "prnrRefNo");
 		this.hashFields.put("apro_flg", "aproFlg");
-		this.hashFields.put("upd_usr_id", "updUsrId");
 		return this.hashFields;
-	}
-	
-	/**
-	 * Column Info
-	 * @return updDt
-	 */
-	public String getUpdDt() {
-		return this.updDt;
 	}
 	
 	/**
@@ -201,18 +178,18 @@ public class SummaryVO extends AbstractValueObject {
 	
 	/**
 	 * Column Info
-	 * @return dateTo
-	 */
-	public String getDateTo() {
-		return this.dateTo;
-	}
-	
-	/**
-	 * Column Info
 	 * @return partnercodes
 	 */
 	public String getPartnercodes() {
 		return this.partnercodes;
+	}
+	
+	/**
+	 * Column Info
+	 * @return dateTo
+	 */
+	public String getDateTo() {
+		return this.dateTo;
 	}
 	
 	/**
@@ -225,18 +202,18 @@ public class SummaryVO extends AbstractValueObject {
 	
 	/**
 	 * Column Info
-	 * @return creDt
-	 */
-	public String getCreDt() {
-		return this.creDt;
-	}
-	
-	/**
-	 * Column Info
 	 * @return custVndrSeq
 	 */
 	public String getCustVndrSeq() {
 		return this.custVndrSeq;
+	}
+	
+	/**
+	 * Column Info
+	 * @return trdCd
+	 */
+	public String getTrdCd() {
+		return this.trdCd;
 	}
 	
 	/**
@@ -297,14 +274,6 @@ public class SummaryVO extends AbstractValueObject {
 	
 	/**
 	 * Column Info
-	 * @return creUsrId
-	 */
-	public String getCreUsrId() {
-		return this.creUsrId;
-	}
-	
-	/**
-	 * Column Info
 	 * @return invExpActAmt
 	 */
 	public String getInvExpActAmt() {
@@ -335,23 +304,7 @@ public class SummaryVO extends AbstractValueObject {
 		return this.aproFlg;
 	}
 	
-	/**
-	 * Column Info
-	 * @return updUsrId
-	 */
-	public String getUpdUsrId() {
-		return this.updUsrId;
-	}
-	
 
-	/**
-	 * Column Info
-	 * @param updDt
-	 */
-	public void setUpdDt(String updDt) {
-		this.updDt = updDt;
-	}
-	
 	/**
 	 * Column Info
 	 * @param csrNo
@@ -370,18 +323,18 @@ public class SummaryVO extends AbstractValueObject {
 	
 	/**
 	 * Column Info
-	 * @param dateTo
-	 */
-	public void setDateTo(String dateTo) {
-		this.dateTo = dateTo;
-	}
-	
-	/**
-	 * Column Info
 	 * @param partnercodes
 	 */
 	public void setPartnercodes(String partnercodes) {
 		this.partnercodes = partnercodes;
+	}
+	
+	/**
+	 * Column Info
+	 * @param dateTo
+	 */
+	public void setDateTo(String dateTo) {
+		this.dateTo = dateTo;
 	}
 	
 	/**
@@ -394,18 +347,18 @@ public class SummaryVO extends AbstractValueObject {
 	
 	/**
 	 * Column Info
-	 * @param creDt
-	 */
-	public void setCreDt(String creDt) {
-		this.creDt = creDt;
-	}
-	
-	/**
-	 * Column Info
 	 * @param custVndrSeq
 	 */
 	public void setCustVndrSeq(String custVndrSeq) {
 		this.custVndrSeq = custVndrSeq;
+	}
+	
+	/**
+	 * Column Info
+	 * @param trdCd
+	 */
+	public void setTrdCd(String trdCd) {
+		this.trdCd = trdCd;
 	}
 	
 	/**
@@ -466,14 +419,6 @@ public class SummaryVO extends AbstractValueObject {
 	
 	/**
 	 * Column Info
-	 * @param creUsrId
-	 */
-	public void setCreUsrId(String creUsrId) {
-		this.creUsrId = creUsrId;
-	}
-	
-	/**
-	 * Column Info
 	 * @param invExpActAmt
 	 */
 	public void setInvExpActAmt(String invExpActAmt) {
@@ -504,14 +449,6 @@ public class SummaryVO extends AbstractValueObject {
 		this.aproFlg = aproFlg;
 	}
 	
-	/**
-	 * Column Info
-	 * @param updUsrId
-	 */
-	public void setUpdUsrId(String updUsrId) {
-		this.updUsrId = updUsrId;
-	}
-	
 /**
 	 * Request 의 데이터를 추출하여 VO 의 멤버변수에 설정.
 	 * @param request
@@ -525,14 +462,13 @@ public class SummaryVO extends AbstractValueObject {
 	 * @param request
 	 */
 	public void fromRequest(HttpServletRequest request, String prefix) {
-		setUpdDt(JSPUtil.getParameter(request, prefix + "upd_dt", ""));
 		setCsrNo(JSPUtil.getParameter(request, prefix + "csr_no", ""));
 		setInvRevActAmt(JSPUtil.getParameter(request, prefix + "inv_rev_act_amt", ""));
-		setDateTo(JSPUtil.getParameter(request, prefix + "date_to", ""));
 		setPartnercodes(JSPUtil.getParameter(request, prefix + "partnercodes", ""));
+		setDateTo(JSPUtil.getParameter(request, prefix + "date_to", ""));
 		setLoclCurrCd(JSPUtil.getParameter(request, prefix + "locl_curr_cd", ""));
-		setCreDt(JSPUtil.getParameter(request, prefix + "cre_dt", ""));
 		setCustVndrSeq(JSPUtil.getParameter(request, prefix + "cust_vndr_seq", ""));
+		setTrdCd(JSPUtil.getParameter(request, prefix + "trd_cd", ""));
 		setJoCrrCd(JSPUtil.getParameter(request, prefix + "jo_crr_cd", ""));
 		setRlaneCd(JSPUtil.getParameter(request, prefix + "rlane_cd", ""));
 		setCustVndrCntCd(JSPUtil.getParameter(request, prefix + "cust_vndr_cnt_cd", ""));
@@ -540,12 +476,10 @@ public class SummaryVO extends AbstractValueObject {
 		setPagerows(JSPUtil.getParameter(request, prefix + "pagerows", ""));
 		setInvNo(JSPUtil.getParameter(request, prefix + "inv_no", ""));
 		setCustVndrEngNm(JSPUtil.getParameter(request, prefix + "cust_vndr_eng_nm", ""));
-		setCreUsrId(JSPUtil.getParameter(request, prefix + "cre_usr_id", ""));
 		setInvExpActAmt(JSPUtil.getParameter(request, prefix + "inv_exp_act_amt", ""));
 		setIbflag(JSPUtil.getParameter(request, prefix + "ibflag", ""));
 		setPrnrRefNo(JSPUtil.getParameter(request, prefix + "prnr_ref_no", ""));
 		setAproFlg(JSPUtil.getParameter(request, prefix + "apro_flg", ""));
-		setUpdUsrId(JSPUtil.getParameter(request, prefix + "upd_usr_id", ""));
 	}
 
 	/**
@@ -573,14 +507,13 @@ public class SummaryVO extends AbstractValueObject {
   		int length = request.getParameterValues(prefix + "ibflag").length;
   
 		try {
-			String[] updDt = (JSPUtil.getParameter(request, prefix	+ "upd_dt", length));
 			String[] csrNo = (JSPUtil.getParameter(request, prefix	+ "csr_no", length));
 			String[] invRevActAmt = (JSPUtil.getParameter(request, prefix	+ "inv_rev_act_amt", length));
-			String[] dateTo = (JSPUtil.getParameter(request, prefix	+ "date_to", length));
 			String[] partnercodes = (JSPUtil.getParameter(request, prefix	+ "partnercodes", length));
+			String[] dateTo = (JSPUtil.getParameter(request, prefix	+ "date_to", length));
 			String[] loclCurrCd = (JSPUtil.getParameter(request, prefix	+ "locl_curr_cd", length));
-			String[] creDt = (JSPUtil.getParameter(request, prefix	+ "cre_dt", length));
 			String[] custVndrSeq = (JSPUtil.getParameter(request, prefix	+ "cust_vndr_seq", length));
+			String[] trdCd = (JSPUtil.getParameter(request, prefix	+ "trd_cd", length));
 			String[] joCrrCd = (JSPUtil.getParameter(request, prefix	+ "jo_crr_cd", length));
 			String[] rlaneCd = (JSPUtil.getParameter(request, prefix	+ "rlane_cd", length));
 			String[] custVndrCntCd = (JSPUtil.getParameter(request, prefix	+ "cust_vndr_cnt_cd", length));
@@ -588,31 +521,27 @@ public class SummaryVO extends AbstractValueObject {
 			String[] pagerows = (JSPUtil.getParameter(request, prefix	+ "pagerows", length));
 			String[] invNo = (JSPUtil.getParameter(request, prefix	+ "inv_no", length));
 			String[] custVndrEngNm = (JSPUtil.getParameter(request, prefix	+ "cust_vndr_eng_nm", length));
-			String[] creUsrId = (JSPUtil.getParameter(request, prefix	+ "cre_usr_id", length));
 			String[] invExpActAmt = (JSPUtil.getParameter(request, prefix	+ "inv_exp_act_amt", length));
 			String[] ibflag = (JSPUtil.getParameter(request, prefix	+ "ibflag", length));
 			String[] prnrRefNo = (JSPUtil.getParameter(request, prefix	+ "prnr_ref_no", length));
 			String[] aproFlg = (JSPUtil.getParameter(request, prefix	+ "apro_flg", length));
-			String[] updUsrId = (JSPUtil.getParameter(request, prefix	+ "upd_usr_id", length));
 			
 			for (int i = 0; i < length; i++) {
 				model = new SummaryVO();
-				if (updDt[i] != null)
-					model.setUpdDt(updDt[i]);
 				if (csrNo[i] != null)
 					model.setCsrNo(csrNo[i]);
 				if (invRevActAmt[i] != null)
 					model.setInvRevActAmt(invRevActAmt[i]);
-				if (dateTo[i] != null)
-					model.setDateTo(dateTo[i]);
 				if (partnercodes[i] != null)
 					model.setPartnercodes(partnercodes[i]);
+				if (dateTo[i] != null)
+					model.setDateTo(dateTo[i]);
 				if (loclCurrCd[i] != null)
 					model.setLoclCurrCd(loclCurrCd[i]);
-				if (creDt[i] != null)
-					model.setCreDt(creDt[i]);
 				if (custVndrSeq[i] != null)
 					model.setCustVndrSeq(custVndrSeq[i]);
+				if (trdCd[i] != null)
+					model.setTrdCd(trdCd[i]);
 				if (joCrrCd[i] != null)
 					model.setJoCrrCd(joCrrCd[i]);
 				if (rlaneCd[i] != null)
@@ -627,8 +556,6 @@ public class SummaryVO extends AbstractValueObject {
 					model.setInvNo(invNo[i]);
 				if (custVndrEngNm[i] != null)
 					model.setCustVndrEngNm(custVndrEngNm[i]);
-				if (creUsrId[i] != null)
-					model.setCreUsrId(creUsrId[i]);
 				if (invExpActAmt[i] != null)
 					model.setInvExpActAmt(invExpActAmt[i]);
 				if (ibflag[i] != null)
@@ -637,8 +564,6 @@ public class SummaryVO extends AbstractValueObject {
 					model.setPrnrRefNo(prnrRefNo[i]);
 				if (aproFlg[i] != null)
 					model.setAproFlg(aproFlg[i]);
-				if (updUsrId[i] != null)
-					model.setUpdUsrId(updUsrId[i]);
 				models.add(model);
 			}
 
@@ -668,14 +593,13 @@ public class SummaryVO extends AbstractValueObject {
 	* 포맷팅된 문자열에서 특수문자 제거("-","/",",",":")
 	*/
 	public void unDataFormat(){
-		this.updDt = this.updDt .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.csrNo = this.csrNo .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.invRevActAmt = this.invRevActAmt .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
-		this.dateTo = this.dateTo .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.partnercodes = this.partnercodes .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
+		this.dateTo = this.dateTo .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.loclCurrCd = this.loclCurrCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
-		this.creDt = this.creDt .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.custVndrSeq = this.custVndrSeq .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
+		this.trdCd = this.trdCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.joCrrCd = this.joCrrCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.rlaneCd = this.rlaneCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.custVndrCntCd = this.custVndrCntCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
@@ -683,11 +607,9 @@ public class SummaryVO extends AbstractValueObject {
 		this.pagerows = this.pagerows .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.invNo = this.invNo .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.custVndrEngNm = this.custVndrEngNm .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
-		this.creUsrId = this.creUsrId .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.invExpActAmt = this.invExpActAmt .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.ibflag = this.ibflag .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.prnrRefNo = this.prnrRefNo .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.aproFlg = this.aproFlg .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
-		this.updUsrId = this.updUsrId .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 	}
 }

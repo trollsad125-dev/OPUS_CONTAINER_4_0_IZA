@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sqls>
 	<querys>
-		<query name="CLVPractice3DBDAOSearchRLaneCdRSQL">
-			<desc><![CDATA[Search Rev Lane]]></desc>
+		<query name="CLVPractice3DBDAOSearchTrdCdsRSQL">
+			<desc><![CDATA[Search Trade Code]]></desc>
 			<sql><![CDATA[
-SELECT RLANE_CD RLANE_CD
+SELECT TRD_CD TRD_CD
 FROM JOO_CARRIER
 WHERE 1=1
 #if (${jo_crr_cd} != '' && ${jo_crr_cd} != 'ALL')
@@ -18,8 +18,12 @@ and jo_crr_cd in (
 	#end
 )
 #end
-GROUP BY RLANE_CD			]]></sql>
+#if (${rlane_cd} != ''&& ${rlane_cd} != 'ALL')
+and UPPER(rlane_cd) like UPPER('%'||@[rlane_cd]||'%')
+#end
+GROUP BY TRD_CD			]]></sql>
 			<params>
+				<param name="rlane_cd" type="12" value="" out="N"/>
 			</params>
 		</query>
 	</querys>

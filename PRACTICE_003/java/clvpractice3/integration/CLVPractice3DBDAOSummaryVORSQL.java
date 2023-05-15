@@ -4,10 +4,10 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.12
+*@LastModifyDate : 2023.05.15
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.12 
+* 2023.05.15 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration;
@@ -133,7 +133,7 @@ public class CLVPractice3DBDAOSummaryVORSQL implements ISQLTemplate{
 		query.append("    AND NVL(STL.THEA_STL_FLG, 'N') = 'N'" ).append("\n"); 
 		query.append("	AND INV.ACCT_YRMON   BETWEEN REPLACE(@[date_fr],'-','') AND REPLACE(@[date_to],'-','')" ).append("\n"); 
 		query.append("	#if (${jo_crr_cd} != '' && ${jo_crr_cd} != 'All')" ).append("\n"); 
-		query.append("		and INV.JO_CRR_CD in (" ).append("\n"); 
+		query.append("	and INV.JO_CRR_CD in (" ).append("\n"); 
 		query.append("			#foreach($key IN ${partnerCodes})" ).append("\n"); 
 		query.append("				#if($velocityCount < $partnerCodes.size()) " ).append("\n"); 
 		query.append("					'$key', " ).append("\n"); 
@@ -176,7 +176,7 @@ public class CLVPractice3DBDAOSummaryVORSQL implements ISQLTemplate{
 		query.append("    ) INV" ).append("\n"); 
 		query.append(" WHERE 1=1" ).append("\n"); 
 		query.append(" GROUP BY JO_CRR_CD, RLANE_CD, CSR_NO, APRO_FLG, CUST_VNDR_CNT_CD, CUST_VNDR_SEQ, PRNR_REF_NO, CUST_VNDR_ENG_NM, LOCL_CURR_CD, INV_NO" ).append("\n"); 
-		query.append(" ORDER BY INV_NO, JO_CRR_CD		" ).append("\n"); 
+		query.append(" ORDER BY INV_NO, JO_CRR_CD" ).append("\n"); 
 
 	}
 }

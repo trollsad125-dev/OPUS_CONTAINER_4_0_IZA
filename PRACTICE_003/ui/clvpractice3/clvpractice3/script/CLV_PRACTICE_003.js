@@ -409,11 +409,43 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
 
       case IBSEARCH_ASYNC02: // Get List Rev Lane Code By Carrier Code
           formObj.f_cmd.value = SEARCH24; //SEARCHLIST06;
-          var joCrrCds = jo_crr_cds.GetSelectCode();
+          rlane_cds.RemoveAll();
+          var joCrrCds = jo_crr_cds.GetSelectCode(); 
           var param = FormQueryString(formObj);
-          
           var sXml = sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
-          ComXml2ComboItem(sXml, rlane_cds, "code", "code");
+          var comboItems="";
+          var rlaneCds    = ComGetEtcData(sXml, "rlane_cds");      
+          comboItems=rlaneCds.split(ROWMARK);
+          rlane_cds.InsertItem(-1, "ALL|", "ALL");
+          
+          for (var i=0 ; i < comboItems.length ; i++) {
+        	  if(comboItems[i]!==null){
+        		  rlane_cds.InsertItem(-1, comboItems[i], comboItems[i]);
+        	  }
+
+          }
+         
+          break;
+      case IBSEARCH_ASYNC03: // Get List Trade Code By Carrier Code and Rev Lane
+          formObj.f_cmd.value = SEARCH25; //SEARCHLIST06;
+          //Remove all old code
+          trd_cd.RemoveAll();
+          var joCrrCds = jo_crr_cds.GetSelectCode(); 
+          var rLaneCds = rlane_cds.GetSelectCode();
+          var param = FormQueryString(formObj);
+          var sXml = sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
+          var comboItems="";
+          var trdCds    = ComGetEtcData(sXml, "trd_cds");      
+          comboItems=trdCds.split(ROWMARK);
+          for (var i=0 ; i < comboItems.length ; i++) {
+        	  if(comboItems[i]!==null){
+        		  trd_cd.InsertItem(-1, comboItems[i], comboItems[i]);
+        	  }
+        	  trd_cd.SetSelectIndex(0);
+        	 
+          }
+          comboItems="";
+          
           break;
       case IBINSERT: // insert
           break;
@@ -633,6 +665,14 @@ function jo_crr_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex, new
 	
  }
 }
+function rlane_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex, newText, newCode) {
+	  var formObj = document.form;
+	 if(comboObj.GetSelectCode()!=null){
+		 doActionIBSheet(getCurrentSheet(), formObj, IBSEARCH_ASYNC03);
+		 trd_cd.SetEnable(1);
+		
+	 }
+	}
 
 
 function GetCheckConditionPeriod(){

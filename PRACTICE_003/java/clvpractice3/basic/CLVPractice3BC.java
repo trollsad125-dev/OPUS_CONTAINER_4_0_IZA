@@ -72,4 +72,6 @@ public interface CLVPractice3BC {
 
 	public List<SummaryVO> searchJooCrrCds(SummaryVO summaryVO) throws EventException;
 	public List<SummaryVO> searchRevLaneCds(SummaryVO summaryVO) throws EventException;
+
+	public List<SummaryVO> searchTrdCds(SummaryVO summaryVo) throws EventException;
 }

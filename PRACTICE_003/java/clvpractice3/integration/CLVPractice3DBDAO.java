@@ -15,9 +15,11 @@ package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 
 
@@ -532,7 +534,7 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 	  * @exception DAOException
 	  */
 	 @SuppressWarnings("unchecked")
-	 public List<SummaryVO> searchRevLaneCds(SummaryVO jooCarrierVO) throws DAOException {
+	 public List<SummaryVO> searchRevLaneCds(SummaryVO summaryVO) throws DAOException {
 		 DBRowSet dbRowset = null;
 		 List<SummaryVO> list = new ArrayList<>();
 		 //query parameter
@@ -541,14 +543,51 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 		 Map<String, Object> velParam = new HashMap<String, Object>();
 		 
 		 try{
-			 if(jooCarrierVO != null){
-				Map<String, String> mapVO = jooCarrierVO .getColumnValues();
+			 if(summaryVO != null){
+				Map<String, String> mapVO = summaryVO .getColumnValues();
 				param.putAll(mapVO);
 				
 				velParam.putAll(mapVO);
+				velParam.put("crrCds", Arrays.asList(summaryVO.getJoCrrCd().split(",")));
 			 }
 			 dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAOSearchRLaneCdRSQL(), param, velParam);
-			 list = (List)RowSetUtil.rowSetToVOs(dbRowset, JooCarrierVO .class);
+			 list = (List)RowSetUtil.rowSetToVOs(dbRowset, SummaryVO .class);
+		 } catch(SQLException se) {
+			 log.error(se.getMessage(),se);
+			 throw new DAOException(new ErrorHandler(se).getMessage());
+		 } catch(Exception ex) {
+			 log.error(ex.getMessage(),ex);
+			 throw new DAOException(new ErrorHandler(ex).getMessage());
+		 }
+		 return list;
+	 }
+		/**
+	  * search carrier code
+	  * 
+	  * @param JooCarrierVO jooCarrierVO
+	  * @return List<JooCarrierVO>
+	  * @exception DAOException
+	  */
+	 @SuppressWarnings("unchecked")
+	 public List<SummaryVO> searchTradeCds(SummaryVO summaryVO) throws DAOException {
+		 DBRowSet dbRowset = null;
+		 List<SummaryVO> list = new ArrayList<>();
+		 //query parameter
+		 Map<String, Object> param = new HashMap<String, Object>();
+		 //velocity parameter
+		 Map<String, Object> velParam = new HashMap<String, Object>();
+		 
+		 try{
+			 if(summaryVO != null){
+				Map<String, String> mapVO = summaryVO .getColumnValues();
+				param.putAll(mapVO);
+				
+				velParam.putAll(mapVO);
+				velParam.put("crrCds", Arrays.asList(summaryVO.getJoCrrCd().split(",")));
+				
+			 }
+			 dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAOSearchTrdCdsRSQL(), param, velParam);
+			 list = (List)RowSetUtil.rowSetToVOs(dbRowset, SummaryVO .class);
 		 } catch(SQLException se) {
 			 log.error(se.getMessage(),se);
 			 throw new DAOException(new ErrorHandler(se).getMessage());

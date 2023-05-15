@@ -94,11 +94,9 @@ public class CLVPractice3BCImpl extends BasicCommandSupport implements CLVPracti
 			List<SummaryVO> deleteVoList = new ArrayList<SummaryVO>();
 			for ( int i=0; i<summaryVO .length; i++ ) {
 				if ( summaryVO[i].getIbflag().equals("I")){
-					summaryVO[i].setCreUsrId(account.getUsr_id());
-					summaryVO[i].setUpdUsrId(account.getUsr_id());
+
 					insertVoList.add(summaryVO[i]);
 				} else if ( summaryVO[i].equals("U")){
-					summaryVO[i].setCreUsrId(account.getUsr_id());
 					updateVoList.add(summaryVO[i]);
 				} else if ( summaryVO[i].getIbflag().equals("D")){
 					deleteVoList.add(summaryVO[i]);
@@ -137,11 +135,10 @@ public class CLVPractice3BCImpl extends BasicCommandSupport implements CLVPracti
 			List<DetailVO> deleteVoList = new ArrayList<DetailVO>();
 			for ( int i=0; i<detailVO .length; i++ ) {
 				if ( detailVO[i].getIbflag().equals("I")){
-					detailVO[i].setCreUsrId(account.getUsr_id());
-					detailVO[i].setUpdUsrId(account.getUsr_id());
+
 					insertVoList.add(detailVO[i]);
 				} else if ( detailVO[i].getIbflag().equals("U")){
-					detailVO[i].setUpdUsrId(account.getUsr_id());
+					
 					updateVoList.add(detailVO[i]);
 				} else if ( detailVO[i].getIbflag().equals("D")){
 					deleteVoList.add(detailVO[i]);
@@ -193,6 +190,23 @@ public class CLVPractice3BCImpl extends BasicCommandSupport implements CLVPracti
 	public List<SummaryVO> searchRevLaneCds(SummaryVO summaryVo) throws EventException {
 		try {
 			return dbDao.searchRevLaneCds(summaryVo);
+		} catch(DAOException ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		} catch (Exception ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}
+	}
+	/**
+	 * searching Carrier Code list, it's used dropdownlist
+	 * 
+	 * @param JooCarrierVO jooCarrierVO
+	 * @return List<JooCarrierVO>
+	 * @exception EventException
+	 */
+	@Override
+	public List<SummaryVO> searchTrdCds(SummaryVO summaryVo) throws EventException {
+		try {
+			return dbDao.searchTradeCds(summaryVo);
 		} catch(DAOException ex) {
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		} catch (Exception ex) {

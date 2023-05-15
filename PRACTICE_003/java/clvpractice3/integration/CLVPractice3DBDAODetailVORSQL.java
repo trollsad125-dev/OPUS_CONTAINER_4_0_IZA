@@ -1,13 +1,13 @@
 /*=========================================================
 *Copyright(c) 2023 CyberLogitec
 *@FileName : CLVPractice3DBDAODetailVORSQL.java
-*@FileTitle : CLV Practice 3
+*@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.11
+*@LastModifyDate : 2023.05.15
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.11 
+* 2023.05.15 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration;

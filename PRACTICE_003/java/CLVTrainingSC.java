@@ -144,6 +144,8 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 				eventResponse = initCrrCdPrc3(e);
 			}else if (e.getFormCommand().isCommand(FormCommand.SEARCH24)) {
 				eventResponse = initRevLane(e);
+			}else if (e.getFormCommand().isCommand(FormCommand.SEARCH25)) {
+				eventResponse = initTradeCode(e);
 			}
 		
 		}
@@ -624,13 +626,47 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 			StringBuilder rLaneCdsBuilder = new StringBuilder();
 			if(null != rLaneCds && rLaneCds.size() > 0){
 				for(int i =0; i < rLaneCds.size(); i++){
-					rLaneCdsBuilder.append(rLaneCds.get(i).getJoCrrCd());
+					rLaneCdsBuilder.append(rLaneCds.get(i).getRlaneCd());
 					if (i < rLaneCds.size() - 1){
 						rLaneCdsBuilder.append("|");
 					}	
 				}
 			}
 			eventResponse.setETCData("rlane_cds", rLaneCdsBuilder.toString());
+			
+		}catch(EventException ex){
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}catch(Exception ex){
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}	
+		return eventResponse;
+	}
+	/**
+	 * This method for ComboBox Trade Code data
+	 * 
+	 * @param Event e
+	 * @return EventResponse
+	 * @exception EventException
+	 */
+	private EventResponse initTradeCode(Event e) throws EventException {
+		// PDTO(Data Transfer Object including Parameters)
+		GeneralEventResponse eventResponse = new GeneralEventResponse();
+		ClvPractice003Event event = (ClvPractice003Event)e;
+		CLVPractice3BC command = new CLVPractice3BCImpl();
+
+		try{
+
+			List<SummaryVO> trdCds = command.searchTrdCds(event.getSummaryVO());
+			StringBuilder trdCdsBuilder = new StringBuilder();
+			if(null != trdCds && trdCds.size() > 0){
+				for(int i =0; i < trdCds.size(); i++){
+					trdCdsBuilder.append(trdCds.get(i).getTrdCd());
+					if (i < trdCds.size() - 1){
+						trdCdsBuilder.append("|");
+					}	
+				}
+			}
+			eventResponse.setETCData("trd_cds", trdCdsBuilder.toString());
 			
 		}catch(EventException ex){
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
