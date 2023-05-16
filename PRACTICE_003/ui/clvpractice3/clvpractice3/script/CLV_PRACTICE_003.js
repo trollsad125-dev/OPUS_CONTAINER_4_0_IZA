@@ -174,9 +174,7 @@ function tab1_OnChange(tabObj , nItem)
     var objs=document.all.item("tabLayer");
     objs[nItem].style.display="Inline";
     objs[beforetab].style.display="none";
-    //--------------- important --------------------------//
-    objs[beforetab].style.zIndex=objs[nItem].style.zIndex -1 ;
-    //------------------------------------------------------//
+
     beforetab=nItem;
     
     if (beforetab == 0 && summaryFlag == 0) {
