@@ -35,7 +35,9 @@ import com.clt.framework.support.view.signon.SignOnUserAccount;
 public interface CLVPractice3BC {
 
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * 
+	 * 
+	 * Search Joo Invoice Detail
 	 * 
 	 * @param DetailVO	detailVO
 	 * @return List<DetailVO>
@@ -44,7 +46,7 @@ public interface CLVPractice3BC {
 	public List<DetailVO> searchDetailVO(DetailVO detailVO) throws EventException;
 
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Search Joo Invoice 
 	 * 
 	 * @param SummaryVO	summaryVO
 	 * @return List<SummaryVO>
@@ -53,25 +55,29 @@ public interface CLVPractice3BC {
 	public List<SummaryVO> searchSummaryVO(SummaryVO summaryVO) throws EventException;
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Search Joo Carrier Code 
 	 * 
-	 * @param SummaryVO[] summaryVO
-	 * @param account SignOnUserAccount
+	 * @param SummaryVO	summaryVO
+	 * @return List<SummaryVO>
 	 * @exception EventException
 	 */
-	public void multiSummaryVO(SummaryVO[] summaryVO,SignOnUserAccount account) throws EventException;
+	public List<SummaryVO> searchJooCrrCds(SummaryVO summaryVO) throws EventException;
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Search Joo Rev Lane Code 
 	 * 
-	 * @param DetailVO[] detailVO
-	 * @param account SignOnUserAccount
+	 * @param SummaryVO	summaryVO
+	 * @return List<SummaryVO>
 	 * @exception EventException
 	 */
-	public void multiDetailVO(DetailVO[] detailVO,SignOnUserAccount account) throws EventException;
-
-	public List<SummaryVO> searchJooCrrCds(SummaryVO summaryVO) throws EventException;
 	public List<SummaryVO> searchRevLaneCds(SummaryVO summaryVO) throws EventException;
 
+	/**
+	 * Search Joo Trade Code 
+	 * 
+	 * @param SummaryVO	summaryVO
+	 * @return List<SummaryVO>
+	 * @exception EventException
+	 */
 	public List<SummaryVO> searchTrdCds(SummaryVO summaryVo) throws EventException;
 }

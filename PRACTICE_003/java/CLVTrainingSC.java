@@ -16,12 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-
-
-
-
-
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.basic.CLVPractice2BC;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.basic.CLVPractice2BCImpl;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.event.ClvPractice002Event;
@@ -39,18 +33,16 @@ import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.basic.ErrMsgMgmtBC;
 import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.basic.ErrMsgMgmtBCImpl;
 import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.event.ClvTraining001Event;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration.ErrMsgMgmtDBDAO;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
+import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.event.EventResponse;
-import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.GeneralEventResponse;
 import com.clt.framework.support.controller.html.FormCommand;
 import com.clt.framework.support.layer.service.ServiceCommandSupport;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
-import com.clt.apps.opus.fns.joo.training.joocarriermgmt.basic.JooCarrierMgmtBC;
-import com.clt.apps.opus.fns.joo.training.joocarriermgmt.basic.JooCarrierMgmtBCImpl;
-import com.clt.apps.opus.fns.joo.training.joocarriermgmt.event.FnsJoo0901Event;
 
 
 
@@ -135,12 +127,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 			else if (e.getFormCommand().isCommand(FormCommand.SEARCH01)) {
 				eventResponse = searchSummaryVO(e);
 			}
-			else if (e.getFormCommand().isCommand(FormCommand.MULTI01)) {
-				eventResponse = multiSummaryVO(e);
-			}
-			else if (e.getFormCommand().isCommand(FormCommand.MULTI02)) {
-				eventResponse = multiDetailVO(e);
-			} else if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
+			else if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
 				eventResponse = initCrrCdPrc3(e);
 			}else if (e.getFormCommand().isCommand(FormCommand.SEARCH24)) {
 				eventResponse = initRevLane(e);
@@ -460,8 +447,8 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	/**
-	 * CLV_PRACTICE_003 : [이벤트]<br>
-	 * [비즈니스대상]을 [행위]합니다.<br>
+	 * 	 * Search JOO INVOICE_DTL based on Detail VO
+
 	 * 
 	 * @param Event e
 	 * @return EventResponse
@@ -476,6 +463,19 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		try{
 			List<DetailVO> list = command.searchDetailVO(event.getDetailVO());
 			eventResponse.setRsVoList(list);
+			StringBuilder allFilterCurrency = new StringBuilder();
+			if(null != list && list.size() > 0){
+				for(int i =0; i < list.size(); i++){
+					String[] arrayFilter = allFilterCurrency.toString().split("\\|");
+					if(!Arrays.asList(arrayFilter).contains(list.get(i).getLoclCurrCd())){
+						allFilterCurrency.append(list.get(i).getLoclCurrCd());
+						if (i < list.size() - 1){
+							allFilterCurrency.append("|");
+						}
+					}
+				}
+			}
+			eventResponse.setETCData("currency_data",allFilterCurrency.toString());
 		}catch(EventException ex){
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}catch(Exception ex){
@@ -484,8 +484,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	/**
-	 * CLV_PRACTICE_003 : [이벤트]<br>
-	 * [비즈니스대상]을 [행위]합니다.<br>
+	 * Search JOO INVOICE based on Summary VO
 	 * 
 	 * @param Event e
 	 * @return EventResponse
@@ -520,60 +519,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		}	
 		return eventResponse;
 	}
-	/**
-	 * CLV_PRACTICE_003 : [이벤트]<br>
-	 * [비즈니스대상]을 [행위]합니다.<br>
-	 *
-	 * @param Event e
-	 * @return EventResponse
-	 * @exception EventException
-	 */
-	private EventResponse multiSummaryVO(Event e) throws EventException {
-		// PDTO(Data Transfer Object including Parameters)
-		GeneralEventResponse eventResponse = new GeneralEventResponse();
-		ClvPractice003Event event = (ClvPractice003Event)e;
-		CLVPractice3BC command = new CLVPractice3BCImpl();
-		try{
-			begin();
-			command.multiSummaryVO(event.getSummaryVOS(),account);
-			eventResponse.setUserMessage(new ErrorHandler("XXXXXXXXX").getUserMessage());
-			commit();
-		} catch(EventException ex) {
-			rollback();
-			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
-		} catch(Exception ex) {
-			rollback();
-			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
-		}
-		return eventResponse;
-	}
-	/**
-	 * CLV_PRACTICE_003 : [이벤트]<br>
-	 * [비즈니스대상]을 [행위]합니다.<br>
-	 *
-	 * @param Event e
-	 * @return EventResponse
-	 * @exception EventException
-	 */
-	private EventResponse multiDetailVO(Event e) throws EventException {
-		// PDTO(Data Transfer Object including Parameters)
-		GeneralEventResponse eventResponse = new GeneralEventResponse();
-		ClvPractice003Event event = (ClvPractice003Event)e;
-		CLVPractice3BC command = new CLVPractice3BCImpl();
-		try{
-			begin();
-			command.multiDetailVO(event.getDetailVOS(),account);
-			eventResponse.setUserMessage(new ErrorHandler("XXXXXXXXX").getUserMessage());
-			commit();
-		} catch(EventException ex) {
-			rollback();
-			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
-		} catch(Exception ex) {
-			rollback();
-			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
-		}
-		return eventResponse;
-	}
+
 	/**
 	 * This method for initial data
 	 * 

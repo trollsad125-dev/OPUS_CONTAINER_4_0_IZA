@@ -10,9 +10,6 @@
 * 2023.05.11 
 * 1.0 Creation
 =========================================================*/
-
-	msgs['PRC00001']="'To date' must be later than 'From date'.";
-    msgs['PRC00002']="{?msg1} code is invalid !";
     
 // common global variable
 var sheetObjects = new Array();
@@ -22,8 +19,14 @@ var comboCnt = 0;
 var tabObjects=new Array();
 var tabCnt=0 ;
 var beforetab=1;
+var summaryFlag = 0;
+var detailFlag=0
 var ROWMARK = "|";
 var FIELDMARK=",";
+msgs['PRC00002']="'To date' must be later than 'From date'.";
+msgs['PRC00001']="There is any error in script.  Please check it again.";
+
+
 //Event handler processing by button click event */
 document.onclick = processButtonClick;
 // Event handler processing by button name */
@@ -39,43 +42,56 @@ function processButtonClick() {
 		}
 
 		switch (srcName) {
-			case "btn_Retrieve":
-				doActionIBSheet(sheetObject1, formObj, IBSEARCH);
-				break;
-			case "btn_New":
-				resetForm(formObj);
-				break;
-			case "btn_Save":
-				doActionIBSheet(sheetObject1, formObj, IBSAVE);
-				break;
-			case "btn_DownExcel":
-				if (sheetObject1.RowCount() < 1) {// no data
-					ComShowCodeMessage("COM132501");
-				} else {
-					sheetObject1.Down2Excel({ HiddenColumn:1,Merge:1});
-				}
-				break;
-			case "btns_calendar1":
-			case "btns_calendar2":
-                var cal=new ComCalendar();
-                if(srcName == "btns_calendar1"){
-                    cal.select(formObj.date_fr, 'yyyy-MM-dd');
-                }else{
-                    cal.select(formObj.date_to, 'yyyy-MM-dd');
-                }
-                break;
-			case "btn_RowDelete":
-				doActionIBSheet(sheetObject1, formObj, IBDELETE);
-				break;
-			case "btn_RowAdd":
-				doActionIBSheet(sheetObject1, formObj, IBINSERT);
-				break;
-			default :
-				break;
+		case "btn_Retrieve":
+			doActionIBSheet(sheetObject1, formObj, IBSEARCH);
+			break;
+		case "btn_New":
+			resetForm(formObj);
+			break;
+		case "btn_DownExcel":
+			if (sheetObject1.RowCount() < 1) {// no data
+				ComShowCodeMessage("COM132501");
+			} else {
+				sheetObject1.Down2Excel({
+					HiddenColumn : 1,
+					Merge : 1
+				});
+			}
+			break;
+		case "btn_date_fr_down":
+			UF_addMonth(formObj.date_fr, -1);
+			sheetObject1.RemoveAll();
+			break;
+		case "btn_date_fr_up":
+			if (!GetCheckConditionPeriod()) {
+				ComShowCodeMessage("PRC00002");
+				return;
+			}
+			UF_addMonth(formObj.date_fr, +1);
+			sheetObject1.RemoveAll();
+			break;
+		case "btn_date_to_down":
+			if (!GetCheckConditionPeriod()) {
+				ComShowCodeMessage("PRC00002");
+				return;
+			}
+			UF_addMonth(formObj.date_to, -1);
+			sheetObject1.RemoveAll();
+			break;
+		case "btn_date_to_up":
+			UF_addMonth(formObj.date_to, +1);
+			sheetObject1.RemoveAll();
+			break;
+		case "btn_DownExcel2":
+			doActionIBSheet(sheetObject1, formObj, IBDOWNEXCEL);
+			sheetObject1.RemoveAll();
+			break;
+		default:
+			break;
 		} // end switch
 	} catch (e) {
 		if (e == "[object Error]") {
-			ComShowCodeMessage('JOO00001');
+			ComShowCodeMessage('PRC00001');
 		} else {
 			ComShowMessage(e.message);
 		}
@@ -83,15 +99,17 @@ function processButtonClick() {
 }
 /**
  * rest form when click new button
+ * @param formObj
  */
 function resetForm(formObj){
 	formObj.reset();
-	sheetObjects[0].RemoveAll();
-	s_jo_crr_cd.SetSelectIndex(0);
+	getCurrentSheet().RemoveAll();
+	jo_crr_cds.SetSelectIndex(0);
 }
 /**
  * registering IBSheet Object as list adding process for list in case of needing
  * batch processing with other items defining list on the top of source
+ * @param sheet_obj
  */
 function setSheetObject(sheet_obj) {
 	sheetObjects[sheetCnt++] = sheet_obj;
@@ -115,6 +133,7 @@ function getCurrentSheet(){
  * registering IBCombo Object as list param : combo_obj adding process for list
  * in case of needing batch processing with other items defining list on the top
  * of source
+ * @param combo_obj
  */
 function setComboObject(combo_obj) {
     comboObjects[comboCnt++] = combo_obj;
@@ -123,6 +142,7 @@ function setComboObject(combo_obj) {
  * registering IBTab Object as list
  * adding process for list in case of needing batch processing with other items
  * defining list on the top of source
+ * @param tab_obj
  */
 function setTabObject(tab_obj){
     tabObjects[tabCnt++]=tab_obj;
@@ -130,6 +150,8 @@ function setTabObject(tab_obj){
 /**
  * initializing Tab
  * setting Tab items
+ * @param tabObj
+ * @param tabNo
  */
 function initTab(tabObj , tabNo) {
      switch(tabNo) {
@@ -144,6 +166,8 @@ function initTab(tabObj , tabNo) {
 /**
  * Event when clicking Tab
  * activating selected tab items
+ * @param tabObj
+ * @param nItem
  */
 function tab1_OnChange(tabObj , nItem)
 {
@@ -155,9 +179,9 @@ function tab1_OnChange(tabObj , nItem)
     //------------------------------------------------------//
     beforetab=nItem;
     
-    if (beforetab == 0) {
+    if (beforetab == 0 && summaryFlag == 0) {
         ComFireEvent(ComGetObject("btn_Retrieve") ,"click");
-    }else{
+    }else if(beforetab == 1 && detailFlag == 0){
         ComFireEvent(ComGetObject("btn_Retrieve") ,"click");
     }
     
@@ -168,8 +192,8 @@ function tab1_OnChange(tabObj , nItem)
  * setting Combo basic info
  * 
  * @param comboObj
- * @param comboIndex
- *            Number
+ * @param comboNo
+ *            
  */
 function initCombo(comboObj, comboNo) {
     var formObject = document.form;
@@ -180,8 +204,7 @@ function initCombo(comboObj, comboNo) {
                 SetMultiSeparator(",");  // add 
                 SetUseAutoComplete(1);
                 SetColAlign(0, "left");
-                SetColWidth(0, "150");
-                ValidChar(2, 1); // Uppercase
+                SetColWidth(0, "60");
                 SetDropHeight(160);
                 SetMaxLength(3);
             }
@@ -202,23 +225,22 @@ function initCombo(comboObj, comboNo) {
                 SetMultiSelect(0);
                 SetUseAutoComplete(1);
                 SetColAlign(0, "left");
-                // SetColWidth(0, "60");
-                ValidChar(2, 1); // Uppercase
                 SetDropHeight(160);
+                SetColWidth(0, "60");
                 SetMaxLength(3);
                 SetEnable(0);
             }
+            comboObj.RemoveAll();
             break;
 
         case "rlane_cds": 
             with (comboObj) { 
-                SetMultiSelect(false);
+                SetMultiSelect(0);
                 SetUseAutoComplete(1);
                 SetColAlign(0, "left");
-                SetColWidth(0, "90");
+                SetColWidth(0, "60");
                 SetDropHeight(160);
-                ValidChar(2,1);//only upper case
-                SetMaxLength(7);
+                SetMaxLength(3);
                 SetEnable(0);
             }
             comboObj.RemoveAll();
@@ -245,68 +267,18 @@ function loadPage() {
     for (var k = 0; k < comboObjects.length; k++) {
         initCombo(comboObjects[k], k + 1);
     }
-    //initControl();
     resizeSheet();
-    //doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
-}
-/*function initControl() {
-    var formObject=document.form;   
-
-    
-    TO : 현재 월
-    FR : 현재 월 - 2 : 3개월전.
-     
-    initPeriod();  
-    
-    doActionIBSheet(sheetObjects[0], document.form, IBSEARCH_ASYNC02);
 }
 
-function initPeriod(){
-    var formObj=document.form;
-    
-    //From : -3년, To : +1 월
-    var tmpToYm = ComGetNowInfo("ymd","-"); //ComGetDateAdd(formObj.exe_yrmon.value,"M", 1);
-    formObj.to_acct_yrmon.value=JooGetDateFormat(tmpToYm,"ym");
-    
-    //년월 만 하면 -3년이 넘게 설정 되어 동일 월로 설정하기 위해서 2015-07-02 로 Day 를 마춘다.
-    var tmpFrYm = ComGetDateAdd(formObj.to_acct_yrmon.value+"-01","M", -2);
-    formObj.fr_acct_yrmon.value=JooGetDateFormat(tmpFrYm,"ym"); 
-}
-*/
-
-
-function jo_crr_cd_OnCheckClick(comboObj, index, code) {
-    if(index==0) {          
-        var bChk=comboObj.GetItemCheck(index);
-        if(bChk){
-            for(var i=1 ; i < comboObj.GetItemCount() ; i++) {
-                comboObj.SetItemCheck(i,0);
-            }
-        }
-    } else {
-        //ALL 
-        var bChk=comboObj.GetItemCheck(index);
-        if (bChk) {
-            comboObj.SetItemCheck(0,0);
-        }
-    }
-    var checkCnt=0;
-    var count = parseInt(comboObj.GetItemCount());
-    for(var i = 1 ; i <  count; i++) {
-        if(comboObj.GetItemCheck(i)) {
-            checkCnt++;
-        }
-    }
-    if(checkCnt == 0) {
-        comboObj.SetItemCheck(0,true, null, null, false);
-    }
-}
 /**
  * setting sheet initial values and header param : sheetObj, sheetNo adding case
  * as numbers of counting sheets
+ * @param sheetObj
+ * @param sheetNo
  */
 function initSheet(sheetObj, sheetNo) {
 	var cnt = 0;
+	initPeriod();
 	switch (sheetObj.id) {
 	 case "t1sheet1": // t1sheet1 init     //t1sheet1 init
          with(sheetObj){
@@ -368,25 +340,25 @@ function initSheet(sheetObj, sheetNo) {
                 ];
          
         InitColumns(cols);
-        //SetColProperty(0    , prefix +"re_divr_cd"      , {ComboText:"|Rev|Exp", ComboCode:"|R|E", DefaultValue:"R"} );
         SetCountPosition();
         SetEditable(1);
         
-     }
-    break;
-}
-}
-function resizeSheet(){
-    ComResizeSheet(sheetObjects[0]);
+	     }
+	    break;
+	}
 }
 
-//handling sheet process
-function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
+/**
+ * Do Action in IB Sheet 
+ * @param sheetObj
+ * @param formObj
+ * @param sAction
+ */
+function doActionIBSheet(sheetObj, formObj, sAction) {
   sheetObj.ShowDebugMsg(false);
   var sheetID=sheetObj.id;
   switch (sAction) {
       case IBSEARCH: // retrieve
-          if( !validateForm(sheetObj,formObj,sAction) ){return;}
           if ( sheetID == "t1sheet1"){
               formObj.f_cmd.value=SEARCH01;
               var param = FormQueryString(formObj);
@@ -395,15 +367,20 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
               var sXml=sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
               allCurrency	  = ComGetEtcData(sXml, "currency_data");
               sheetObj.LoadSearchData(sXml,{Sync:1} );
+              
               ComOpenWait(false);
+              summaryFlag = 1;
           }else if ( sheetID == "t2sheet1"){
               formObj.f_cmd.value=SEARCH02;
+              
               var param = FormQueryString(formObj);
                   param += "&" + ComGetPrefixParam(sheetID+"_");
               ComOpenWait(true);
               var sXml=sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
+              allCurrency	  = ComGetEtcData(sXml, "currency_data");
               sheetObj.LoadSearchData(sXml,{Sync:1} );
               ComOpenWait(false);
+              detailFlag =1;
           }
           break; 
 
@@ -447,32 +424,39 @@ function doActionIBSheet(sheetObj, formObj, sAction, cRow) {
           comboItems="";
           
           break;
-      case IBINSERT: // insert
-          break;
-          
-      case IBSEARCH_ASYNC08: // Carrier/Trade/RLane Combo Code By Auth Office Code
-          var param = "";
-              param += "f_cmd="   + SEARCH23;
-          
-          var sXml = sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
-          
-          var joCrrCds    = ComGetEtcData(sXml, "jo_crr_cds");
-          
-          var trdCds      = ComGetEtcData(sXml, "trd_cds");
-          var rlaneCds    = ComGetEtcData(sXml, "rlane_cds");            
-          
-          var comboItems=joCrrCds.split(ROWMARK);
-          var comboItem="";
-          jo_crr_cds.InsertItem(-1, "ALL|", "ALL");    //ALL
-          for (var i=0 ; i < comboItems.length ; i++) {
-              jo_crr_cds.InsertItem(-1, comboItems[i], comboItems[i]);
+      case IBDOWNEXCEL:
+    	  if ( sheetID == "t1sheet1"){
+              formObj.f_cmd.value=SEARCH01;
+              var param = FormQueryString(formObj);
+                  param += "&" + ComGetPrefixParam(sheetID+"_");
+              ComOpenWait(true);
+              var sXml=sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
+              allCurrency	  = ComGetEtcData(sXml, "currency_data");
+              sheetObj.LoadSearchData(sXml,{Sync:1} );
+              ComOpenWait(false);
+          }else if ( sheetID == "t2sheet1"){
+              formObj.f_cmd.value=SEARCH02;
+              var param = FormQueryString(formObj);
+                  param += "&" + ComGetPrefixParam(sheetID+"_");
+              ComOpenWait(true);
+              var sXml=sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
+              sheetObj.LoadSearchData(sXml,{Sync:1} );
+              ComOpenWait(false);
           }
-          jo_crr_cds.SetSelectIndex(0);
-          
+    	  sheetObj.Down2Excel({
+				HiddenColumn : 1,
+				Merge : 1
+			});
+    	  
           break;
-  }
+	}	
 }
-function t1sheet1_OnSearchEnd(sheetObj, ErrMsg) {
+ 
+/**
+ * Tab1Sheet1 when Search end and handle data
+ * @param sheetObj
+ */
+function t1sheet1_OnSearchEnd(sheetObj) {
   if (sheetObj.RowCount() > 0) {
 
 	  var index = "";
@@ -557,73 +541,117 @@ function t1sheet1_OnSearchEnd(sheetObj, ErrMsg) {
       
   }
 }
-function t1sheet1_OnSaveEnd(sheetObj, Code, Msg, StCode, StMsg) {
-  if (sheetObj.RowCount() > 0) {
 
-  }
-}
-
+/**
+ * Tab1Sheet1 when Search end and handle data
+ * @param sheetObj
+ */
 function t2sheet1_OnSearchEnd(sheetObj, ErrMsg) {
-  if (sheetObj.RowCount() > 0) {
+	if (sheetObj.RowCount() > 0) {
 
+		var index = "";
+		var strPartner = "";
+		var nextStrPartner = "";
+		var strLane = "";
+		var nextStrLane = "";
+		var iStRow = sheetObj.HeaderRows();
+		var iEdRow = sheetObj.LastRow();
+		var prefix = "t2sheet1_";
+		var totalColumnValue = 1;
+		for (var i = iStRow; i <= iEdRow; i++) {
+			// First line in sheet
+			strPartner = sheetObj.GetCellText(i, prefix + "jo_crr_cd");
+			strLane = sheetObj.GetCellText(i, prefix + "rlane_cd");
+			// Next First Line in Sheet
+			nextStrPartner = sheetObj.GetCellText(i + 1, prefix + "jo_crr_cd");
+			nextStrLane = sheetObj.GetCellText(i + 1, prefix + "rlane_cd");
 
-      var str = "";
-      var iStRow = sheetObj.HeaderRows();
-      var iEdRow = sheetObj.LastRow();
-      var prefix = "t2sheet1_";
-      for(var i=iStRow;i<=iEdRow;i++){
-          str = sheetObj.GetCellText(i, prefix + "jo_crr_cd");   // ITM 항목 읽기
-          
-          if(str.indexOf("Total")>-1){
-              sheetObj.SetMergeCell(i,1,1,11); // OWN 5칸 머지
-              
-              var tmpStr = ComReplaceStr(str+"","Total:","");
-              sheetObj.SetCellValue(i, prefix + "jo_crr_cd", tmpStr, 0); // OWN 5칸 머지
-              
-              sheetObj.SetRowBackColor(i,"#FCDCEE");
-              sheetObj.SetCellFontBold(i,  prefix + "jo_crr_cd", 1);
-              sheetObj.SetCellFontBold(i,  prefix + "locl_curr_cd", 1);
-              sheetObj.SetCellFontBold(i,  prefix + "inv_act_amt", 1);
-              sheetObj.SetCellFontBold(i,  prefix + "slp_act_amt", 1);
-          }else if(str.indexOf("Subtotal")>-1){
-              sheetObj.SetMergeCell(i,1,1,11); // OWN 5칸 머지
-              
-              var tmpStr = ComReplaceStr(str+"","Subtotal:","");
-              sheetObj.SetCellValue(i, prefix + "jo_crr_cd", tmpStr, 0); // OWN 5칸 머지
-              sheetObj.SetRowBackColor(i,"#FEFA91");   
-              sheetObj.SetCellFontBold(i,  prefix + "jo_crr_cd", 1);  
-              sheetObj.SetCellFontBold(i,  prefix + "locl_curr_cd", 1);   
-              sheetObj.SetCellFontBold(i,  prefix + "inv_act_amt", 1);    
-              sheetObj.SetCellFontBold(i,  prefix + "slp_act_amt", 1);         
-          }
-      }
-  }
+			if (strPartner === nextStrPartner && strLane === nextStrLane) {
+				totalColumnValue++;
+
+			} else {
+				// Insert next row
+				sheetObj.DataInsert(i + 1);
+
+				// Get Current total data
+				var currentCurr = sheetObj.GetCellText(i, prefix
+						+ "locl_curr_cd");
+				var totalRevMoney = 0;
+				var totalExpenseMoney = 0;
+
+				for (var j = 0; j < totalColumnValue; j++) {
+					var revMoney = sheetObj.GetCellValue(i - j, prefix
+							+ "inv_rev_act_amt");
+					var expenseMoney = sheetObj.GetCellValue(i - j, prefix
+							+ "inv_exp_act_amt");
+					totalRevMoney = totalRevMoney + revMoney;
+					totalExpenseMoney = totalExpenseMoney + expenseMoney;
+				}
+				// Handle total value
+				i++;
+				index += i + ROWMARK;
+				sheetObj.SetRowBackColor(i, "#FCDCEE");
+				// Set Last Row again
+				iEdRow = sheetObj.LastRow();
+				sheetObj.SetCellFontBold(i, prefix + "jo_crr_cd", 1);
+				sheetObj.SetCellFontBold(i, prefix + "locl_curr_cd", 1);
+				sheetObj.SetCellFontBold(i, prefix + "inv_rev_act_amt", 1);
+				sheetObj.SetCellFontBold(i, prefix + "inv_exp_act_amt", 1);
+				// Currency
+				sheetObj.SetCellValue(i, 8, currentCurr);
+				// Rev
+				sheetObj.SetCellValue(i, 9, totalRevMoney);
+				// Expense
+				sheetObj.SetCellValue(i, 10, totalExpenseMoney);
+				totalColumnValue = 1;
+			}
+
+		}
+		var allCurrencyG = allCurrency.split(ROWMARK);
+		var allIndexAdded = index.split(ROWMARK);
+
+		for (var i = 0; i < allCurrencyG.length; i++) {
+			if (allCurrencyG[i] !== "") {
+				sheetObj.DataInsert(-1);
+				this["totalRev" + allCurrencyG[i]] = 0;
+				this["totalExp" + allCurrencyG[i]] = 0;
+				for (var j = 0; j < allIndexAdded.length; ++j) {
+					if (allCurrencyG[i] == sheetObj.GetCellText(
+							allIndexAdded[j], prefix + "locl_curr_cd")) {
+						this["totalRev" + allCurrencyG[i]] = this["totalRev"
+								+ allCurrencyG[i]]
+								+ sheetObj.GetCellValue(allIndexAdded[j],
+										prefix + "inv_rev_act_amt");
+						this["totalExp" + allCurrencyG[i]] = this["totalExp"
+								+ allCurrencyG[i]]
+								+ sheetObj.GetCellValue(allIndexAdded[j],
+										prefix + "inv_exp_act_amt");
+					}
+				}
+				sheetObj.SetCellValue(sheetObj.LastRow(), 8, allCurrencyG[i]);
+				sheetObj.SetCellValue(sheetObj.LastRow(), 9, this["totalRev"
+						+ allCurrencyG[i]]);
+				sheetObj.SetCellValue(sheetObj.LastRow(), 10, this["totalExp"
+						+ allCurrencyG[i]]);
+				sheetObj.SetCellFontBold(sheetObj.LastRow(), prefix
+						+ "locl_curr_cd", 1);
+				sheetObj.SetCellFontBold(sheetObj.LastRow(), prefix
+						+ "inv_rev_act_amt", 1);
+				sheetObj.SetCellFontBold(sheetObj.LastRow(), prefix
+						+ "inv_exp_act_amt", 1);
+				sheetObj.SetRowBackColor(sheetObj.LastRow(), "#FFD700");
+			}
+		}
+
+	}
 }
 /**
-* handling process for input validation
-*/
-function validateForm(sheetObj, formObj, sAction) {
-/*    with (formObj) {
-      switch (sAction) {
-          case IBSAVE:
-              var sParam = ComGetSaveString(sheetObj);
-              if (sParam == "") {
-                  return false;
-              }
-              var Row = sheetObj.ColValueDup("jo_crr_cd|rlane_cd", false);
-              if (Row > -1) {
-                  ComShowCodeMessage("JOO00161");
-                  sheetObj.SelectCell(Row, "rlane_cd");
-                  return false;
-              }
-              if (!ComShowCodeConfirm("JOO00046")) {
-                  return false;
-              }
-              break;
-      } // end switch
-  }*/
-  return true;
-}
+ * ComboBox Joo Carrier Code When Clicked 
+ * 
+ * @param comboObj
+ * @param value
+ * @param text
+ */
 function jo_crr_cds_OnCheckClick(comboObj, index, code) {
   if(index==0) {          
       var bChk=comboObj.GetItemCheck(index);
@@ -633,13 +661,11 @@ function jo_crr_cds_OnCheckClick(comboObj, index, code) {
           }
       }
   } else {
-      //ALL 이 아닌 다른 Item 체크.
       var bChk=comboObj.GetItemCheck(index);
       if (bChk) {
           comboObj.SetItemCheck(0,0);
       }
   }
-  //Combo Item이 전부 Uncheck 일때 자동으로 All 선택이 되도록 한다.
   var checkCnt=0;
   var count = parseInt(comboObj.GetItemCount());
   for(var i = 1 ; i <  count; i++) {
@@ -652,43 +678,161 @@ function jo_crr_cds_OnCheckClick(comboObj, index, code) {
   }
 }
 /**
-* 
-* @param comboObj
-* @param value
-* @param text
-*/
-function jo_crr_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex, newText, newCode) {
-  var formObj = document.form;
- if(comboObj.GetSelectCode()!=null){
-	 doActionIBSheet(getCurrentSheet(), formObj, IBSEARCH_ASYNC02);
-	 rlane_cds.SetEnable(1);
-	
- }
+ * jo_crr_cds comboObject when have changing
+ * 
+ * @param comboObj
+ * @param formObj
+ */
+function jo_crr_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex,
+		newText, newCode) {
+	var formObj = document.form;
+	if (comboObj.GetSelectCode() != null) {
+		doActionIBSheet(getCurrentSheet(), formObj, IBSEARCH_ASYNC02);
+		rlane_cds.SetEnable(1);
+
+	}
 }
-function rlane_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex, newText, newCode) {
-	  var formObj = document.form;
-	 if(comboObj.GetSelectCode()!=null){
-		 doActionIBSheet(getCurrentSheet(), formObj, IBSEARCH_ASYNC03);
-		 trd_cd.SetEnable(1);
-		
-	 }
+/**
+ * rlane_cds comboObject when have changing
+ * 
+ * @param comboObj
+ * @param formObj
+ */
+function rlane_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex,
+		newText, newCode) {
+	var formObj = document.form;
+	if (comboObj.GetSelectCode() != null) {
+		doActionIBSheet(getCurrentSheet(), formObj, IBSEARCH_ASYNC03);
+		trd_cd.SetEnable(1);
+
+	}
+}
+/**
+ * Resize Sheet Object
+ * 
+ */
+function resizeSheet() {
+	if (beforetab == 0) {
+		ComResizeSheet(sheetObjects[0]);
+	} else {
+		ComResizeSheet(sheetObjects[1]);
 	}
 
-
+}
+/**
+ * Tab 1 Sheet 1 Double Click and do Search to Detail
+ * 
+ * @param currentRow
+ * @param parentCodeS1
+ * @param rLaneCodeS1
+ * @param iStRow
+ * @param iEdRow
+ */
+function t1sheet1_OnDblClick(sheetObj, Row,Col){
+	var currentRow = sheetObj.GetSelectRow();
+	var parentCodeS1 = sheetObj.GetCellValue(currentRow,1);
+	var rLaneCodeS1  = sheetObj.GetCellValue(currentRow,2);
+	
+	tabObjects[0].SetSelectedIndex(1);
+	
+	var iStRow = getCurrentSheet().HeaderRows();
+    var iEdRow = getCurrentSheet().LastRow();
+    
+    
+	for(var i=iStRow;i<=iEdRow;i++){
+		if(parentCodeS1 == getCurrentSheet().GetCellValue(i,"t2sheet1_" + "jo_crr_cd") && rLaneCodeS1 == getCurrentSheet().GetCellValue(i,"t2sheet1_" + "rlane_cd")){
+			getCurrentSheet().SetSelectRow(i);
+		}
+		
+		iEdRow = getCurrentSheet().LastRow();
+	}
+	
+}
+/**
+ * Check Period in Date From to Date To
+ * 
+ * @param comboObj
+ * @param frDt
+ * @param toDt
+ */
 function GetCheckConditionPeriod(){
-  var formObj=document.form;
-  var frDt=formObj.fr_acct_yrmon.value.replaceStr("-","")+"01";
-  var toDt=formObj.to_acct_yrmon.value.replaceStr("-","")+"01";
-  if (ComGetDaysBetween(frDt, toDt) <= 0){
-      return false;
-  }   
-  return true;
+    var formObj=document.form;
+    var frDt=formObj.date_fr.value.replaceStr("-","")+"01";
+    var toDt=formObj.date_to.value.replaceStr("-","")+"01";
+    if (ComGetDaysBetween(frDt, toDt) <= 0){
+        return false;
+    }   
+    return true;
 }
-function resizeSheet() {
-  if(beforetab == 0){
-      ComResizeSheet(sheetObjects[0]);
-  }else{
-      ComResizeSheet(sheetObjects[1]);
-  }
-  
+
+/**
+ * add month click
+ * @param obj
+ * @param iMonth
+ * @return
+ */
+
+function UF_addMonth(obj, iMonth){
+	 if (obj.value != "") {
+		 obj.value=ComGetDateAdd(obj.value+"-01", "M", iMonth).substring(0, 7);
+	 }
 }
+
+/**
+ * Init Period
+ * 
+ * @param formObj
+ * @param tmpToYm
+ * @param toDt
+ */
+function initPeriod(){
+    var formObj=document.form;
+    //Get tmp Date To and set to value date_to
+    var tmpToYm = ComGetNowInfo("ymd","-"); 
+    formObj.date_to.value=GetDateFormat(tmpToYm,"ym");
+    //Get Date Tmp From and set to Value date_fr
+    var tmpFrYm = ComGetDateAdd(formObj.date_to.value+"-01","M", -2);
+    formObj.date_fr.value=GetDateFormat(tmpFrYm,"ym"); 
+}
+
+/**
+ * Get Date Format
+ * 
+ * @param sVal
+ * @param sFormat
+ * @param retValue
+ */
+function GetDateFormat(obj, sFormat){
+	var sVal = String(getArgValue(obj));
+	sVal = sVal.replace(/\/|\-|\.|\:|\ /g,"");
+	
+    if (ComIsEmpty(sVal)) return "";
+    
+	var retValue = "";
+	switch(sFormat){
+	    	
+		case "ymd":		//yyyy-mm-dd 10	            
+		case "mdy":		//mm-dd-yyyy 10
+			retValue = sVal.substring(0,8);
+			break;     	            
+	    case "ym":		//yyyy-mm 7
+	    case "yw":		//yyyy-mm 7
+	    case "hms":     //hh:mm:ss 8
+			retValue = sVal.substring(0,6);
+			break;     	            
+	    case "yyyy":     //yyyy 4   	            
+	    case "hm":      //hh:mm 5
+			retValue = sVal.substring(0,4);
+			break;
+	    case "ymdhms":     //yyyy-mm-dd hh:mm:ss 19
+			retValue = sVal.substring(0,14);
+			break;    	            
+	    case "ymdhm":     //yyyy-mm-dd hh:mm 16
+			retValue = sVal.substring(0,12);
+			break;
+		}
+
+	retValue = ComGetMaskedValue(retValue,sFormat);
+	return retValue;
+}
+

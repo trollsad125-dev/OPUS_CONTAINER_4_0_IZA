@@ -85,8 +85,8 @@
 		<div class="opus_design_btn">
 			<button class="btn_accent" name="btn_Retrieve" id="btn_Retrieve" type="button">Retrieve</button><!-- 
 		    --><button class="btn_normal" name="btn_New" id="btn_New" type="button">New</button><!--
-			--><button class="btn_normal" name="btn_Save" id="btn_Save" type="button">Save</button><!--
-			--><button class="btn_normal" name="btn_DownExcel" id=btn_DownExcel type="button">Down Excel</button>
+			--><button class="btn_normal" name="btn_DownExcel" id=btn_DownExcel type="button">Down Excel</button><!-- 
+			--><button class="btn_normal" name="btn_DownExcel2" id=btn_DownExce2l type="button">Down Excel2</button>
 		</div>
 		<!-- opus_design_btn (E) -->
 	
@@ -113,19 +113,20 @@
 			   </colgroup> 
 			   <tbody>
 			   		<tr>
-			   		<th style="width: 94px; ">Year Month</th>
-			   		<td style="width: 242px; ">
-						<input type="text" style="width:78px;text-align:center;" caption="Create Date From" name="date_fr" !cofield="s_cre_dt_to" dataformat="ymd" maxLength="10" minlength="8"><!--  
-						--><button type="button" class="calendar ir" name="btns_calendar1" id="btns_calendar1" tabindex="-1"></button>~
-						<input type="text" style="width:78px;text-align:center;" caption="Create Date To" name="date_to" !cofield="s_cre_dt_fm" dataformat="ymd" maxLength="10" minlength="8"><!-- 
-						--><button type="button" class="calendar ir" name="btns_calendar2" id="btns_calendar2" tabindex="-1"></button>
+			   		<th>Year Month</th>
+						<td><input type="text" style="width: 100px;" class="input1" value="" name="date_fr" id="date_fr" readonly><!--
+							--><button type="button" class="btn_left" name="btn_date_fr_down" id="btn_date_fr_down"></button><!--
+							--><button type="button" class="btn_right" name="btn_date_fr_up" id="btn_date_fr_up"></button><!--
+							--><input type="text" style="width: 100px;" class="input1" value="" name="date_to" id="date_to" readonly><!--
+							--><button type="button" class="btn_left" name="btn_date_to_down" id="btn_date_to_down"></button><!--
+							--><button type="button" class="btn_right" name="btn_date_to_up" id="btn_date_to_up"></button>
 						</td>
 						<th>Partner</th>
-						<td><script type="text/javascript">ComComboObject('jo_crr_cds', 1, 170, 0, 0);</script></td>
+						<td><script type="text/javascript">ComComboObject('jo_crr_cds', 1, 100, 0, 0);</script></td>
 						<th>Lane</th>
-						<td><script type="text/javascript">ComComboObject('rlane_cds', 1, 60, 0, 0);</script></td>
+						<td><script type="text/javascript">ComComboObject('rlane_cds',1, 100, 0, 0);</script></td>
 		               	<th>Trade</th>
-						<td><script type="text/javascript">ComComboObject('trd_cd',1,55,0,0);</script></td>
+						<td><script type="text/javascript">ComComboObject('trd_cd',1, 100, 0, 0);</script></td>
 					</tr> 
 			   </tbody>
 			</table>

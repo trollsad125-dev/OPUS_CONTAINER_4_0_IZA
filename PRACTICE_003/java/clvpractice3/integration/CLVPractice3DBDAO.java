@@ -13,22 +13,15 @@
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.basic.CLVPractice3BCImpl;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.DetailVO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.SummaryVO;
-import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.integration.CLVPractice4DBDAOSearchCrrCdRSQL;
-import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.component.rowset.DBRowSet;
 import com.clt.framework.core.layer.integration.DAOException;
@@ -49,8 +42,10 @@ import com.clt.framework.support.layer.integration.DBDAOSupport;
  */
 public class CLVPractice3DBDAO extends DBDAOSupport {
 
+	
+	private static final long serialVersionUID = 1L;
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Search Joo Invoice Detail
 	 * 
 	 * @param DetailVO detailVO
 	 * @return List<DetailVO>
@@ -84,7 +79,7 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 		return list;
 	}
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Search JOO_INVOICE 
 	 * 
 	 * @param SummaryVO summaryVO
 	 * @return List<SummaryVO>
@@ -119,381 +114,7 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param SummaryVO summaryVO
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public void addmultiSummaryVO(SummaryVO summaryVO) throws DAOException,Exception {
-		//query parameter
-		Map<String, Object> param = new HashMap<String, Object>();
-		//velocity parameter
-		Map<String, Object> velParam = new HashMap<String, Object>();
-		try {
-			Map<String, String> mapVO = summaryVO .getColumnValues();
-			
-			param.putAll(mapVO);
-			velParam.putAll(mapVO);
-			
-			SQLExecuter sqlExe = new SQLExecuter("");
-			int result = sqlExe.executeUpdate((ISQLTemplate)new CLVPractice3DBDAOSummaryVOCSQL(), param, velParam);
-			if(result == Statement.EXECUTE_FAILED)
-					throw new DAOException("Fail to insert SQL");
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-	}
-	
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param SummaryVO summaryVO
-	 * @return int
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int modifymultiSummaryVO(SummaryVO summaryVO) throws DAOException,Exception {
-		//query parameter
-		Map<String, Object> param = new HashMap<String, Object>();
-		//velocity parameter
-		Map<String, Object> velParam = new HashMap<String, Object>();
-		
-		int result = 0;
-		try {
-			Map<String, String> mapVO = summaryVO .getColumnValues();
-			
-			param.putAll(mapVO);
-			velParam.putAll(mapVO);
-			
-			SQLExecuter sqlExe = new SQLExecuter("");
-			result = sqlExe.executeUpdate((ISQLTemplate)new CLVPractice3DBDAOSummaryVOUSQL(), param, velParam);
-			if(result == Statement.EXECUTE_FAILED)
-					throw new DAOException("Fail to insert SQL");
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return result;
-	}
-	
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param SummaryVO summaryVO
-	 * @return int
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int removemultiSummaryVO(SummaryVO summaryVO) throws DAOException,Exception {
-		//query parameter
-		Map<String, Object> param = new HashMap<String, Object>();
-		//velocity parameter
-		Map<String, Object> velParam = new HashMap<String, Object>();
-		
-		int result = 0;
-		try {
-			Map<String, String> mapVO = summaryVO .getColumnValues();
-			
-			param.putAll(mapVO);
-			velParam.putAll(mapVO);
-			
-			SQLExecuter sqlExe = new SQLExecuter("");
-			result = sqlExe.executeUpdate((ISQLTemplate)new CLVPractice3DBDAOSummaryVODSQL(), param, velParam);
-			if(result == Statement.EXECUTE_FAILED)
-					throw new DAOException("Fail to insert SQL");
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return result;
-	}
-
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param List<SummaryVO> summaryVO
-	 * @return int[]
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int[] addmultiSummaryVOS(List<SummaryVO> summaryVO) throws DAOException,Exception {
-		int insCnt[] = null;
-		try {
-			SQLExecuter sqlExe = new SQLExecuter("");
-			if(summaryVO .size() > 0){
-				insCnt = sqlExe.executeBatch((ISQLTemplate)new CLVPractice3DBDAOSummaryVOCSQL(), summaryVO,null);
-				for(int i = 0; i < insCnt.length; i++){
-					if(insCnt[i]== Statement.EXECUTE_FAILED)
-						throw new DAOException("Fail to insert No"+ i + " SQL");
-				}
-			}
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return insCnt;
-	}
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param List<SummaryVO> summaryVO
-	 * @return int[]
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int[] modifymultiSummaryVOS(List<SummaryVO> summaryVO) throws DAOException,Exception {
-		int updCnt[] = null;
-		try {
-			SQLExecuter sqlExe = new SQLExecuter("");
-			if(summaryVO .size() > 0){
-				updCnt = sqlExe.executeBatch((ISQLTemplate)new CLVPractice3DBDAOSummaryVOUSQL(), summaryVO,null);
-				for(int i = 0; i < updCnt.length; i++){
-					if(updCnt[i]== Statement.EXECUTE_FAILED)
-						throw new DAOException("Fail to insert No"+ i + " SQL");
-				}
-			}
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return updCnt;
-	}
-	
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param List<SummaryVO> summaryVO
-	 * @return int[]
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int[] removemultiSummaryVOS(List<SummaryVO> summaryVO) throws DAOException,Exception {
-		int delCnt[] = null;
-		try {
-			SQLExecuter sqlExe = new SQLExecuter("");
-			if(summaryVO .size() > 0){
-				delCnt = sqlExe.executeBatch((ISQLTemplate)new CLVPractice3DBDAOSummaryVODSQL(), summaryVO,null);
-				for(int i = 0; i < delCnt.length; i++){
-					if(delCnt[i]== Statement.EXECUTE_FAILED)
-						throw new DAOException("Fail to insert No"+ i + " SQL");
-				}
-			}
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return delCnt;
-	}
-	
-	
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param DetailVO detailVO
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public void addmultiDetailVO(DetailVO detailVO) throws DAOException,Exception {
-		//query parameter
-		Map<String, Object> param = new HashMap<String, Object>();
-		//velocity parameter
-		Map<String, Object> velParam = new HashMap<String, Object>();
-		try {
-			Map<String, String> mapVO = detailVO .getColumnValues();
-			
-			param.putAll(mapVO);
-			velParam.putAll(mapVO);
-			
-			SQLExecuter sqlExe = new SQLExecuter("");
-			int result = sqlExe.executeUpdate((ISQLTemplate)new CLVPractice3DBDAODetailVOCSQL(), param, velParam);
-			if(result == Statement.EXECUTE_FAILED)
-					throw new DAOException("Fail to insert SQL");
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-	}
-	
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param DetailVO detailVO
-	 * @return int
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int modifymultiDetailVO(DetailVO detailVO) throws DAOException,Exception {
-		//query parameter
-		Map<String, Object> param = new HashMap<String, Object>();
-		//velocity parameter
-		Map<String, Object> velParam = new HashMap<String, Object>();
-		
-		int result = 0;
-		try {
-			Map<String, String> mapVO = detailVO .getColumnValues();
-			
-			param.putAll(mapVO);
-			velParam.putAll(mapVO);
-			
-			SQLExecuter sqlExe = new SQLExecuter("");
-			result = sqlExe.executeUpdate((ISQLTemplate)new CLVPractice3DBDAODetailVOUSQL(), param, velParam);
-			if(result == Statement.EXECUTE_FAILED)
-					throw new DAOException("Fail to insert SQL");
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return result;
-	}
-	
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param DetailVO detailVO
-	 * @return int
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int removemultiDetailVO(DetailVO detailVO) throws DAOException,Exception {
-		//query parameter
-		Map<String, Object> param = new HashMap<String, Object>();
-		//velocity parameter
-		Map<String, Object> velParam = new HashMap<String, Object>();
-		
-		int result = 0;
-		try {
-			Map<String, String> mapVO = detailVO .getColumnValues();
-			
-			param.putAll(mapVO);
-			velParam.putAll(mapVO);
-			
-			SQLExecuter sqlExe = new SQLExecuter("");
-			result = sqlExe.executeUpdate((ISQLTemplate)new CLVPractice3DBDAODetailVODSQL(), param, velParam);
-			if(result == Statement.EXECUTE_FAILED)
-					throw new DAOException("Fail to insert SQL");
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return result;
-	}
-
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param List<DetailVO> detailVO
-	 * @return int[]
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int[] addmultiDetailVOS(List<DetailVO> detailVO) throws DAOException,Exception {
-		int insCnt[] = null;
-		try {
-			SQLExecuter sqlExe = new SQLExecuter("");
-			if(detailVO .size() > 0){
-				insCnt = sqlExe.executeBatch((ISQLTemplate)new CLVPractice3DBDAODetailVOCSQL(), detailVO,null);
-				for(int i = 0; i < insCnt.length; i++){
-					if(insCnt[i]== Statement.EXECUTE_FAILED)
-						throw new DAOException("Fail to insert No"+ i + " SQL");
-				}
-			}
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return insCnt;
-	}
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param List<DetailVO> detailVO
-	 * @return int[]
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int[] modifymultiDetailVOS(List<DetailVO> detailVO) throws DAOException,Exception {
-		int updCnt[] = null;
-		try {
-			SQLExecuter sqlExe = new SQLExecuter("");
-			if(detailVO .size() > 0){
-				updCnt = sqlExe.executeBatch((ISQLTemplate)new CLVPractice3DBDAODetailVOUSQL(), detailVO,null);
-				for(int i = 0; i < updCnt.length; i++){
-					if(updCnt[i]== Statement.EXECUTE_FAILED)
-						throw new DAOException("Fail to insert No"+ i + " SQL");
-				}
-			}
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return updCnt;
-	}
-	
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param List<DetailVO> detailVO
-	 * @return int[]
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	public int[] removemultiDetailVOS(List<DetailVO> detailVO) throws DAOException,Exception {
-		int delCnt[] = null;
-		try {
-			SQLExecuter sqlExe = new SQLExecuter("");
-			if(detailVO .size() > 0){
-				delCnt = sqlExe.executeBatch((ISQLTemplate)new CLVPractice3DBDAODetailVODSQL(), detailVO,null);
-				for(int i = 0; i < delCnt.length; i++){
-					if(delCnt[i]== Statement.EXECUTE_FAILED)
-						throw new DAOException("Fail to insert No"+ i + " SQL");
-				}
-			}
-		} catch(SQLException se) {
-			log.error(se.getMessage(),se);
-			throw new DAOException(new ErrorHandler(se).getMessage());
-		} catch(Exception ex) {
-			log.error(ex.getMessage(),ex);
-			throw new DAOException(new ErrorHandler(ex).getMessage());
-		}
-		return delCnt;
-	}
-	/**
-	  * search carrier code
+	  * search joo carrier code
 	  * 
 	  * @param JooCarrierVO jooCarrierVO
 	  * @return List<JooCarrierVO>
@@ -514,6 +135,7 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 				param.putAll(mapVO);
 				
 				velParam.putAll(mapVO);
+				velParam.put("crrCds", Arrays.asList(jooCarrierVO.getJoCrrCd().split(",")));
 			 }
 			 dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAOSearchJooCrrCdsRSQL(), param, velParam);
 			 list = (List)RowSetUtil.rowSetToVOs(dbRowset, SummaryVO .class);
@@ -527,7 +149,7 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 		 return list;
 	 }
 		/**
-	  * search carrier code
+	  * search Rev Lane code
 	  * 
 	  * @param JooCarrierVO jooCarrierVO
 	  * @return List<JooCarrierVO>
@@ -562,7 +184,7 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 		 return list;
 	 }
 		/**
-	  * search carrier code
+	  * search Trade code
 	  * 
 	  * @param JooCarrierVO jooCarrierVO
 	  * @return List<JooCarrierVO>

@@ -4,10 +4,10 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.15
+*@LastModifyDate : 2023.05.16
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.15 
+* 2023.05.16 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration;
@@ -136,7 +136,9 @@ public class CLVPractice3DBDAODetailVORSQL implements ISQLTemplate{
 		query.append("		,JOO_CSR CSR" ).append("\n"); 
 		query.append("	WHERE 1=1" ).append("\n"); 
 		query.append("    AND NVL(STL.THEA_STL_FLG, 'N') = 'N'" ).append("\n"); 
+		query.append("	#if (${date_fr} != '' && ${date_to} != '')" ).append("\n"); 
 		query.append("	AND INV.ACCT_YRMON   BETWEEN REPLACE(@[date_fr],'-','') AND REPLACE(@[date_to],'-','')" ).append("\n"); 
+		query.append("	#end" ).append("\n"); 
 		query.append("	#if (${jo_crr_cd} != '' && ${jo_crr_cd} != 'All')" ).append("\n"); 
 		query.append("		and INV.JO_CRR_CD in (" ).append("\n"); 
 		query.append("			#foreach($key IN ${partnerCodes})" ).append("\n"); 

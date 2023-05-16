@@ -4,10 +4,10 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.15
+*@LastModifyDate : 2023.05.16
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.15 
+* 2023.05.16 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration;
@@ -72,7 +72,6 @@ public class CLVPractice3DBDAOSearchRLaneCdRSQL implements ISQLTemplate{
 		query.append("	#end" ).append("\n"); 
 		query.append(")" ).append("\n"); 
 		query.append("#end" ).append("\n"); 
-		query.append("GROUP BY RLANE_CD" ).append("\n"); 
 
 	}
 }
