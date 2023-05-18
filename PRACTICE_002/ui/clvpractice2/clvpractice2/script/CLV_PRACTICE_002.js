@@ -30,10 +30,10 @@ document.onclick=processButtonClick;
                   }
         	        break;
         			/*****************grid button ************************/				
-				case "btn_rowadd_master": //add row  
+				case "btn_rowadd_mst": //add row  
 	                doActionIBSheet(sheetObjects[0],	formObject,	IBINSERT);
 					break;
-				case "btn_rowdelete_master": //delete row
+				case "btn_rowdelete_mst": //delete row
 					doActionIBSheet(sheetObjects[0],	formObject,	MODIFY01);					
 					break;        	        
 				case "btn_rowadd_dtl": //add row  
@@ -51,11 +51,16 @@ document.onclick=processButtonClick;
     		}
     	}
     }
-
+    /**
+     * Set Sheet Object into Array
+     * @param sheet_obj
+     */
     function setSheetObject(sheet_obj){
     	 sheetObjects[sheetCnt++]=sheet_obj;
     }
-
+    /**
+     * JSP will call loadPage
+     */
     function loadPage() {
         for(i=0;i<sheetObjects.length;i++){
             ComConfigSheet(sheetObjects[i]);
@@ -63,6 +68,7 @@ document.onclick=processButtonClick;
             ComEndConfigSheet(sheetObjects[i]);
         }
         initControl();
+        //Insert into Sub System Object
 		var tmp=subSysCd.substring(1,subSysCd.length-1).split(", ");
 		with (subsystem) {
 			SetMultiSelect(0);
@@ -70,18 +76,22 @@ document.onclick=processButtonClick;
 				InsertItem(i, tmp[i], tmp[i]);
 			}
 		}
-		for(var i=1; i<sheetObjects[0].rowCount+1; i++) {
-    		if(sheetObjects[0].GetCellValue(i, "sheet1_intg_cd_tp_cd") == "T") {
-    			sheetObjects[0].SetCellEditable(i,"sheet1_mng_tbl_nm",1);
-   			}
-   		}
+
     }
+    /**
+     * Init Control for Form Object and add Event Listener based on CoAxon.js
+     */
     function initControl() {
       	var formObject=document.form1;
           axon_event.addListenerFormat('keypress', 'keypressFormat', formObject);
           axon_event.addListener ('keydown', 'ComKeyEnter', 'form1');
     }
-
+    /**
+     * init Sheet
+     * 
+     * @param sheetObj
+     * @param sheetNo
+     */
     function initSheet(sheetObj,sheetNo) {
         var cnt=0;
         switch(sheetNo) {
@@ -117,7 +127,6 @@ document.onclick=processButtonClick;
             	SetColProperty(prefix+"ownr_sub_sys_cd", {ComboText:tmp.join("|"), ComboCode:tmp.join("|")} );
             	SetColProperty(prefix+"intg_cd_tp_cd", {ComboText:"General Code|Table Code", ComboCode:"G|T"} );
             	SetColProperty(prefix+"intg_cd_use_flg", {ComboText:"Y|N", ComboCode:"Y|N"} );
-        	                    	
             	SetEditable(1);
 	            SetSheetHeight(240);
             	
@@ -144,21 +153,32 @@ document.onclick=processButtonClick;
 			     {Type:"Text",      Hidden:0,  Width:50,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_val_dp_seq",  KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 } ];
                  
                 InitColumns(cols);
-
                 SetEditable(1);
 	            resizeSheet();
     		}
             break;
         }
     }
+    
+    /**
+     * Resize Sheet
+     * 
+     */
     function resizeSheet(){
         ComResizeSheet(sheetObjects[1]);
     }
-    
+
+    /**
+     * Do Action IB Sheet
+     * 
+     * @param sheetObj
+     * @param formObj
+     * @param sAction
+     */
     function doActionIBSheet(sheetObj,formObj,sAction) {
         sheetObj.ShowDebugMsg(false);
         switch(sAction) {
-           case IBSEARCH: //Search
+           case IBSEARCH:      //Search
                     if ( sheetObj.id == "sheet1" ) {
     					formObj.f_cmd.value=SEARCH01;
     					var arr1=new Array("sheet1_", "");
@@ -178,9 +198,8 @@ document.onclick=processButtonClick;
     						sheetObj.LoadSearchData(sXml2,{Sync:1} );
     					}
                     }
-                
                 break;
-            case IBSAVE:  //Save Button
+            case IBSAVE:       //SAVE
                 formObj.f_cmd.value=MULTI;
                 sheetObj.DoSave("CLV_PRACTICE_002GS.do", FormQueryString(formObj), -1, false);
                 break;
@@ -214,9 +233,6 @@ document.onclick=processButtonClick;
             	var j=sheetObj.GetSelectRow();
             	sheetObj.SetCellValue(j, sheetprefix+"ibflag","D");
             	sheetObj.SetRowHidden(j,1);
-            	formObj.f_cmd.value=MULTI;
-                sheetObj.DoSave("CLV_PRACTICE_002GS.do", FormQueryString(formObj), -1, false);
-            	//sheet1을 삭세하면 sheet2 하위 아이템 역시 삭제 처리함
             	if( sheetObj.id == "sheet1" ){
             		var codeid=sheetObj.GetCellValue(j, "sheet1_intg_cd_id");
             		if( sheetObjects[1].RowCount()> 0 && codeid==document.form1.codeid.value){
@@ -226,26 +242,18 @@ document.onclick=processButtonClick;
             		        }
             		}
             	}
-
 		 	    break; 
         }
     }
 
+    /**
+     * When Double Click on Sheet 1
+     * 
+     * @param sheetObj
+     * @param Row
+     * @param Col
+     */
     function sheet1_OnDblClick(sheetObj, Row, Col) {
     	ComSetObjValue(document.form1.codeid, sheetObj.GetCellValue(Row, "sheet1_intg_cd_id"));
     	doActionIBSheet(sheetObjects[1],document.form1,IBSEARCH);
     }
-    function sheet1_OnChange(sheetObj,Row,Col) {
-  	 if(Col == 2){
- 			var code=sheetObj.GetCellValue(Row, Col);
-     	    for(var int=1; int < sheetObj.RowCount(); int++) {
- 			var orlcode=sheetObj.GetCellValue(int, Col);
- 				if(code != '' && int != Row && code == orlcode){
-     				 ComShowCodeMessage('COM131302',code);
-     				 sheetObj.SetCellValue(Row, Col,"");
-     				 return;
-     			 }
-     		 }
-     	 }
-    }
-    

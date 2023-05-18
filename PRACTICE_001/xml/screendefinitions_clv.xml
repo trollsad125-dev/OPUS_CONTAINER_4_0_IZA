@@ -6,5 +6,25 @@
         <parameter key="body"     value="apps/opus/esm/clv/clvtraining/errmsgmgmt/jsp/CLV_TRAINING_001.jsp"/>
     </screen>
 	<!-- Nhat Nguyen : 2023-04-19 end -->
+	<!-- Nhat Nguyen : 2023-05-04 start -->
+    <screen name="CLV_PRACTICE_002">
+        <parameter key="title"    value="CLV Practice 2" direct="true"/>
+        <parameter key="body"     value="apps/opus/esm/clv/clvpractice2/clvpractice2/jsp/CLV_PRACTICE_002.jsp"/>
+    </screen>
+	<!-- Nhat Nguyen : 2023-05-04 end -->
+
+	<!-- Nhat Nguyen : 2023-05-08 start -->
+    <screen name="CLV_Practice_004">
+        <parameter key="title"    value="FW_Practice_004" direct="true"/>
+        <parameter key="body"     value="apps/opus/esm/clv/clvpractice4/clvpractice4/jsp/CLV_PRACTICE_004.jsp"/>
+    </screen>
+	<!-- Nhat Nguyen : 2023-05-08 end -->
+
+	<!-- Nhat Nguyen : 2023-05-11 start -->
+    <screen name="CLV_PRACTICE_003">
+        <parameter key="title"    value="CLV Practice 3" direct="true"/>
+        <parameter key="body"     value="apps/opus/esm/clv/clvpractice3/clvpractice3/jsp/CLV_PRACTICE_003.jsp"/>
+    </screen>
+	<!-- Nhat Nguyen : 2023-05-11 end -->
 
 </screen-definitions>

@@ -28,7 +28,7 @@ import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 public interface ErrMsgMgmtBC {
 
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Search Error Message
 	 * 
 	 * @param ComErrMsgVO	comErrMsgVO
 	 * @return List<ComErrMsgVO>
@@ -37,7 +37,7 @@ public interface ErrMsgMgmtBC {
 	public List<ComErrMsgVO> searchErrMsg(ComErrMsgVO comErrMsgVO) throws EventException;
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Insert Delete Update Error Message
 	 * 
 	 * @param ComErrMsgVO[] comErrMsgVO
 	 * @param account SignOnUserAccount

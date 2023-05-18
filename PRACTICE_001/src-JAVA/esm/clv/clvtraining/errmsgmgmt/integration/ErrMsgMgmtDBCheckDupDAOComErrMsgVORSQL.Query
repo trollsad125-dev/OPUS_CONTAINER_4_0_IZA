@@ -4,7 +4,8 @@
 		<query name="ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL">
 			<desc><![CDATA[te]]></desc>
 			<sql><![CDATA[
-SELECT  DECODE(SIGN(COUNT(1)),1,'Y','N') DUP_FLG                                                       
+SELECT                                                                
+   	1                                                          
 FROM com_err_msg                                                      
 WHERE lang_tp_cd = 'ENG' AND
       err_msg_cd LIKE '%'||@[err_msg_cd]||'%'			]]></sql>

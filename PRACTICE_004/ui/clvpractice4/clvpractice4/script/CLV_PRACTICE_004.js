@@ -78,7 +78,7 @@ function processButtonClick() {
 	}
 }
 /**
- * rest form when click new button
+ * reset form when click new button
  */
 function resetForm(formObj){
 	formObj.reset();
@@ -144,6 +144,13 @@ function initCombo(comboObj, comboNo) {
 	}
 }
 
+/**
+ * ComboBox s_jo_crr_cd When Check Click
+ * 
+ * @param comboObj
+ * @param index
+ * @param code
+ */
 function s_jo_crr_cd_OnCheckClick(comboObj, index, code) {
     if(index==0) {          
         var bChk=comboObj.GetItemCheck(index);
@@ -170,6 +177,7 @@ function s_jo_crr_cd_OnCheckClick(comboObj, index, code) {
         comboObj.SetItemCheck(0,true, null, null, false);
     }
 }
+
 /**
  * setting sheet initial values and header param : sheetObj, sheetNo adding case
  * as numbers of counting sheets
@@ -221,9 +229,22 @@ function initSheet(sheetObj, sheetNo) {
 		break;
 	}
 }
+
+/**
+ * Resize Sheet
+ */
 function resizeSheet(){
     ComResizeSheet(sheetObjects[0]);
 }
+
+/**
+ * To Do Action in Sheet
+ * 
+ * @param sheetObj
+ * @param formObj
+ * @param sAction
+ * 
+ */
 
 function doActionIBSheet(sheetObj, formObj, sAction) {
 	sheetObj.ShowDebugMsg(false);
@@ -255,18 +276,29 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 		break;
 	}
 }
-
-function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
+/**
+ * Sheet 1 When Search End will go here
+ * 
+ */
+function sheet1_OnSearchEnd() { 
  	ComOpenWait(false);
 }
-
+/**
+ * Sheet 1 When Before Save 
+ * 
+ */
 function sheet1_OnBeforeSave() {
 	ComOpenWait(true);
 }
 
-function sheet1_OnSaveEnd(sheetObj, Code, Msg, StCode, StMsg) { 
+/**
+ * Sheet 1 When After Save 
+ * 
+ */
+function sheet1_OnSaveEnd() { 
 	doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
 }
+
 /**
  * handling process for input validation
  */
@@ -343,42 +375,16 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 		}
 	}
 	
-/*	
-	if(colName == "jo_crr_cd" || colName == "rlane_cd"){//check duplicate data
-		if(sheetObj.GetCellValue(Row,"jo_crr_cd") != "" && sheetObj.GetCellValue(Row,"rlane_cd") != ""){
-			//check on UI Frist
-			var headerRowNum = sheetObj.HeaderRows();
-			for(var i = headerRowNum; i <= sheetObj.RowCount(); i++){
-				if(i != Row && sheetObj.GetCellValue(Row,"jo_crr_cd") == sheetObj.GetCellValue(i,"jo_crr_cd")
-						&& sheetObj.GetCellValue(Row,"rlane_cd") == sheetObj.GetCellValue(i,"rlane_cd")){
-					ComShowCodeMessage("COM131302");
-					sheetObj.SetCellValue(Row, Col,OldValue,0);
-					sheetObj.SelectCell(Row, Col);
-					return;
-				}
-			}
-			//check on Service side
-			formObj.f_cmd.value		= COMMAND01;
-			var sParam				= FormQueryString(formObj) + "&jo_crr_cd=" + sheetObj.GetCellValue(Row,"jo_crr_cd") + "&rlane_cd=" + sheetObj.GetCellValue(Row,"rlane_cd");
-			var sXml 				= sheetObj.GetSearchData("CLV_Practice_004GS.do", sParam, {sync:1});	
-			var flag				= ComGetEtcData(sXml, "ISEXIST");
-			if(flag == 'Y'){
-				ComShowCodeMessage("COM131302");
-				sheetObj.SetCellValue(Row, Col,OldValue,0);
-				sheetObj.SelectCell(Row, Col);
-			}
-		}
-	}*/
 }
 /**
 * adding data to combo field
-* Web IBMultiCombo객체.InsertItem(Index, Text, Code);
+* 
+* @param comboObj
+* @param comboItems
 * */
 function addComboItem(comboObj, comboItems) {
 	for (var i = 0; i < comboItems.length; i++) {
 		var comboItem = comboItems[i].split(",");
-		//comboObj.InsertItem(i, comboItem[0] + "|" + comboItem[1], comboItem[1]);
-		//NYK Modify 2014.10.21
 		if (comboItem.length == 1) {
 			comboObj.InsertItem(i, comboItem[0], comboItem[0]);
 		} else {

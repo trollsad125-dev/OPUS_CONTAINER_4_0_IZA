@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="CLVPractice2DBDAOsearchSubSystemCdRSQL">
+			<desc><![CDATA[CLVPractice2DBDAOsearchSubSystemCd]]></desc>
+			<sql><![CDATA[
+SELECT INTG_CD_VAL_CTNT SUB_SYS_CD
+FROM COM_INTG_CD_DTL
+ORDER BY INTG_CD_VAL_DP_DESC			]]></sql>
+			<params>
+			</params>
+		</query>
+	</querys>
+</sqls>

@@ -1,16 +1,16 @@
 /*=========================================================
 *Copyright(c) 2023 CyberLogitec
-*@FileName : ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL.java
-*@FileTitle : 
+*@FileName : CLVPractice2DBDAOCheckDuplicateRSQL.java
+*@FileTitle : FW_Practice_004
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.04.24
+*@LastModifyDate : 2023.05.08
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.04.24 
+* 2023.05.08 
 * 1.0 Creation
 =========================================================*/
-package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration ;
+package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration;
 
 import java.util.HashMap;
 import org.apache.log4j.Logger;
@@ -23,7 +23,7 @@ import com.clt.framework.support.db.ISQLTemplate;
  * @since J2EE 1.6
  */
 
-public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
+public class CLVPractice2DBDAOCheckDuplicateRSQL implements ISQLTemplate{
 
 	private StringBuffer query = new StringBuffer();
 	
@@ -34,10 +34,10 @@ public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
 	
 	/**
 	  * <pre>
-	  * te
+	  * Select Duplicate
 	  * </pre>
 	  */
-	public ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL(){
+	public CLVPractice2DBDAOCheckDuplicateRSQL(){
 		setQuery();
 		params = new HashMap<String,String[]>();
 		String tmp = null;
@@ -47,11 +47,11 @@ public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
 		if(arrTmp.length !=2){
 			throw new IllegalArgumentException();
 		}
-		params.put("err_msg_cd",new String[]{arrTmp[0],arrTmp[1]});
+		params.put("intg_cd_id",new String[]{arrTmp[0],arrTmp[1]});
 
 		query.append("/*").append("\n"); 
-		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration ").append("\n"); 
-		query.append("FileName : ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL").append("\n"); 
+		query.append("Path : com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration").append("\n"); 
+		query.append("FileName : CLVPractice2DBDAOCheckDuplicateRSQL").append("\n"); 
 		query.append("*/").append("\n"); 
 	}
 	
@@ -67,11 +67,9 @@ public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
 	 * Query 생성
 	 */
 	public void setQuery(){
-		query.append("SELECT                                                                " ).append("\n"); 
-		query.append("   	1                                                          " ).append("\n"); 
-		query.append("FROM com_err_msg                                                      " ).append("\n"); 
-		query.append("WHERE lang_tp_cd = 'ENG' AND" ).append("\n"); 
-		query.append("      err_msg_cd LIKE '%'||@[err_msg_cd]||'%'" ).append("\n"); 
+		query.append("SELECT  DECODE(SIGN(COUNT(1)),1,'Y','N') DUP_FLG" ).append("\n"); 
+		query.append("FROM    COM_INTG_CD" ).append("\n"); 
+		query.append("WHERE   INTG_CD_ID = @[intg_cd_id]" ).append("\n"); 
 
 	}
 }

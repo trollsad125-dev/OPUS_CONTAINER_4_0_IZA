@@ -25,9 +25,9 @@
 
 <%
 	ClvTraining001Event  event = null;					//PDTO(Data Transfer Object including Parameters)
-	Exception serverException   = null;			//서버에서 발생한 에러
-	String strErrMsg = "";						//에러메세지
-	int rowCount	 = 0;						//DB ResultSet 리스트의 건수
+	Exception serverException   = null;			
+	String strErrMsg = "";						
+	int rowCount	 = 0;						
 
 	String successFlag = "";
 	String codeList  = "";
@@ -47,7 +47,7 @@
 
 		event = (ClvTraining001Event)request.getAttribute("Event");
 		serverException = (Exception)request.getAttribute(CommonWebKeys.EXCEPTION_OBJECT);
-
+		
 		if (serverException != null) {
 			strErrMsg = new ErrorHandler(serverException).loadPopupMessage();
 		}
@@ -70,63 +70,72 @@
 	}
 </script>
 
+
+
 <form name="form">
 <input type="hidden" name="f_cmd">
 <input type="hidden" name="pagerows">
 <input type="hidden" name="lang_tp_cd" value="ENG">
-		<!-- page_title_area(S)	-->
+		<!-- page_title_area(S) -->
 		<div class="page_title_area clear">
-			<!-- page_title(S)	-->
+			<!-- page_title(S) -->
 			<h2 class="page_title">
-				<button type="button"> <span id="title"></span></button>
+				<button type="button">
+					<span id="title"></span>
+				</button>
 			</h2>
-			<!-- page_title(E)	-->
-			<!-- opus_design_btn(S)	-->
+			<!-- page_title(E) -->
+			
+			<!-- opus_design_btn(S) -->
 			<div class="opus_design_btn">
-				<button type="button" class="btn_accent" name="btn_Retrieve" id="btn_Retrieve">Retrieve</button><!-- 
-				 --><button type="button" class="btn_normal" name="btn_Save" id="btn_Save">Save</button><!-- 
-				 --><button type="button" class="btn_normal" name="btn_DownExcel" id="btn_DownExcel">Down Excel</button>
+				<button type="button" class="btn_accent" name="btn_Retrieve" id="btn_Retrieve">Retrieve</button><!--
+					--><button type="button" class="btn_normal" name="btn_Save" id="btn_Save">Save</button><!--
+					--><button type="button" class="btn_normal" name="btn_DownExcel" id="btn_DownExcel">Down Excel</button>
 			</div>
-			<!-- opus_design_btn(E)	-->
-			<!-- location(S)	-->
+			<!-- opus_design_btn(E) -->
+			
+			<!-- location(S) -->
 			<div class="location">
 				<span id="navigation"></span>
 			</div>
-			<!-- location(E)	-->
+			<!-- location(E) -->
+			
 		</div>
-		<!-- page_title_area(E)	-->
-		<!-- wrap_search(S)	-->
+		<!-- page_title_area(E) -->
+		
+		<!-- wrap_search(S) -->
 		<div class="wrap_search">
-			<!-- opus_design_inquiry(S)	-->
+			<!-- opus_design_inquiry(S) -->
 			<div class="opus_design_inquiry">
 				<table>
 					<tbody>
 						<tr>
 							<th width="40">Message Code</th>
-							<td width="120"><input type="text" style="width: 100px;"
-								class="input" value="" name="err_msg_cd" id="err_msg_cd"></td>
+							<td width="120"><input type="text" style="width: 100px;"class="input" value="" name="err_msg_cd" id="err_msg_cd"></td>
 							<th width="40">Message</th>
-							<td><input type="text" style="width: 100px;" class="input" value="" name="err_msg" id="err_msg"></td>
+							<td><input type="text" style="width: 100px;" class="input"
+								value="" dataformat="engup" name="err_msg" id="err_msg"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<!-- opus_design_inquiry(E)	-->
+			<!-- opus_design_inquiry(E) -->
 		</div>
-		<!-- wrap_search(E)	-->
-		<!-- wrap_result(S)	-->
+		<!-- wrap_search(E) -->
+		
+		<!-- wrap_result(S) -->
 		<div class="wrap_result">
-			<!-- opus_design_grid(S)	-->
+			<!-- opus_design_grid(S) -->
 			<div class="opus_design_grid">
-				<!-- opus_design_btn(S)	-->
+				<!-- opus_design_btn(S) -->
 				<div class="opus_design_btn">
-					<button type="button" class="btn_accent" name="btn_Add" id="btn_Add">Row Add</button>
+					<button type="button" class="btn_accent" name="btn_Add" id="btn_Add">Row Add</button><!--
+			-->
 				</div>
-				<!-- opus_design_btn(E)	-->
+				<!-- opus_design_btn(E) -->
 				<script language="javascript">ComSheetObject('sheet1');</script>
 			</div>
-			<!-- opus_design_grid(E)	-->
+			<!-- opus_design_grid(E) -->
 		</div>
-		<!-- wrap_result(E)	-->
-		<!-- 개발자 작업  끝 -->
+		<!-- wrap_result(E) -->
 </form>

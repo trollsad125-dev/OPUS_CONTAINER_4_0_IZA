@@ -32,18 +32,14 @@ import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
  */
 public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtBC {
 
-	// Database Access Object
 	private transient ErrMsgMgmtDBDAO dbDao = null;
 
-	/**
-	 * ErrMsgMgmtBCImpl 객체 생성<br>
-	 * ErrMsgMgmtDBDAO를 생성한다.<br>
-	 */
+
 	public ErrMsgMgmtBCImpl() {
 		dbDao = new ErrMsgMgmtDBDAO();
 	}
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Search
 	 * 
 	 * @param ComErrMsgVO comErrMsgVO
 	 * @return List<ComErrMsgVO>
@@ -59,9 +55,9 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 		}
 		
 	}
-	
+
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Insert - Delete - Update 
 	 * 
 	 * @param ComErrMsgVO[] comErrMsgVO
 	 * @param account SignOnUserAccount
@@ -72,6 +68,7 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 			List<ComErrMsgVO> insertVoList = new ArrayList<ComErrMsgVO>();
 			List<ComErrMsgVO> updateVoList = new ArrayList<ComErrMsgVO>();
 			List<ComErrMsgVO> deleteVoList = new ArrayList<ComErrMsgVO>();
+			
 			for ( int i=0; i<comErrMsgVO .length; i++ ) {
 				if ( comErrMsgVO[i].getIbflag().equals("I")){
 					comErrMsgVO[i].setCreUsrId(account.getUsr_id());

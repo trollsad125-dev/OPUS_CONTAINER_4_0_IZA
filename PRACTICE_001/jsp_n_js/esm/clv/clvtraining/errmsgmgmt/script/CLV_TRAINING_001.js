@@ -10,23 +10,30 @@
 * 2023.04.19 
 * 1.0 Creation
 =========================================================*/
-    
-	var tabObjects=new Array();
-	var tabCnt=0 ;
-	var beforetab=1;
+
 	var sheetObjects=new Array();
 	var sheetCnt=0;
 	var rowcount=0;
     document.onclick=processButtonClick;
-
-
+    /**
+     * Set Sheet Object into SheetObjects
+     * @param sheet_obj
+     * @returns
+     */
     function setSheetObject(sheet_obj){
         sheetObjects[sheetCnt++]=sheet_obj;
      }
+    /**
+     * resize Sheet
+     * @returns
+     */
     function resizeSheet(){
-      ComResizeSheet(sheetObjects[0]);
-     }
-
+      	         ComResizeSheet(sheetObjects[0]);
+      }
+     /**
+      * Load Page and Call IBSearch
+      * @returns
+      */
      function loadPage() {
  		for(i=0;i<sheetObjects.length;i++){
 			ComConfigSheet (sheetObjects[i]);
@@ -35,9 +42,13 @@
 			doActionIBSheet(sheetObjects[i],document.form,IBSEARCH)
 		}
  	}
-
+/**
+ * Process when Click any button
+ * @returns
+ */
     function processButtonClick(){
         var sheetObject1=sheetObjects[0];
+        /*******************************************************/
         var formObject=document.form;
    	try {
    		var srcName=ComGetEvent("name");
@@ -47,9 +58,11 @@
            		break;
            	case "btn_Retrieve":
            		doActionIBSheet(sheetObject1,formObject,IBSEARCH);
+           		
            		break;
            	case "btn_Save":
            		doActionIBSheet(sheetObject1,formObject,IBSAVE);
+           		
            		break;
            	case "btn_DownExcel":
            		doActionIBSheet(sheetObject1,formObject,IBDOWNEXCEL);
@@ -63,8 +76,12 @@
    		}
    	}
     }
-
-
+/**
+ * init Sheet
+ * @param sheetObj
+ * @param sheetNo
+ * @returns
+ */
     function initSheet(sheetObj,sheetNo) {
         var cnt=0;
 		var sheetID=sheetObj.id;
@@ -96,6 +113,13 @@
         }
     }
 
+/**
+ * Do Action IBSHEET 
+ * @param sheetObj
+ * @param formObj
+ * @param sAction
+ * @returns
+ */
     function doActionIBSheet(sheetObj,formObj,sAction) {
         switch(sAction) {
 		case IBSEARCH:      //Search
@@ -111,30 +135,26 @@
 			rowcount=sheetObj.RowCount();
 			row=sheetObj.DataInsert(-1);
 			break;
-		case IBDOWNEXCEL:	//Download Excel
+		case IBDOWNEXCEL:	//DOWNLOAD excel
 			if(sheetObj.RowCount() < 1){
-				ComShowMessage("No Row");
+				ComShowCodeMessage("No");
 			}else{
 				sheetObj.Down2Excel({DownCols: makeHiddenSkipCol(sheetObj), SheetDesign:1, Merge:1});
 			}
 			break;
-        }
     }
+    }
+    /**
+     * Sheet 1 when after search
+     * @param sheetObj
+     * @param Code
+     * @param Msg
+     * @param StCode
+     * @param StMsg
+     * @returns
+     */
     function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
      	ComOpenWait(false);
+     	sheetObj.SetRowBackColor(3,"#ff0000");
      }
-    
-     function sheet1_OnChange(sheetObj,Row,Col){
-    	 if(Col == 2){
-			var code=sheetObj.GetCellValue(Row, Col);
-    	    for(var int=1; int < sheetObj.RowCount(); int++) {
-			var orlcode=sheetObj.GetCellValue(int, Col);
-				if(code != '' && int != Row && code == orlcode){
-    				 ComShowCodeMessage('COM131302',code);
-    				 sheetObj.SetCellValue(Row, Col,"");
-    				 return;
-    			 }
-    		 }
-    	 }
-     }
-     
+

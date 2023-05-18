@@ -20,4 +20,11 @@
     </screen>
 	<!-- Nhat Nguyen : 2023-05-08 end -->
 
+	<!-- Nhat Nguyen : 2023-05-11 start -->
+    <screen name="CLV_PRACTICE_003">
+        <parameter key="title"    value="CLV Practice 3" direct="true"/>
+        <parameter key="body"     value="apps/opus/esm/clv/clvpractice3/clvpractice3/jsp/CLV_PRACTICE_003.jsp"/>
+    </screen>
+	<!-- Nhat Nguyen : 2023-05-11 end -->
+
 </screen-definitions>

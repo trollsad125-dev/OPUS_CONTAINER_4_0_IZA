@@ -117,12 +117,12 @@
 						<th>Carrier</th>
 						<td><script type="text/javascript">ComComboObject('s_jo_crr_cd',1,80, 1, 0, 0);</script></td>
 						<th>Vendor</th>
-						<td><input type="text" style="width:60px;" name="s_vndr_seq" id="s_vndr_seq" dataformat="num" maxlength="6"/></td>
+						<td><input type="text" style="width:60px;" name="s_vndr_seq" id="s_vndr_seq"  maxlength="6"/></td>
 						<th>Create Date</th>
 						<td>
-							<input type="text" style="width:78px;text-align:center;" caption="Create Date From" name="s_cre_dt_fm" !cofield="s_cre_dt_to" dataformat="ymd" maxLength="10" minlength="8"><!--  
+							<input type="text" style="width:78px;text-align:center;"  name="s_cre_dt_fm"   maxLength="10" ><!--  
 							--><button type="button" class="calendar ir" name="btns_calendar1" id="btns_calendar1" tabindex="-1"></button>~
-							<input type="text" style="width:78px;text-align:center;" caption="Create Date To" name="s_cre_dt_to" !cofield="s_cre_dt_fm" dataformat="ymd" maxLength="10" minlength="8"><!-- 
+							<input type="text" style="width:78px;text-align:center;"  name="s_cre_dt_to"  maxLength="10" ><!-- 
 							--><button type="button" class="calendar ir" name="btns_calendar2" id="btns_calendar2" tabindex="-1"></button>
 						</td>
 					</tr> 

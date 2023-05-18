@@ -40,8 +40,23 @@
 
     <event-mapping>
         <event-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.event.ClvPractice004Event</event-class>
-        <service-action-class>com.clt.apps.opus.esm.clv.clvtraining.CLVPractice4SC</service-action-class>
+        <service-action-class>com.clt.apps.opus.esm.clv.clvtraining.CLVTrainingSC</service-action-class>
     </event-mapping>
 	<!-- Nhat Nguyen : 2023-05-08 end -->
+
+	<!-- Nhat Nguyen : 2023-05-11 start -->
+    <url-mapping url="CLV_PRACTICE_003.do" screen="CLV_PRACTICE_003.screen" >
+        <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.event.CLV_PRACTICE_003HTMLAction</web-action-class>
+    </url-mapping>
+
+    <url-mapping url="CLV_PRACTICE_003GS.do" screen="com.clt.framework.core.controller.DefaultViewAdapter" >
+        <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.event.CLV_PRACTICE_003HTMLAction</web-action-class>
+    </url-mapping>
+
+    <event-mapping>
+        <event-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.event.ClvPractice003Event</event-class>
+        <service-action-class>com.clt.apps.opus.esm.clv.clvtraining.CLVTrainingSC</service-action-class>
+    </event-mapping>
+	<!-- Nhat Nguyen : 2023-05-11 end -->
 
 </mappings>

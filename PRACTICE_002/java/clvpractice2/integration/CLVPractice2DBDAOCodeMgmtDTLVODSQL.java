@@ -1,16 +1,16 @@
 /*=========================================================
 *Copyright(c) 2023 CyberLogitec
-*@FileName : ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL.java
-*@FileTitle : 
+*@FileName : CLVPractice2DBDAOCodeMgmtDTLVODSQL.java
+*@FileTitle : CLV Practice 2
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.04.24
+*@LastModifyDate : 2023.05.04
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.04.24 
+* 2023.05.04 
 * 1.0 Creation
 =========================================================*/
-package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration ;
+package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration ;
 
 import java.util.HashMap;
 import org.apache.log4j.Logger;
@@ -23,7 +23,7 @@ import com.clt.framework.support.db.ISQLTemplate;
  * @since J2EE 1.6
  */
 
-public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
+public class CLVPractice2DBDAOCodeMgmtDTLVODSQL implements ISQLTemplate{
 
 	private StringBuffer query = new StringBuffer();
 	
@@ -34,10 +34,10 @@ public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
 	
 	/**
 	  * <pre>
-	  * te
+	  * Delete
 	  * </pre>
 	  */
-	public ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL(){
+	public CLVPractice2DBDAOCodeMgmtDTLVODSQL(){
 		setQuery();
 		params = new HashMap<String,String[]>();
 		String tmp = null;
@@ -47,11 +47,18 @@ public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
 		if(arrTmp.length !=2){
 			throw new IllegalArgumentException();
 		}
-		params.put("err_msg_cd",new String[]{arrTmp[0],arrTmp[1]});
+		params.put("intg_cd_val_ctnt",new String[]{arrTmp[0],arrTmp[1]});
+
+		tmp = java.sql.Types.VARCHAR + ",N";
+		arrTmp = tmp.split(",");
+		if(arrTmp.length !=2){
+			throw new IllegalArgumentException();
+		}
+		params.put("intg_cd_id",new String[]{arrTmp[0],arrTmp[1]});
 
 		query.append("/*").append("\n"); 
-		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration ").append("\n"); 
-		query.append("FileName : ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL").append("\n"); 
+		query.append("Path : com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration ").append("\n"); 
+		query.append("FileName : CLVPractice2DBDAOCodeMgmtDTLVODSQL").append("\n"); 
 		query.append("*/").append("\n"); 
 	}
 	
@@ -67,11 +74,10 @@ public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
 	 * Query 생성
 	 */
 	public void setQuery(){
-		query.append("SELECT                                                                " ).append("\n"); 
-		query.append("   	1                                                          " ).append("\n"); 
-		query.append("FROM com_err_msg                                                      " ).append("\n"); 
-		query.append("WHERE lang_tp_cd = 'ENG' AND" ).append("\n"); 
-		query.append("      err_msg_cd LIKE '%'||@[err_msg_cd]||'%'" ).append("\n"); 
+		query.append("DELETE" ).append("\n"); 
+		query.append("FROM COM_INTG_CD_DTL" ).append("\n"); 
+		query.append("WHERE INTG_CD_ID = @[intg_cd_id]" ).append("\n"); 
+		query.append("AND   INTG_CD_VAL_CTNT = NVL2(@[intg_cd_val_ctnt],@[intg_cd_val_ctnt],INTG_CD_VAL_CTNT)" ).append("\n"); 
 
 	}
 }

@@ -42,7 +42,7 @@ import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Search Error Message
 	 * 
 	 * @param ComErrMsgVO comErrMsgVO
 	 * @return List<ComErrMsgVO>
@@ -77,7 +77,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Insert Error Message
 	 * 
 	 * @param ComErrMsgVO comErrMsgVO
 	 * @exception DAOException
@@ -108,15 +108,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
-	 * 
-	 * @param ComErrMsgVO comErrMsgVO
-	 * @exception DAOException
-	 * @exception Exception
-	 */
-	
-	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 *  Update Error Message
 	 * 
 	 * @param ComErrMsgVO comErrMsgVO
 	 * @return int
@@ -151,7 +143,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 *  Delete  Error Message
 	 * 
 	 * @param ComErrMsgVO comErrMsgVO
 	 * @return int
@@ -186,7 +178,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	}
 
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 * Insert  Error Message
 	 * 
 	 * @param List<ComErrMsgVO> comErrMsgVO
 	 * @return int[]
@@ -217,7 +209,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 		return insCnt;
 	}
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 *   Update Error Message
 	 * 
 	 * @param List<ComErrMsgVO> comErrMsgVO
 	 * @return int[]
@@ -246,7 +238,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	}
 	
 	/**
-	 * [처리대상] 정보를 [행위] 합니다.<br>
+	 *  Delete  Error Message
 	 * 
 	 * @param List<ComErrMsgVO> comErrMsgVO
 	 * @return int[]
@@ -273,5 +265,5 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 		}
 		return delCnt;
 	}
-	
+
 }
