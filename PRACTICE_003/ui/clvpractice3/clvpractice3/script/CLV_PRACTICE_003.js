@@ -112,6 +112,7 @@ function resetForm(formObj){
  * @param sheet_obj
  */
 function setSheetObject(sheet_obj) {
+	console.log(sheet_obj.id);
 	sheetObjects[sheetCnt++] = sheet_obj;
 }
 
@@ -174,9 +175,7 @@ function tab1_OnChange(tabObj , nItem)
     var objs=document.all.item("tabLayer");
     objs[nItem].style.display="Inline";
     objs[beforetab].style.display="none";
-    //--------------- important --------------------------//
-    objs[beforetab].style.zIndex=objs[nItem].style.zIndex -1 ;
-    //------------------------------------------------------//
+
     beforetab=nItem;
     
     if (beforetab == 0 && summaryFlag == 0) {
@@ -732,20 +731,57 @@ function t1sheet1_OnDblClick(sheetObj, Row,Col){
 	var currentRow = sheetObj.GetSelectRow();
 	var parentCodeS1 = sheetObj.GetCellValue(currentRow,1);
 	var rLaneCodeS1  = sheetObj.GetCellValue(currentRow,2);
-	
-	tabObjects[0].SetSelectedIndex(1);
-	
-	var iStRow = getCurrentSheet().HeaderRows();
-    var iEdRow = getCurrentSheet().LastRow();
-    
-    
-	for(var i=iStRow;i<=iEdRow;i++){
-		if(parentCodeS1 == getCurrentSheet().GetCellValue(i,"t2sheet1_" + "jo_crr_cd") && rLaneCodeS1 == getCurrentSheet().GetCellValue(i,"t2sheet1_" + "rlane_cd")){
-			getCurrentSheet().SetSelectRow(i);
-		}
+	var unFindFlag =0;
+	if(parentCodeS1!=="" && rLaneCodeS1 !==""){
 		
-		iEdRow = getCurrentSheet().LastRow();
+		tabObjects[0].SetSelectedIndex(1);
+
+	    if(findJooRlaneCode(getCurrentSheet(),parentCodeS1,rLaneCodeS1) === 1){
+	    	 ComFireEvent(ComGetObject("btn_Retrieve") ,"click");
+	    	 findJooRlaneCode(getCurrentSheet(),parentCodeS1,rLaneCodeS1);
+	    	 unFindFlag = 0;
+	    }
+	}else{
+		ComShowMessage("No please");
+		
+		return;
 	}
+
+}
+
+/**
+ * find Joo Carrier and Rev Lane Code
+ * 
+ * @param sheetObj
+ * @param parentCodeS1
+ * @param rLaneCodeS1
+ */
+
+function findJooRlaneCode(sheetObj,parentCodeS1,rLaneCodeS1){
+
+	var iStRow = sheetObj.HeaderRows();
+    var iEdRow = sheetObj.LastRow();
+    var findOut = 0;
+    var index = -1;
+	for(var i=iStRow;i<=iEdRow;i++){
+		var s2JooCrr = sheetObj.GetCellValue(i, "t2sheet1_" + "jo_crr_cd");
+		var s2RlaneCd = sheetObj.GetCellValue(i, "t2sheet1_" + "rlane_cd");
+		if ((parentCodeS1 === s2JooCrr && rLaneCodeS1 === s2RlaneCd)) {
+			findOut = 1;
+			index = i;
+			unFindFlag = 0;
+			break;
+		} 
+		
+		iEdRow = sheetObj.LastRow();
+	}
+	if(findOut === 1){
+		sheetObj.SetSelectRow(index);
+	}else{
+		findOut =0;
+		return 1;
+	}
+	
 	
 }
 /**
