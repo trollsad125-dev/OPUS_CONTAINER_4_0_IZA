@@ -67,7 +67,6 @@ document.onclick=processButtonClick;
             initSheet(sheetObjects[i],i+1);
             ComEndConfigSheet(sheetObjects[i]);
         }
-        initControl();
         //Insert into Sub System Object
 		var tmp=subSysCd.substring(1,subSysCd.length-1).split(", ");
 		with (subsystem) {
@@ -78,14 +77,7 @@ document.onclick=processButtonClick;
 		}
 
     }
-    /**
-     * Init Control for Form Object and add Event Listener based on CoAxon.js
-     */
-    function initControl() {
-      	var formObject=document.form1;
-          axon_event.addListenerFormat('keypress', 'keypressFormat', formObject);
-          axon_event.addListener ('keydown', 'ComKeyEnter', 'form1');
-    }
+
     /**
      * init Sheet
      * 
