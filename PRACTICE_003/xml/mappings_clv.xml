@@ -30,7 +30,7 @@
 	<!-- Nhat Nguyen : 2023-05-04 end -->
 
 	<!-- Nhat Nguyen : 2023-05-08 start -->
-    <url-mapping url="CLV_PRACTICE_004.do" screen="CLV_Practice_004.screen" >
+    <url-mapping url="CLV_PRACTICE_004.do" screen="CLV_PRACTICE_004.screen" >
         <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.event.CLV_PRACTICE_004HTMLAction</web-action-class>
     </url-mapping>
 
