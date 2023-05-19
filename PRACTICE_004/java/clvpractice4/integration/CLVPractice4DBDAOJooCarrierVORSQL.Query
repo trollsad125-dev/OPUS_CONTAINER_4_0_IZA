@@ -8,9 +8,9 @@ SELECT
 	MODI_COST_CTR_CD
 ,	EDW_UPD_DT
 ,	UPD_USR_ID
-,	UPD_DT
+,	to_char(UPD_DT,'yyyy/MM/dd HH:mm:ss') UPD_DT
 ,	CRE_USR_ID
-,	CRE_DT
+,	to_char(CRE_DT,'yyyy/MM/dd HH:mm:ss') CRE_DT
 ,	DELT_FLG
 ,	JO_STL_OPT_CD
 ,	TRD_CD

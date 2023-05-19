@@ -4,10 +4,10 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.05
+*@LastModifyDate : 2023.05.19
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.05 
+* 2023.05.19 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration;
@@ -50,7 +50,7 @@ public class CLVPractice2DBDAOCodeMgmtDTLVORSQL implements ISQLTemplate{
 		params.put("codeid",new String[]{arrTmp[0],arrTmp[1]});
 
 		query.append("/*").append("\n"); 
-		query.append("Path : com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration").append("\n"); 
+		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration").append("\n"); 
 		query.append("FileName : CLVPractice2DBDAOCodeMgmtDTLVORSQL").append("\n"); 
 		query.append("*/").append("\n"); 
 	}
@@ -69,8 +69,8 @@ public class CLVPractice2DBDAOCodeMgmtDTLVORSQL implements ISQLTemplate{
 	public void setQuery(){
 		query.append("SELECT B.INTG_CD_ID," ).append("\n"); 
 		query.append("B.INTG_CD_VAL_CTNT," ).append("\n"); 
-		query.append("REPLACE(B.INTG_CD_VAL_DP_DESC,'&','&'||'amp;') INTG_CD_VAL_DP_DESC," ).append("\n"); 
-		query.append("REPLACE(B.INTG_CD_VAL_DESC,'&','&'||'amp;') INTG_CD_VAL_DESC," ).append("\n"); 
+		query.append("B.INTG_CD_VAL_DP_DESC," ).append("\n"); 
+		query.append("B.INTG_CD_VAL_DESC," ).append("\n"); 
 		query.append("B.INTG_CD_VAL_DP_SEQ," ).append("\n"); 
 		query.append("B.APLY_ST_DT," ).append("\n"); 
 		query.append("B.APLY_END_DT" ).append("\n"); 

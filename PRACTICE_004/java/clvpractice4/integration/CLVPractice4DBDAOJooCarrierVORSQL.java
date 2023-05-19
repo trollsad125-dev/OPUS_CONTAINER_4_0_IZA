@@ -4,10 +4,10 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.11
+*@LastModifyDate : 2023.05.19
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.11 
+* 2023.05.19 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.integration;
@@ -92,9 +92,9 @@ public class CLVPractice4DBDAOJooCarrierVORSQL implements ISQLTemplate{
 		query.append("	MODI_COST_CTR_CD" ).append("\n"); 
 		query.append(",	EDW_UPD_DT" ).append("\n"); 
 		query.append(",	UPD_USR_ID" ).append("\n"); 
-		query.append(",	UPD_DT" ).append("\n"); 
+		query.append(",	to_char(UPD_DT,'yyyy/MM/dd HH:mm:ss') UPD_DT" ).append("\n"); 
 		query.append(",	CRE_USR_ID" ).append("\n"); 
-		query.append(",	CRE_DT" ).append("\n"); 
+		query.append(",	to_char(CRE_DT,'yyyy/MM/dd HH:mm:ss') CRE_DT" ).append("\n"); 
 		query.append(",	DELT_FLG" ).append("\n"); 
 		query.append(",	JO_STL_OPT_CD" ).append("\n"); 
 		query.append(",	TRD_CD" ).append("\n"); 

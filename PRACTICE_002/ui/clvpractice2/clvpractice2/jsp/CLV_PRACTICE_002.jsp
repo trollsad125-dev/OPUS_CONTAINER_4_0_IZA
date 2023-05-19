@@ -89,11 +89,11 @@
 
 <div class="wrap_search">
 	<div class="opus_design_inquiry wFit">   <!-- no TAB  -->
-		<table class="search" border="0" style="width: 100%;">
+		<table class="search" border="0" style="width: 40%;">
 			<tr class="h23">
 				<th width="70">Subsystem</th>
 				<td><script language="javascript">ComComboObject('subsystem', 1, 120, 0);</script></td>
-				<td width="90"><select name="searchtype" style="width: 80;">
+				<td width="90"><select name="searchtype" style="width: 60;">
 					<option value="0" selected>Cd ID</option>
 					<option value="1">Cd Name</option>
 				</select></td>

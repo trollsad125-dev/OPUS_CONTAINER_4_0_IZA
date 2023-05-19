@@ -77,6 +77,7 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 			List<CodeMgmtCondVO> insertVoList = new ArrayList<CodeMgmtCondVO>();
 			List<CodeMgmtCondVO> updateVoList = new ArrayList<CodeMgmtCondVO>();
 			List<CodeMgmtCondVO> deleteVoList = new ArrayList<CodeMgmtCondVO>();
+			List<CodeMgmtDTLVO>  deleteDetailVoList =  new ArrayList<CodeMgmtDTLVO>();
 			for ( int i=0; i<codeMgmtCondVO .length; i++ ) {
 				if ( codeMgmtCondVO[i].getIbflag().equals("I")){
 					codeMgmtCondVO[i].setCreUsrId(account.getUsr_id());
@@ -86,6 +87,12 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 					updateVoList.add(codeMgmtCondVO[i]);
 				} else if ( codeMgmtCondVO[i].getIbflag().equals("D")){
 					deleteVoList.add(codeMgmtCondVO[i]);
+					//Create Detail VO
+					CodeMgmtDTLVO detailVO = new CodeMgmtDTLVO();
+					detailVO.setIntgCdId(codeMgmtCondVO[i].getIntgCdId());
+					
+					//Add Code Id Detail into DeleteDetailVOList by Searching it
+					deleteDetailVoList.addAll(dbDao.searchCodeMgmtDtl(detailVO));
 				}
 			}
 			
@@ -111,6 +118,9 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 			}
 			
 			if ( deleteVoList.size() > 0 ) {
+				if(deleteDetailVoList.size() > 0){
+					dbDao.removemultiCodeDtlS(deleteDetailVoList);
+				}
 				dbDao.removemultiCodeMgmtS(deleteVoList);
 			}
 		}

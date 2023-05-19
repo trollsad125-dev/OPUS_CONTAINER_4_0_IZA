@@ -1,13 +1,13 @@
 /*=========================================================
 *Copyright(c) 2023 CyberLogitec
 *@FileName : CLVPractice2DBDAOCodeMgmtCondVORSQL.java
-*@FileTitle : FW_Practice_004
+*@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.08
+*@LastModifyDate : 2023.05.19
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.08 
+* 2023.05.19 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration;
@@ -57,7 +57,7 @@ public class CLVPractice2DBDAOCodeMgmtCondVORSQL implements ISQLTemplate{
 		params.put("subsystem",new String[]{arrTmp[0],arrTmp[1]});
 
 		query.append("/*").append("\n"); 
-		query.append("Path : com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration").append("\n"); 
+		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration").append("\n"); 
 		query.append("FileName : CLVPractice2DBDAOCodeMgmtCondVORSQL").append("\n"); 
 		query.append("*/").append("\n"); 
 	}
@@ -77,8 +77,8 @@ public class CLVPractice2DBDAOCodeMgmtCondVORSQL implements ISQLTemplate{
 		query.append("SELECT" ).append("\n"); 
 		query.append("A.OWNR_SUB_SYS_CD," ).append("\n"); 
 		query.append("A.INTG_CD_ID," ).append("\n"); 
-		query.append("REPLACE(A.INTG_CD_NM,'&','&'||'amp;') INTG_CD_NM," ).append("\n"); 
-		query.append("REPLACE(A.INTG_CD_DESC,'&','&'||'amp;') INTG_CD_DESC," ).append("\n"); 
+		query.append("A.INTG_CD_NM," ).append("\n"); 
+		query.append("A.INTG_CD_DESC," ).append("\n"); 
 		query.append("A.INTG_CD_TP_CD," ).append("\n"); 
 		query.append("A.MNG_TBL_NM," ).append("\n"); 
 		query.append("A.INTG_CD_LEN," ).append("\n"); 
