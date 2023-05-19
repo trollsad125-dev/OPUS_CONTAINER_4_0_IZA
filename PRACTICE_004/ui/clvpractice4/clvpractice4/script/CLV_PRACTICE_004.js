@@ -255,11 +255,12 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 	case IBSEARCH: // retrieve
 		formObj.f_cmd.value = SEARCH;
 		ComOpenWait(true);
-		sheetObj.DoSearch("CLV_Practice_004GS.do", FormQueryString(formObj) );
+		sheetObj.DoSearch("CLV_PRACTICE_004GS.do", FormQueryString(formObj) );
+		ComOpenWait(false);
 		break;
 	case IBSAVE: // retrieve
 		formObj.f_cmd.value = MULTI;
-		sheetObj.DoSave("CLV_Practice_004GS.do", FormQueryString(formObj));
+		sheetObj.DoSave("CLV_PRACTICE_004GS.do", FormQueryString(formObj));
 		break;
 	case IBINSERT: //Row Add button event
 		sheetObj.DataInsert(-1);
@@ -270,7 +271,7 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 			if(sheetObj.GetCellValue(i, "del_chk") == 1){
 				sheetObj.SetRowHidden(i, 1);
 				sheetObj.SetRowStatus(i,"D");
-				sheetObj.DoSave("CLV_Practice_004GS.do", FormQueryString(formObj));
+				sheetObj.DoSave("CLV_PRACTICE_004GS.do", FormQueryString(formObj));
 			}
 		}
 		break;
@@ -334,7 +335,7 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 	if(colName == "jo_crr_cd"){//check invalid with mdm carrier
 		formObj.f_cmd.value		= COMMAND02;
 		var sParam				= FormQueryString(formObj) + "&jo_crr_cd=" + Value;
-		var sXml 				= sheetObj.GetSearchData("CLV_Practice_004GS.do", sParam, {sync:1});	
+		var sXml 				= sheetObj.GetSearchData("CLV_PRACTICE_004GS.do", sParam, {sync:1});	
 		var flag				= ComGetEtcData(sXml, "ISEXIST");
 		if(flag == 'N'){
 			ComShowCodeMessage("PRC00002",["Carrier"]);
@@ -344,7 +345,7 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 	}else if(colName == "vndr_seq"){//check invalid vendor code
 		formObj.f_cmd.value		= COMMAND03;
 		var sParam				= FormQueryString(formObj) + "&vndr_seq=" + Value;
-		var sXml 				= sheetObj.GetSearchData("CLV_Practice_004GS.do", sParam, {sync:1});	
+		var sXml 				= sheetObj.GetSearchData("CLV_PRACTICE_004GS.do", sParam, {sync:1});	
 		var flag				= ComGetEtcData(sXml, "ISEXIST");
 		if(flag == 'N'){
 			ComShowCodeMessage("PRC00002",["Vendor"]);
@@ -355,7 +356,7 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 		if(sheetObj.GetCellValue(Row,"cust_seq") != "" && sheetObj.GetCellValue(Row,"cust_cnt_cd") != ""){
 			formObj.f_cmd.value		= COMMAND04;
 			var sParam				= FormQueryString(formObj)+ "&cust_cnt_cd=" + sheetObj.GetCellValue(Row,"cust_cnt_cd") + "&cust_seq=" + sheetObj.GetCellValue(Row,"cust_seq") ;
-			var sXml 				= sheetObj.GetSearchData("CLV_Practice_004GS.do", sParam, {sync:1});	
+			var sXml 				= sheetObj.GetSearchData("CLV_PRACTICE_004GS.do", sParam, {sync:1});	
 			var flag				= ComGetEtcData(sXml, "ISEXIST");
 			if(flag == 'N'){
 				ComShowCodeMessage("PRC00002",["Customer"]);
@@ -366,7 +367,7 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 	}else if(colName == "trd_cd"){//check invalid trade code
 		formObj.f_cmd.value		= COMMAND05;
 		var sParam				= FormQueryString(formObj) + "&trd_cd=" + Value;
-		var sXml 				= sheetObj.GetSearchData("CLV_Practice_004GS.do", sParam, {sync:1});	
+		var sXml 				= sheetObj.GetSearchData("CLV_PRACTICE_004GS.do", sParam, {sync:1});	
 		var flag				= ComGetEtcData(sXml, "ISEXIST");
 		if(flag == 'N'){
 			ComShowCodeMessage("PRC00002",["Trade"]);
