@@ -386,12 +386,7 @@ function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 function addComboItem(comboObj, comboItems) {
 	for (var i = 0; i < comboItems.length; i++) {
 		var comboItem = comboItems[i].split(",");
-		if (comboItem.length == 1) {
+			// Insert Combo Item into ComboOject  s_jo_crr_cd
 			comboObj.InsertItem(i, comboItem[0], comboItem[0]);
-		} else {
-			comboObj.InsertItem(i, comboItem[0] + "|" + comboItem[1],
-					comboItem[1]);
-		}
-
 	}
 }
