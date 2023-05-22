@@ -151,7 +151,7 @@ function initCombo(comboObj, comboNo) {
  * @param code
  */
 function s_jo_crr_cd_OnCheckClick(comboObj, index, code) {
-    if(index==0) {          
+    if(index==0) {
         var bChk=comboObj.GetItemCheck(index);
         if(bChk){
             for(var i=1 ; i < comboObj.GetItemCount() ; i++) {
@@ -201,7 +201,7 @@ function initSheet(sheetObj, sheetNo) {
 
 			var cols = [ 
 	             { Type : "Status", Hidden : 1, Width : 50, Align : "Center", ColMerge : 0, SaveName : "ibflag" }, 
-	             { Type : "DelCheck", Hidden : 0, Width : 50, Align : "Center", ColMerge : 0, SaveName : "del_chk" }, 
+	             { Type : "CheckBox", Hidden : 0, Width : 50, Align : "Center", ColMerge : 0, SaveName : "del_chk" }, 
 	             { Type : "Combo", Hidden : 0, Width : 70, Align : "Center", ColMerge : 0, SaveName : "jo_crr_cd", KeyField : 1, Format : "", UpdateEdit : 0, InsertEdit : 1, EditLen: 3 }, 
 	             { Type : "Combo", Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "rlane_cd", KeyField : 1, Format : "", UpdateEdit : 0, InsertEdit : 1, EditLen: 5  }, 
 	             { Type : "Text", Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "vndr_seq", KeyField : 1, Format : "", UpdateEdit : 1, InsertEdit : 1 , EditLen: 6 }, 
@@ -224,7 +224,6 @@ function initSheet(sheetObj, sheetNo) {
 			SetColProperty("trd_cd", { AcceptKeys : "E|N", InputCaseSensitive : 1 });
 			SetColProperty("rlane_cd", { ComboText : rlanCombo, ComboCode : rlanCombo });
 			SetColProperty("delt_flg", { ComboText : "N|Y", ComboCode : "N|Y" });
-			//SetColProperty("cre_dt",{Format:"yyyy/MM/dd"});
 			SetWaitImageVisible(0);
 			resizeSheet();
 		}
@@ -266,12 +265,10 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 		sheetObj.DataInsert(-1);
 		break;
 	case IBDELETE: //Row Delete button event
-		formObj.f_cmd.value = MULTI;
 		for( var i = sheetObj.LastRow(); i >= sheetObj.HeaderRows(); i-- ) {
 			if(sheetObj.GetCellValue(i, "del_chk") == 1){
 				sheetObj.SetRowHidden(i, 1);
 				sheetObj.SetRowStatus(i,"D");
-				sheetObj.DoSave("CLV_PRACTICE_004GS.do", FormQueryString(formObj));
 			}
 		}
 		break;
@@ -318,8 +315,6 @@ function validateForm(sheetObj, formObj, sAction) {
             ComSetFocus(creDtFm);
             return false;
         }
-        if(!ComChkObjValid(creDtFm)) {return false;}
-        if(!ComChkObjValid(creDtTo)) {return false;}
 		break;
 	}
 	return true;

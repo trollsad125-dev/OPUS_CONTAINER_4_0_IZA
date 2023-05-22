@@ -61,8 +61,6 @@ public class CLV_PRACTICE_003HTMLAction extends HTMLActionSupport {
 		if(command.isCommand(FormCommand.SEARCH01)) {
 			event.setSummaryVO((SummaryVO)getVO(request, SummaryVO .class));
 			//Set Partner Code and Joo Carrier Cd
-			event.getSummaryVO().setPartnercodes(JSPUtil.getParameter(request, "jo_crr_cds"));
-			event.getSummaryVO().setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
 			event.getSummaryVO().setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
 			event.getSummaryVO().setRlaneCd(JSPUtil.getParameter(request, "rlane_cds"));
 			event.getSummaryVO().setTrdCd(JSPUtil.getParameter(request, "trd_cd"));
@@ -70,8 +68,6 @@ public class CLV_PRACTICE_003HTMLAction extends HTMLActionSupport {
 		else if(command.isCommand(FormCommand.SEARCH02)) {
 			event.setDetailVO((DetailVO)getVO(request, DetailVO .class));
 			//Set Partner Code and Joo Carrier Cd
-			event.getDetailVO().setPartnercodes(JSPUtil.getParameter(request, "jo_crr_cds"));
-			event.getDetailVO().setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
 			event.getDetailVO().setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
 			event.getDetailVO().setRlaneCd(JSPUtil.getParameter(request, "rlane_cds"));
 			event.getDetailVO().setTrdCd(JSPUtil.getParameter(request, "trd_cd"));

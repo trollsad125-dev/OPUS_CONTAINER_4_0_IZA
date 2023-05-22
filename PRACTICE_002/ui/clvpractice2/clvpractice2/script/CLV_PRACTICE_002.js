@@ -238,6 +238,8 @@ document.onclick=processButtonClick;
      * @param Col
      */
     function sheet1_OnDblClick(sheetObj, Row, Col) {
-    	ComSetObjValue(document.form1.codeid, sheetObj.GetCellValue(Row, "sheet1_intg_cd_id"));
-    	doActionIBSheet(sheetObjects[1],document.form1,IBSEARCH);
+    	if(sheetObj.GetCellValue(Row,"sheet1_ibflag") !== "I"){
+        	ComSetObjValue(document.form1.codeid, sheetObj.GetCellValue(Row, "sheet1_intg_cd_id"));
+        	doActionIBSheet(sheetObjects[1],document.form1,IBSEARCH);
+    	}
     }

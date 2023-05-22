@@ -281,8 +281,8 @@ function initSheet(sheetObj, sheetNo) {
 	switch (sheetObj.id) {
 	 case "t1sheet1": // t1sheet1 init     //t1sheet1 init
          with(sheetObj){
-             var HeadTitle1="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Customer/S.Provider|Customer/S.Provider|cust_vndr_cnt_cd|cust_vndr_seq";
-             var HeadTitle2="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Code|Name|cust_vndr_cnt_cd|cust_vndr_seq";
+             var HeadTitle1="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Customer/S.Provider|Customer/S.Provider";
+             var HeadTitle2="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Code|Name";
              var headCount=ComCountHeadTitle(HeadTitle1);
              SetConfig( { SearchMode:0, MergeSheet:1, Page:500, DataRowMerge:0 } );
              var info    = { Sort:0, ColMove:1, HeaderCheck:1, ColResize:1 };
@@ -300,9 +300,7 @@ function initSheet(sheetObj, sheetNo) {
 	                       {Type:"Float",     Hidden:0, Width:120,  Align:"Right",   ColMerge:0,   SaveName: prefix + "inv_rev_act_amt",KeyField:0,   CalcLogic:"",   Format:"NullFloat",   PointCount:2,   UpdateEdit:0,   InsertEdit:0 },
 	                       {Type:"Float",     Hidden:0, Width:120,  Align:"Right",   ColMerge:0,   SaveName: prefix + "inv_exp_act_amt",KeyField:0,   CalcLogic:"",   Format:"NullFloat",   PointCount:2,   UpdateEdit:0,   InsertEdit:0 },
 	                       {Type:"Text",      Hidden:0, Width:90,   Align:"Left",    ColMerge:0,   SaveName: prefix + "prnr_ref_no",    KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },   
-	                       {Type:"Text",      Hidden:0, Width:200,  Align:"Left",    ColMerge:0,   SaveName: prefix + "cust_vndr_eng_nm",KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },   
-	                       {Type:"Text",      Hidden:1, Width:90,   Align:"Left",    ColMerge:0,   SaveName: prefix + "cust_vndr_cnt_cd",KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },   
-	                       {Type:"Text",      Hidden:1, Width:90,   Align:"Left",    ColMerge:0,   SaveName: prefix + "cust_vndr_seq",  KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 }
+	                       {Type:"Text",      Hidden:0, Width:200,  Align:"Left",    ColMerge:0,   SaveName: prefix + "cust_vndr_eng_nm",KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 }   
 	                        ];
 	                 
 	                InitColumns(cols);
@@ -688,6 +686,8 @@ function jo_crr_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex,
 	if (comboObj.GetSelectCode() != null) {
 		doActionIBSheet(getCurrentSheet(), formObj, IBSEARCH_ASYNC02);
 		rlane_cds.SetEnable(1);
+		trd_cd.SetEnable(0);
+		trd_cd.RemoveAll();
 
 	}
 }
@@ -703,9 +703,10 @@ function rlane_cds_OnChange(comboObj, oldIndex, oldText, oldCode, newIndex,
 	if (comboObj.GetSelectCode() != null) {
 		doActionIBSheet(getCurrentSheet(), formObj, IBSEARCH_ASYNC03);
 		trd_cd.SetEnable(1);
-
+		
 	}
 }
+
 /**
  * Resize Sheet Object
  * 

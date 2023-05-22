@@ -55,7 +55,7 @@ SELECT INV.JO_CRR_CD
 	#if (${date_fr} != '' && ${date_to} != '')
 	AND INV.ACCT_YRMON   BETWEEN REPLACE(@[date_fr],'-','') AND REPLACE(@[date_to],'-','')
 	#end
-	#if (${jo_crr_cd} != '' && ${jo_crr_cd} != 'All')
+	#if (${jo_crr_cd} != '' && ${jo_crr_cd} != 'ALL')
 		and INV.JO_CRR_CD in (
 			#foreach($key IN ${partnerCodes})
 				#if($velocityCount < $partnerCodes.size()) 
@@ -66,7 +66,7 @@ SELECT INV.JO_CRR_CD
 			#end
 		)
 	#end
-	#if (${rlane_cd}!='')
+	#if (${rlane_cd}!='' && ${rlane_cd}!='ALL')
 		AND STL.RLANE_CD   = @[rlane_cd]
 	#end
 	#if (${trd_cd}!='')

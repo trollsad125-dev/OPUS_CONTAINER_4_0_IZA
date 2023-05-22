@@ -46,8 +46,6 @@ public class DetailVO extends AbstractValueObject {
 	/* Column Info */
 	private String invRevActAmt = null;
 	/* Column Info */
-	private String partnercodes = null;
-	/* Column Info */
 	private String dateTo = null;
 	/* Column Info */
 	private String loclCurrCd = null;
@@ -90,10 +88,9 @@ public class DetailVO extends AbstractValueObject {
 	
 	public DetailVO() {}
 
-	public DetailVO(String ibflag, String pagerows, String joCrrCd, String rlaneCd, String loclCurrCd, String invNo, String csrNo, String aproFlg, String custVndrCntCd, String custVndrSeq, String prnrRefNo, String custVndrEngNm, String invRevActAmt, String invExpActAmt, String revExp, String item, String trdCd, String dateFr, String dateTo, String partnercodes) {
+	public DetailVO(String ibflag, String pagerows, String joCrrCd, String rlaneCd, String loclCurrCd, String invNo, String csrNo, String aproFlg, String custVndrCntCd, String custVndrSeq, String prnrRefNo, String custVndrEngNm, String invRevActAmt, String invExpActAmt, String revExp, String item, String trdCd, String dateFr, String dateTo) {
 		this.csrNo = csrNo;
 		this.invRevActAmt = invRevActAmt;
-		this.partnercodes = partnercodes;
 		this.dateTo = dateTo;
 		this.loclCurrCd = loclCurrCd;
 		this.custVndrSeq = custVndrSeq;
@@ -120,7 +117,6 @@ public class DetailVO extends AbstractValueObject {
 	public HashMap<String, String> getColumnValues(){
 		this.hashColumns.put("csr_no", getCsrNo());
 		this.hashColumns.put("inv_rev_act_amt", getInvRevActAmt());
-		this.hashColumns.put("partnercodes", getPartnercodes());
 		this.hashColumns.put("date_to", getDateTo());
 		this.hashColumns.put("locl_curr_cd", getLoclCurrCd());
 		this.hashColumns.put("cust_vndr_seq", getCustVndrSeq());
@@ -148,7 +144,6 @@ public class DetailVO extends AbstractValueObject {
 	public HashMap<String, String> getFieldNames(){
 		this.hashFields.put("csr_no", "csrNo");
 		this.hashFields.put("inv_rev_act_amt", "invRevActAmt");
-		this.hashFields.put("partnercodes", "partnercodes");
 		this.hashFields.put("date_to", "dateTo");
 		this.hashFields.put("locl_curr_cd", "loclCurrCd");
 		this.hashFields.put("cust_vndr_seq", "custVndrSeq");
@@ -185,13 +180,6 @@ public class DetailVO extends AbstractValueObject {
 		return this.invRevActAmt;
 	}
 	
-	/**
-	 * Column Info
-	 * @return partnercodes
-	 */
-	public String getPartnercodes() {
-		return this.partnercodes;
-	}
 	
 	/**
 	 * Column Info
@@ -346,14 +334,7 @@ public class DetailVO extends AbstractValueObject {
 		this.invRevActAmt = invRevActAmt;
 	}
 	
-	/**
-	 * Column Info
-	 * @param partnercodes
-	 */
-	public void setPartnercodes(String partnercodes) {
-		this.partnercodes = partnercodes;
-	}
-	
+
 	/**
 	 * Column Info
 	 * @param dateTo
@@ -505,7 +486,6 @@ public class DetailVO extends AbstractValueObject {
 	public void fromRequest(HttpServletRequest request, String prefix) {
 		setCsrNo(JSPUtil.getParameter(request, prefix + "csr_no", ""));
 		setInvRevActAmt(JSPUtil.getParameter(request, prefix + "inv_rev_act_amt", ""));
-		setPartnercodes(JSPUtil.getParameter(request, prefix + "partnercodes", ""));
 		setDateTo(JSPUtil.getParameter(request, prefix + "date_to", ""));
 		setLoclCurrCd(JSPUtil.getParameter(request, prefix + "locl_curr_cd", ""));
 		setCustVndrSeq(JSPUtil.getParameter(request, prefix + "cust_vndr_seq", ""));
@@ -552,7 +532,6 @@ public class DetailVO extends AbstractValueObject {
 		try {
 			String[] csrNo = (JSPUtil.getParameter(request, prefix	+ "csr_no", length));
 			String[] invRevActAmt = (JSPUtil.getParameter(request, prefix	+ "inv_rev_act_amt", length));
-			String[] partnercodes = (JSPUtil.getParameter(request, prefix	+ "partnercodes", length));
 			String[] dateTo = (JSPUtil.getParameter(request, prefix	+ "date_to", length));
 			String[] loclCurrCd = (JSPUtil.getParameter(request, prefix	+ "locl_curr_cd", length));
 			String[] custVndrSeq = (JSPUtil.getParameter(request, prefix	+ "cust_vndr_seq", length));
@@ -577,8 +556,6 @@ public class DetailVO extends AbstractValueObject {
 					model.setCsrNo(csrNo[i]);
 				if (invRevActAmt[i] != null)
 					model.setInvRevActAmt(invRevActAmt[i]);
-				if (partnercodes[i] != null)
-					model.setPartnercodes(partnercodes[i]);
 				if (dateTo[i] != null)
 					model.setDateTo(dateTo[i]);
 				if (loclCurrCd[i] != null)
@@ -644,7 +621,6 @@ public class DetailVO extends AbstractValueObject {
 	public void unDataFormat(){
 		this.csrNo = this.csrNo .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.invRevActAmt = this.invRevActAmt .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
-		this.partnercodes = this.partnercodes .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.dateTo = this.dateTo .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.loclCurrCd = this.loclCurrCd .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");
 		this.custVndrSeq = this.custVndrSeq .replaceAll(",", "").replaceAll("-", "").replaceAll("/", "").replaceAll(":", "");

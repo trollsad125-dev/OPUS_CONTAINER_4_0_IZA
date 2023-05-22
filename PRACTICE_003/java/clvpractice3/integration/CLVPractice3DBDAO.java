@@ -63,9 +63,19 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 		try{
 			if(detailVO != null){
 				Map<String, String> mapVO = detailVO .getColumnValues();
-			
+				List<String> partnerCodes = new ArrayList<>();
+				if(null != detailVO.getJoCrrCd()){
+					String[] crr_cd = detailVO.getJoCrrCd().split(",");
+					for(int i = 0; i < crr_cd.length; i++){
+						partnerCodes.add(crr_cd[i]);
+					}
+				}
 				param.putAll(mapVO);
+				param.put("partnerCodes", partnerCodes);
+				
 				velParam.putAll(mapVO);
+				velParam.put("partnerCodes", partnerCodes);
+
 			}
 			dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAODetailVORSQL(), param, velParam);
 			list = (List)RowSetUtil.rowSetToVOs(dbRowset, DetailVO .class);
@@ -97,9 +107,18 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 		try{
 			if(summaryVO != null){
 				Map<String, String> mapVO = summaryVO .getColumnValues();
-			
+				List<String> partnerCodes = new ArrayList<>();
+				if(null != summaryVO.getJoCrrCd()){
+					String[] crr_cd = summaryVO.getJoCrrCd().split(",");
+					for(int i = 0; i < crr_cd.length; i++){
+						partnerCodes.add(crr_cd[i]);
+					}
+				}
 				param.putAll(mapVO);
+				param.put("partnerCodes", partnerCodes);
+				
 				velParam.putAll(mapVO);
+				velParam.put("partnerCodes", partnerCodes);
 			}
 			dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAOSummaryVORSQL(), param, velParam);
 			list = (List)RowSetUtil.rowSetToVOs(dbRowset, SummaryVO .class);

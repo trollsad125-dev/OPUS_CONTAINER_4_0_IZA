@@ -4,10 +4,10 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.16
+*@LastModifyDate : 2023.05.22
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.16 
+* 2023.05.22 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration;
@@ -139,7 +139,7 @@ public class CLVPractice3DBDAODetailVORSQL implements ISQLTemplate{
 		query.append("	#if (${date_fr} != '' && ${date_to} != '')" ).append("\n"); 
 		query.append("	AND INV.ACCT_YRMON   BETWEEN REPLACE(@[date_fr],'-','') AND REPLACE(@[date_to],'-','')" ).append("\n"); 
 		query.append("	#end" ).append("\n"); 
-		query.append("	#if (${jo_crr_cd} != '' && ${jo_crr_cd} != 'All')" ).append("\n"); 
+		query.append("	#if (${jo_crr_cd} != '' && ${jo_crr_cd} != 'ALL')" ).append("\n"); 
 		query.append("		and INV.JO_CRR_CD in (" ).append("\n"); 
 		query.append("			#foreach($key IN ${partnerCodes})" ).append("\n"); 
 		query.append("				#if($velocityCount < $partnerCodes.size()) " ).append("\n"); 
@@ -150,7 +150,7 @@ public class CLVPractice3DBDAODetailVORSQL implements ISQLTemplate{
 		query.append("			#end" ).append("\n"); 
 		query.append("		)" ).append("\n"); 
 		query.append("	#end" ).append("\n"); 
-		query.append("	#if (${rlane_cd}!='')" ).append("\n"); 
+		query.append("	#if (${rlane_cd}!='' && ${rlane_cd}!='ALL')" ).append("\n"); 
 		query.append("		AND STL.RLANE_CD   = @[rlane_cd]" ).append("\n"); 
 		query.append("	#end" ).append("\n"); 
 		query.append("	#if (${trd_cd}!='')" ).append("\n"); 
