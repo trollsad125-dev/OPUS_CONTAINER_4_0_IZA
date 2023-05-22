@@ -56,26 +56,27 @@ public class ClvPractice003ViewAdapter extends ViewAdapter {
  		StringBuilder strBuilder = new StringBuilder();
  		
  		String savedName = "ContractNoInquiry.csv";  
- 		
-    	
+ 		if(command.isCommand(FormCommand.SEARCH01)){
+ 			savedName = "SummarySheet.csv";
+ 		}else if(command.isCommand(FormCommand.SEARCH02)){
+    		savedName = "DetailSheet.csv";
+ 		}
+		response.setContentType("application/vnd.ms.excel");
+		String strClient = request.getHeader("user-agent");
+
+		if (strClient.indexOf("MSIE 5.5") != -1) {
+			response.setHeader("Content-Disposition", "filename=" + savedName
+					+ "; charset=euc-kr");
+		} else {
+			response.setHeader("Content-Disposition", "attachment;filename="
+					+ savedName + ";");
+		}	
     	if(command.isCommand(FormCommand.SEARCH01)) {
-    		savedName = "SummarySheet.csv";
     		List<SummaryVO> list = null;
     		SummaryVO vo = null;
      		list = ((List<SummaryVO>)eventResponse.getRsVoList());
      		try{		
-        		
-     			response.setContentType("application/vnd.ms.excel");
-     			String strClient = request.getHeader("user-agent");
-     
-     			if (strClient.indexOf("MSIE 5.5") != -1) {
-     				response.setHeader("Content-Disposition", "filename="
-     						+ savedName + "; charset=euc-kr");
-     			} else {
-     				response.setHeader("Content-Disposition",
-     						"attachment;filename=" + savedName + ";");
-     			} 			     		
-         		
+	     		
         		PrintWriter pout = response.getWriter();
         		strBuilder.append("Partner,Lane,Invoice No,Slip No,Approved,Curr.,Revenue,Expense,Customer/S.Provider");
         		strBuilder.append("\n");
@@ -118,26 +119,10 @@ public class ClvPractice003ViewAdapter extends ViewAdapter {
             }  
     	}else if(command.isCommand(FormCommand.SEARCH02)){
     		List<DetailVO> list = null;
-    		savedName = "DetailSheet.csv";
     		DetailVO vo = null;
      		list = ((List<DetailVO>)eventResponse.getRsVoList());
      		try{		
-        		
-     			response.setContentType("application/vnd.ms.excel");
-     			String strClient = request.getHeader("user-agent");
-     
-     			if (strClient.indexOf("MSIE 5.5") != -1) {
-     				response.setHeader("Content-Type",
-     						"doesn/matter; charset=euc-kr");
-     				response.setHeader("Content-Disposition", "filename="
-     						+ savedName + "; charset=euc-kr");
-     			} else {
-     				response.setHeader("Content-Type",
-     						"application/octet-stream; charset=euc-kr");
-     				response.setHeader("Content-Disposition",
-     						"attachment;filename=" + savedName + ";");
-     			} 			     		
-         		
+        			
         		PrintWriter pout = response.getWriter();
         		strBuilder.append("Partner,Lane,Invoice No,Slip No,Approved,RevExp,Item,Curr.,Revenue,Expense,Customer/S.Provider");
         		strBuilder.append("\n");
@@ -183,7 +168,8 @@ public class ClvPractice003ViewAdapter extends ViewAdapter {
                 throw new RuntimeException(ex.getMessage());
             }
     	}
-		  	
+		
+
     	return "";
     }
     
