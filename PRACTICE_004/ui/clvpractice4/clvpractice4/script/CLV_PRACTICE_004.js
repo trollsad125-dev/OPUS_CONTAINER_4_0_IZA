@@ -11,8 +11,10 @@
 * 1.0 Creation
 =========================================================*/
 
-	msgs['PRC00001']="'To date' must be later than 'From date'.";
-    msgs['PRC00002']="{?msg1} code is invalid !";
+msgs['PRC00001']="'To date' must be later than 'From date'.";
+msgs['PRC00002']="{?msg1} code is invalid !";
+msgs['PRC00003']="There is any error in script.  Please check it again.";
+
     
 // common global variable
 var sheetObjects = new Array();
@@ -71,7 +73,7 @@ function processButtonClick() {
 		} // end switch
 	} catch (e) {
 		if (e == "[object Error]") {
-			ComShowCodeMessage('JOO00001');
+			ComShowCodeMessage('PRC00003');
 		} else {
 			ComShowMessage(e.message);
 		}
