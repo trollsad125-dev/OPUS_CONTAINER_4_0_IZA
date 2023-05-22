@@ -69,13 +69,9 @@ public class ClvPractice003ViewAdapter extends ViewAdapter {
      			String strClient = request.getHeader("user-agent");
      
      			if (strClient.indexOf("MSIE 5.5") != -1) {
-     				response.setHeader("Content-Type",
-     						"doesn/matter; charset=euc-kr");
      				response.setHeader("Content-Disposition", "filename="
      						+ savedName + "; charset=euc-kr");
      			} else {
-     				response.setHeader("Content-Type",
-     						"application/octet-stream; charset=euc-kr");
      				response.setHeader("Content-Disposition",
      						"attachment;filename=" + savedName + ";");
      			} 			     		
