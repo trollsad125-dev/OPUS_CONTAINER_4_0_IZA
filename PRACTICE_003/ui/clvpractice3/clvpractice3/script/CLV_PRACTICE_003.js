@@ -680,7 +680,16 @@ function GetDateFormat(obj, sFormat){
 	retValue = ComGetMaskedValue(retValue,sFormat);
 	return retValue;
 }
-function showSumTotal(sheetObj,prefix,currPlace,revPlace,expPlace){
+/**
+ * Calculate Sum based on SubSumRow 
+ * 
+ * @param sheetObj
+ * @param prefix
+ * @param currPos
+ * @param revPos
+ * @param expPos
+ */
+function showSumTotal(sheetObj,prefix,currPos,revPos,expPos){
 	 if (sheetObj.RowCount() > 0) {
 
 	      var findSubSum = sheetObj.FindSubSumRow();
@@ -700,9 +709,9 @@ function showSumTotal(sheetObj,prefix,currPlace,revPlace,expPlace){
 	        		  }
 	        		 
 	        	  }
-	        	  sheetObj.SetCellValue(sheetObj.LastRow(),currPlace,allCurrencyG[i]);
-	        	  sheetObj.SetCellValue(sheetObj.LastRow(),revPlace,this["totalRev"+allCurrencyG[i]]);
-	        	  sheetObj.SetCellValue(sheetObj.LastRow(),expPlace,this["totalExp"+allCurrencyG[i]]);
+	        	  sheetObj.SetCellValue(sheetObj.LastRow(),currPos,allCurrencyG[i]);
+	        	  sheetObj.SetCellValue(sheetObj.LastRow(),revPos,this["totalRev"+allCurrencyG[i]]);
+	        	  sheetObj.SetCellValue(sheetObj.LastRow(),expPos,this["totalExp"+allCurrencyG[i]]);
 	        	  sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "locl_curr_cd", 1);
 	              sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "inv_rev_act_amt", 1);
 	              sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "inv_exp_act_amt", 1);
@@ -719,6 +728,7 @@ function showSumTotal(sheetObj,prefix,currPlace,revPlace,expPlace){
 function t2sheet1_OnSearchEnd(sheetObj){
 	showSumTotal(sheetObj,"t2sheet1_",8,9,10);
 }
+
 /**
  * Calculate Total when t1sheet1 end
  * @param sheetObj
