@@ -279,7 +279,7 @@ function initSheet(sheetObj, sheetNo) {
 	var cnt = 0;
 	initPeriod();
 	switch (sheetObj.id) {
-	 case "t1sheet1": // t1sheet1 init     //t1sheet1 init
+	 case "t1sheet1": // t1sheet1 init   
          with(sheetObj){
              var HeadTitle1="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Customer/S.Provider|Customer/S.Provider";
              var HeadTitle2="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Code|Name";
@@ -306,6 +306,7 @@ function initSheet(sheetObj, sheetNo) {
 	                InitColumns(cols);
 	                SetCountPosition();
 	                SetEditable(1);
+	                ShowSubSum([{ StdCol: prefix+"inv_no", SumCols: "7|8", CaptionText: " ", CaptionCol: 3 }]);
 	             }
 		break;
 	 case "t2sheet1": // t2sheet1 init     
@@ -339,8 +340,9 @@ function initSheet(sheetObj, sheetNo) {
         InitColumns(cols);
         SetCountPosition();
         SetEditable(1);
-        
+        ShowSubSum([{ StdCol: prefix+"inv_no", SumCols: "9|10", ShowCumulate: 0, CaptionText: " ", CaptionCol: 3 }]);
 	     }
+        
 	    break;
 	}
 }
@@ -448,199 +450,6 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 	}	
 }
  
-/**
- * Tab1Sheet1 when Search end and handle data
- * @param sheetObj
- */
-function t1sheet1_OnSearchEnd(sheetObj) {
-  if (sheetObj.RowCount() > 0) {
-
-	  var index = "";
-      var strPartner = "";
-      var nextStrPartner = "";
-      var strLane = "";
-      var nextStrLane = "";
-      var iStRow = sheetObj.HeaderRows();
-      var iEdRow = sheetObj.LastRow();
-      var prefix = "t1sheet1_";
-      var totalColumnValue=1;
-      for(var i=iStRow;i<=iEdRow;i++){
-    	  //First line in sheet
-          strPartner = sheetObj.GetCellText(i, prefix + "jo_crr_cd"); 
-          strLane = sheetObj.GetCellText(i, prefix + "rlane_cd"); 
-          //Next First Line in Sheet
-          nextStrPartner = sheetObj.GetCellText(i+1, prefix + "jo_crr_cd");
-     	  nextStrLane = sheetObj.GetCellText(i+1, prefix + "rlane_cd");
-         
-         if(strPartner === nextStrPartner && strLane === nextStrLane){
-        	 totalColumnValue++;
-         
-         }else{
-        	 //Insert next row
-        	 sheetObj.DataInsert(i+1);
-        	
-        	 //Get Current total data
-        	 var currentCurr = sheetObj.GetCellText(i, prefix + "locl_curr_cd");
-        	 var totalRevMoney = 0;
-        	 var totalExpenseMoney = 0;
-    	 
-        	 for(var j=0;j<totalColumnValue;j++){
-        		 var revMoney = sheetObj.GetCellValue(i-j, prefix + "inv_rev_act_amt");
-        		 var expenseMoney = sheetObj.GetCellValue(i-j, prefix + "inv_exp_act_amt");
-        		 totalRevMoney=totalRevMoney+ revMoney;
-        		 totalExpenseMoney = totalExpenseMoney + expenseMoney;
-        	 }
-        	 //Handle total value
-        	 i++;
-        	 index += i+ROWMARK;
-             sheetObj.SetRowBackColor(i,"#FCDCEE");
-             //Set Last Row again
-        	 iEdRow = sheetObj.LastRow();
-             sheetObj.SetCellFontBold(i,  prefix + "jo_crr_cd", 1);
-             sheetObj.SetCellFontBold(i,  prefix + "locl_curr_cd", 1);
-             sheetObj.SetCellFontBold(i,  prefix + "inv_rev_act_amt", 1);
-             sheetObj.SetCellFontBold(i,  prefix + "inv_exp_act_amt", 1);
-             //Currency
-             sheetObj.SetCellValue(i,6,currentCurr);
-             //Rev 
-             sheetObj.SetCellValue(i,7,totalRevMoney);
-             //Expense
-             sheetObj.SetCellValue(i,8,totalExpenseMoney);
-             totalColumnValue=1;
-         }
-         
-      }
-      var allCurrencyG=allCurrency.split(ROWMARK);
-      var allIndexAdded = index.split(ROWMARK);
- 
-      for(var i =0;i<allCurrencyG.length;i++){
-    	  if(allCurrencyG[i] !==""){
-        	  sheetObj.DataInsert(-1);
-        	  this["totalRev"+allCurrencyG[i]]=0;
-        	  this["totalExp"+allCurrencyG[i]]=0;
-        	  for(var j=0;j<allIndexAdded.length;++j){
-        		  if(allCurrencyG[i] == sheetObj.GetCellText(allIndexAdded[j], prefix + "locl_curr_cd")){
-        			  this["totalRev"+allCurrencyG[i]] = this["totalRev"+allCurrencyG[i]] + sheetObj.GetCellValue(allIndexAdded[j], prefix + "inv_rev_act_amt");
-        			  this["totalExp"+allCurrencyG[i]] = this["totalExp"+allCurrencyG[i]] + sheetObj.GetCellValue(allIndexAdded[j], prefix + "inv_exp_act_amt");
-        		  }
-        		 
-        	  }
-        	  sheetObj.SetCellValue(sheetObj.LastRow(),6,allCurrencyG[i]);
-        	  sheetObj.SetCellValue(sheetObj.LastRow(),7,this["totalRev"+allCurrencyG[i]]);
-        	  sheetObj.SetCellValue(sheetObj.LastRow(),8,this["totalExp"+allCurrencyG[i]]);
-        	  sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "locl_curr_cd", 1);
-              sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "inv_rev_act_amt", 1);
-              sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "inv_exp_act_amt", 1);
-              sheetObj.SetRowBackColor(sheetObj.LastRow(),"#FFD700");
-    	  }
-      }
-      
-  }
-}
-
-/**
- * Tab1Sheet1 when Search end and handle data
- * @param sheetObj
- */
-function t2sheet1_OnSearchEnd(sheetObj, ErrMsg) {
-	if (sheetObj.RowCount() > 0) {
-
-		var index = "";
-		var strPartner = "";
-		var nextStrPartner = "";
-		var strLane = "";
-		var nextStrLane = "";
-		var iStRow = sheetObj.HeaderRows();
-		var iEdRow = sheetObj.LastRow();
-		var prefix = "t2sheet1_";
-		var totalColumnValue = 1;
-		for (var i = iStRow; i <= iEdRow; i++) {
-			// First line in sheet
-			strPartner = sheetObj.GetCellText(i, prefix + "jo_crr_cd");
-			strLane = sheetObj.GetCellText(i, prefix + "rlane_cd");
-			// Next First Line in Sheet
-			nextStrPartner = sheetObj.GetCellText(i + 1, prefix + "jo_crr_cd");
-			nextStrLane = sheetObj.GetCellText(i + 1, prefix + "rlane_cd");
-
-			if (strPartner === nextStrPartner && strLane === nextStrLane) {
-				totalColumnValue++;
-
-			} else {
-				// Insert next row
-				sheetObj.DataInsert(i + 1);
-
-				// Get Current total data
-				var currentCurr = sheetObj.GetCellText(i, prefix
-						+ "locl_curr_cd");
-				var totalRevMoney = 0;
-				var totalExpenseMoney = 0;
-
-				for (var j = 0; j < totalColumnValue; j++) {
-					var revMoney = sheetObj.GetCellValue(i - j, prefix
-							+ "inv_rev_act_amt");
-					var expenseMoney = sheetObj.GetCellValue(i - j, prefix
-							+ "inv_exp_act_amt");
-					totalRevMoney = totalRevMoney + revMoney;
-					totalExpenseMoney = totalExpenseMoney + expenseMoney;
-				}
-				// Handle total value
-				i++;
-				index += i + ROWMARK;
-				sheetObj.SetRowBackColor(i, "#FCDCEE");
-				// Set Last Row again
-				iEdRow = sheetObj.LastRow();
-				sheetObj.SetCellFontBold(i, prefix + "jo_crr_cd", 1);
-				sheetObj.SetCellFontBold(i, prefix + "locl_curr_cd", 1);
-				sheetObj.SetCellFontBold(i, prefix + "inv_rev_act_amt", 1);
-				sheetObj.SetCellFontBold(i, prefix + "inv_exp_act_amt", 1);
-				// Currency
-				sheetObj.SetCellValue(i, 8, currentCurr);
-				// Rev
-				sheetObj.SetCellValue(i, 9, totalRevMoney);
-				// Expense
-				sheetObj.SetCellValue(i, 10, totalExpenseMoney);
-				totalColumnValue = 1;
-			}
-
-		}
-		var allCurrencyG = allCurrency.split(ROWMARK);
-		var allIndexAdded = index.split(ROWMARK);
-
-		for (var i = 0; i < allCurrencyG.length; i++) {
-			if (allCurrencyG[i] !== "") {
-				sheetObj.DataInsert(-1);
-				this["totalRev" + allCurrencyG[i]] = 0;
-				this["totalExp" + allCurrencyG[i]] = 0;
-				for (var j = 0; j < allIndexAdded.length; ++j) {
-					if (allCurrencyG[i] == sheetObj.GetCellText(
-							allIndexAdded[j], prefix + "locl_curr_cd")) {
-						this["totalRev" + allCurrencyG[i]] = this["totalRev"
-								+ allCurrencyG[i]]
-								+ sheetObj.GetCellValue(allIndexAdded[j],
-										prefix + "inv_rev_act_amt");
-						this["totalExp" + allCurrencyG[i]] = this["totalExp"
-								+ allCurrencyG[i]]
-								+ sheetObj.GetCellValue(allIndexAdded[j],
-										prefix + "inv_exp_act_amt");
-					}
-				}
-				sheetObj.SetCellValue(sheetObj.LastRow(), 8, allCurrencyG[i]);
-				sheetObj.SetCellValue(sheetObj.LastRow(), 9, this["totalRev"
-						+ allCurrencyG[i]]);
-				sheetObj.SetCellValue(sheetObj.LastRow(), 10, this["totalExp"
-						+ allCurrencyG[i]]);
-				sheetObj.SetCellFontBold(sheetObj.LastRow(), prefix
-						+ "locl_curr_cd", 1);
-				sheetObj.SetCellFontBold(sheetObj.LastRow(), prefix
-						+ "inv_rev_act_amt", 1);
-				sheetObj.SetCellFontBold(sheetObj.LastRow(), prefix
-						+ "inv_exp_act_amt", 1);
-				sheetObj.SetRowBackColor(sheetObj.LastRow(), "#FFD700");
-			}
-		}
-
-	}
-}
 /**
  * ComboBox Joo Carrier Code When Clicked 
  * 
@@ -870,5 +679,51 @@ function GetDateFormat(obj, sFormat){
 
 	retValue = ComGetMaskedValue(retValue,sFormat);
 	return retValue;
+}
+function showSumTotal(sheetObj,prefix,currPlace,revPlace,expPlace){
+	 if (sheetObj.RowCount() > 0) {
+
+	      var findSubSum = sheetObj.FindSubSumRow();
+	      var arrSubSum = findSubSum.split(ROWMARK);
+	      var allCurrencyG=allCurrency.split(ROWMARK);
+	      
+	 
+	      for(var i =0;i<allCurrencyG.length;i++){
+	    	  if(allCurrencyG[i] !==""){
+	        	  sheetObj.DataInsert(-1);
+	        	  this["totalRev"+allCurrencyG[i]]=0;
+	        	  this["totalExp"+allCurrencyG[i]]=0;
+	        	  for(var j=0;j<arrSubSum.length;++j){
+	        		  if(allCurrencyG[i] == sheetObj.GetCellText(arrSubSum[j]-1, prefix + "locl_curr_cd")){
+	        			  this["totalRev"+allCurrencyG[i]] = this["totalRev"+allCurrencyG[i]] + sheetObj.GetCellValue(arrSubSum[j], prefix + "inv_rev_act_amt");
+	        			  this["totalExp"+allCurrencyG[i]] = this["totalExp"+allCurrencyG[i]] + sheetObj.GetCellValue(arrSubSum[j], prefix + "inv_exp_act_amt");
+	        		  }
+	        		 
+	        	  }
+	        	  sheetObj.SetCellValue(sheetObj.LastRow(),currPlace,allCurrencyG[i]);
+	        	  sheetObj.SetCellValue(sheetObj.LastRow(),revPlace,this["totalRev"+allCurrencyG[i]]);
+	        	  sheetObj.SetCellValue(sheetObj.LastRow(),expPlace,this["totalExp"+allCurrencyG[i]]);
+	        	  sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "locl_curr_cd", 1);
+	              sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "inv_rev_act_amt", 1);
+	              sheetObj.SetCellFontBold(sheetObj.LastRow(),  prefix + "inv_exp_act_amt", 1);
+	              sheetObj.SetRowBackColor(sheetObj.LastRow(),"#FFD700");
+	    	  }
+	      }
+	      
+	  }
+}
+/**
+ * Calculate Total when t2sheet1 end
+ * @param sheetObj
+ */
+function t2sheet1_OnSearchEnd(sheetObj){
+	showSumTotal(sheetObj,"t2sheet1_",8,9,10);
+}
+/**
+ * Calculate Total when t1sheet1 end
+ * @param sheetObj
+ */
+function t1sheet1_OnSearchEnd(sheetObj){
+	showSumTotal(sheetObj,"t1sheet1_",6,7,8);
 }
 
