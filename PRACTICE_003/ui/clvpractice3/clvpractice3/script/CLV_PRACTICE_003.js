@@ -369,7 +369,6 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
               summaryFlag = 1;
           }else if ( sheetID == "t2sheet1"){
               formObj.f_cmd.value=SEARCH02;
-              
               var param = FormQueryString(formObj);
                   param += "&" + ComGetPrefixParam(sheetID+"_");
               ComOpenWait(true);
@@ -737,7 +736,7 @@ function t1sheet1_OnDblClick(sheetObj, Row,Col){
 		
 		tabObjects[0].SetSelectedIndex(1);
 
-	    if(findJooRlaneCode(getCurrentSheet(),parentCodeS1,rLaneCodeS1) === 1){
+	    if(finddRlaneCode(getCurrentSheet(),parentCodeS1,rLaneCodeS1) === 1){
 	    	 ComFireEvent(ComGetObject("btn_Retrieve") ,"click");
 	    	 findJooRlaneCode(getCurrentSheet(),parentCodeS1,rLaneCodeS1);
 	    	 unFindFlag = 0;
