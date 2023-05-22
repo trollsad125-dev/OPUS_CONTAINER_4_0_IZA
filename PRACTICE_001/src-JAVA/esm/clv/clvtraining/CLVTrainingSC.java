@@ -95,7 +95,9 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 			} else if (e.getFormCommand().isCommand(FormCommand.MULTI)) {
 				eventResponse = multiErrMsg(e);
 			}
-		} else if (e.getEventName().equalsIgnoreCase("ClvPractice004Event")) {
+		}
+		//Practice 4
+		else if (e.getEventName().equalsIgnoreCase("ClvPractice004Event")) {
 			if (e.getFormCommand().isCommand(FormCommand.SEARCH)) {
 				eventResponse = searchJooCarrier(e);
 			} else if (e.getFormCommand().isCommand(FormCommand.MULTI)) {
@@ -110,7 +112,9 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 					||e.getFormCommand().isCommand(FormCommand.COMMAND05)) {
 				eventResponse = chkInvalid(e);
 			}
-		} else if (e.getEventName().equalsIgnoreCase("ClvPractice002Event")) {
+		} 
+		//Practice 2
+		else if (e.getEventName().equalsIgnoreCase("ClvPractice002Event")) {
 			if (e.getFormCommand().isCommand(FormCommand.SEARCH01)) {
 				eventResponse = searchCodeMgmt(e);
 			} else if (e.getFormCommand().isCommand(FormCommand.MULTI)) {
@@ -120,7 +124,9 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 			} else if (e.getFormCommand().isCommand(FormCommand.SEARCH02)) {
 				eventResponse = searchCodeDtl(e);
 			}
-		}else if (e.getEventName().equalsIgnoreCase("ClvPractice003Event")) {
+		}
+		//Practice 3
+		else if (e.getEventName().equalsIgnoreCase("ClvPractice003Event")) {
 			if (e.getFormCommand().isCommand(FormCommand.SEARCH02)) {
 				eventResponse = searchDetailVO(e);
 			}
@@ -139,7 +145,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	/**
-	 * Search Error Message
+	 * Search Error Message Practice 1
 	 * 
 	 * @param Event e
 	 * @return EventResponse
@@ -162,7 +168,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	/**
-	 * Insert Update Delete Error Message
+	 * Insert Update Delete Error Message Practice 1
 	 *
 	 * @param Event e
 	 * @return EventResponse
@@ -341,7 +347,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	/**
-	 * This method for initial data
+	 * This method for initial data Practice 4
 	 * 
 	 * @param Event e
 	 * @return EventResponse
@@ -384,7 +390,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	/**
-	 * this method for checking invalid data
+	 * this method for checking invalid data Practice 4
 	 * 
 	 * @param Event e
 	 * @return EventResponse
@@ -419,10 +425,9 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 	}
 
 	/**
-	 * checking duplicate data Joo_CARRIER
+	 * checking duplicate data Joo_CARRIER Practice 4
 	 * 
-	 * @param Event
-	 *            e
+	 * @param Event e
 	 * @return EventResponse
 	 * @exception EventException
 	 */
@@ -447,8 +452,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	/**
-	 * 	 * Search JOO INVOICE_DTL based on Detail VO
-
+	 * 	Search JOO INVOICE_DTL based on Detail VO Practice 3
 	 * 
 	 * @param Event e
 	 * @return EventResponse
@@ -484,7 +488,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		return eventResponse;
 	}
 	/**
-	 * Search JOO INVOICE based on Summary VO
+	 * Search JOO INVOICE based on Summary VO Practice 3
 	 * 
 	 * @param Event e
 	 * @return EventResponse
@@ -521,7 +525,7 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 	}
 
 	/**
-	 * This method for initial data
+	 * This method for initial data Practice 3
 	 * 
 	 * @param Event e
 	 * @return EventResponse

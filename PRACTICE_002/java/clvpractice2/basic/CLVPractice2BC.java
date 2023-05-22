@@ -30,7 +30,7 @@ import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
 public interface CLVPractice2BC {
 
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Search Code Master
 	 * 
 	 * @param CodeMgmtCondVO	codeMgmtCondVO
 	 * @return List<CodeMgmtCondVO>
@@ -39,7 +39,7 @@ public interface CLVPractice2BC {
 	public List<CodeMgmtCondVO> searchCodeMgmt(CodeMgmtCondVO codeMgmtCondVO) throws EventException;
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Insert Delete Update Code Master
 	 * 
 	 * @param CodeMgmtCondVO[] codeMgmtCondVO
 	 * @param account SignOnUserAccount
@@ -47,9 +47,14 @@ public interface CLVPractice2BC {
 	 */
 	public void multiCodeMgmt(CodeMgmtCondVO[] codeMgmtCondVO,SignOnUserAccount account) throws EventException;
 	
+	/**
+	 * Search Sub System Code in 
+	 * @return
+	 * @exception EventException
+	 */
 	public String[] searchSubSystemCodeList() throws EventException;
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Search Code Detail
 	 * 
 	 * @param CodeMgmtDtlVO[] codeMgmtDtlVO
 	 * @param account SignOnUserAccount
@@ -58,7 +63,7 @@ public interface CLVPractice2BC {
 	public List<CodeMgmtDTLVO> searchCodeMgmtDtl(CodeMgmtDTLVO codeMgmtDtlVO) throws EventException;
 	
 	/**
-	 * [비즈니스대상]을 [행위] 합니다.<br>
+	 * Insert Delete Update Code Detail
 	 * 
 	 * @param CodeMgmtDTLVO[] codeMgmtDtlVO
 	 * @param account SignOnUserAccount

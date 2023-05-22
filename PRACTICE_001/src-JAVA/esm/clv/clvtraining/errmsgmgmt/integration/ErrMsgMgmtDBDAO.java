@@ -12,15 +12,14 @@
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration;
 
-import java.sql.BatchUpdateException;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.basic.ErrMsgMgmtBCImpl;
+import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.component.rowset.DBRowSet;
 import com.clt.framework.core.layer.integration.DAOException;
@@ -28,7 +27,6 @@ import com.clt.framework.support.db.ISQLTemplate;
 import com.clt.framework.support.db.RowSetUtil;
 import com.clt.framework.support.db.SQLExecuter;
 import com.clt.framework.support.layer.integration.DBDAOSupport;
-import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 
 
 /**
@@ -264,6 +262,42 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 			throw new DAOException(new ErrorHandler(ex).getMessage());
 		}
 		return delCnt;
+	}
+	
+	/**
+	 * 
+	 * @param inputVO
+	 * @return
+	 * @throws DAOException
+	 */
+	public String searchDupChkErrCd(ComErrMsgVO inputVO) throws DAOException {
+		DBRowSet dbRowset = null;
+		String dupFlg = "";
+		// query parameter
+		Map<String, Object> param = new HashMap<String, Object>();
+		// velocity parameter
+		Map<String, Object> velParam = new HashMap<String, Object>();
+
+		try {
+			if (inputVO != null) {
+				Map<String, String> mapVO = inputVO.getColumnValues();
+
+				param.putAll(mapVO);
+				velParam.putAll(mapVO);
+			}
+			dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate) new ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL(),param, velParam);
+			if (dbRowset != null && dbRowset.next()) {
+				dupFlg = dbRowset.getString(1);
+			}
+		} catch (SQLException se) {
+			log.error(se.getMessage(), se);
+			throw new DAOException(new ErrorHandler(se).getMessage());
+		} catch (Exception ex) {
+			log.error(ex.getMessage(), ex);
+			throw new DAOException(new ErrorHandler(ex).getMessage());
+		}
+
+		return dupFlg;
 	}
 
 }

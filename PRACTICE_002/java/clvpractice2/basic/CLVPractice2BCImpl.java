@@ -15,15 +15,14 @@ package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.basic;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bluecast.util.DuplicateKeyException;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration.CLVPractice2DBDAO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.integration.DAOException;
 import com.clt.framework.support.layer.basic.BasicCommandSupport;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
-import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
 
 /**
  * ALPS-CLVPractice2 Business Logic Command Interface<br>
@@ -105,9 +104,11 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 						intgCdId = insertVoList.get(i).getIntgCdId();
 					}
 				}
+				// Check Error Flag Duplication
 				if( !"Y".equals(errFlg) ){
 					dbDao.addmultiCodeMgmtS(insertVoList);
 				}else{
+					//Throw Exception with ERR12356 code with Id in it.
 					throw new DAOException(new ErrorHandler("ERR12356",new String[]{intgCdId}).getMessage());
 				}
 				
@@ -118,6 +119,7 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 			}
 			
 			if ( deleteVoList.size() > 0 ) {
+				//Delete Detail code List in Line 95
 				if(deleteDetailVoList.size() > 0){
 					dbDao.removemultiCodeDtlS(deleteDetailVoList);
 				}
@@ -196,10 +198,12 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 						break;
 					}
 				}
+				// Check Error Flag Duplication
 				if( !"Y".equals(errFlg) ){
 					dbDao.addmultiCodeDtlS(insertVoList);
 				}else{
-					throw new DuplicateKeyException(new ErrorHandler("ERR12356",new String[]{intgCdId}).getMessage());
+					//Throw Exception with ERR12356 code with Id in it.
+					throw new DAOException(new ErrorHandler("ERR12356",new String[]{intgCdId}).getMessage());
 				}
 				
 			}
@@ -212,10 +216,7 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 				dbDao.removemultiCodeDtlS(deleteVoList);
 			}
 		} 
-		catch(DuplicateKeyException de) {
-			log.error("err " + de.toString(), de);
-			throw new EventException(new ErrorHandler(de).getMessage(),de);
-		} catch(DAOException ex) {
+		catch(DAOException ex) {
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		} catch (Exception ex) {
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);

@@ -14,11 +14,9 @@ package com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.basic;
 
 import java.util.List;
 
-import com.clt.framework.component.message.ErrorHandler;
-import com.clt.framework.core.layer.event.EventException;
-import com.clt.framework.core.layer.integration.DAOException;
-import com.clt.framework.support.view.signon.SignOnUserAccount;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
+import com.clt.framework.core.layer.event.EventException;
+import com.clt.framework.support.view.signon.SignOnUserAccount;
 
 /**
  * ALPS-Clvpractice4 Business Logic Command Interface<br>

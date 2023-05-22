@@ -22,8 +22,6 @@ import java.util.Map;
 
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.basic.CLVPractice4BCImpl;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
-import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration.ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL;
-import com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.vo.ComErrMsgVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.component.rowset.DBRowSet;
 import com.clt.framework.core.layer.integration.DAOException;
@@ -276,7 +274,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 @SuppressWarnings("unchecked")
 	public List<JooCarrierVO> searchRLaneCd(JooCarrierVO jooCarrierVO) throws DAOException {
 		DBRowSet dbRowset = null;
-		List<JooCarrierVO> list = new ArrayList();
+		List<JooCarrierVO> list = new ArrayList<>();
 
 		try{
 			dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice4DBDAOSearchRLandCdRSQL(), null, null);
@@ -300,7 +298,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 @SuppressWarnings("unchecked")
 	 public List<JooCarrierVO> searchCrrCd(JooCarrierVO jooCarrierVO) throws DAOException {
 		 DBRowSet dbRowset = null;
-		 List<JooCarrierVO> list = new ArrayList();
+		 List<JooCarrierVO> list = new ArrayList<>();
 		 //query parameter
 		 Map<String, Object> param = new HashMap<String, Object>();
 		 //velocity parameter
@@ -334,7 +332,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 @SuppressWarnings("unchecked")
 	 public List<JooCarrierVO> searchCusCd(JooCarrierVO jooCarrierVO) throws DAOException {
 		 DBRowSet dbRowset = null;
-		 List<JooCarrierVO> list = new ArrayList();
+		 List<JooCarrierVO> list = new ArrayList<>();
 		 //query parameter
 		 Map<String, Object> param = new HashMap<String, Object>();
 		 //velocity parameter
@@ -368,7 +366,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 @SuppressWarnings("unchecked")
 	 public List<JooCarrierVO> searchTradeCd(JooCarrierVO jooCarrierVO) throws DAOException {
 		 DBRowSet dbRowset = null;
-		 List<JooCarrierVO> list = new ArrayList();
+		 List<JooCarrierVO> list = new ArrayList<>();
 		 //query parameter
 		 Map<String, Object> param = new HashMap<String, Object>();
 		 //velocity parameter
@@ -402,7 +400,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 @SuppressWarnings("unchecked")
 	 public List<JooCarrierVO> searchVndrCd(JooCarrierVO jooCarrierVO) throws DAOException {
 		 DBRowSet dbRowset = null;
-		 List<JooCarrierVO> list = new ArrayList();
+		 List<JooCarrierVO> list = new ArrayList<>();
 		 //query parameter
 		 Map<String, Object> param = new HashMap<String, Object>();
 		 //velocity parameter
@@ -454,10 +452,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 				param.putAll(mapVO);
 				velParam.putAll(mapVO);
 			}
-			dbRowset = new SQLExecuter("")
-					.executeQuery(
-							(ISQLTemplate) new CLVPractice4DBDAOCheckDupliJooCarrierRSQL(),
-							param, velParam);
+			dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate) new CLVPractice4DBDAOCheckDupliJooCarrierRSQL(),param, velParam);
 			if (dbRowset != null && dbRowset.next()) {
 				dupFlg = dbRowset.getString(1);
 			}

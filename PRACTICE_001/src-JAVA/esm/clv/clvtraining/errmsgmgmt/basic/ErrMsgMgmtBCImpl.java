@@ -81,9 +81,19 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 					deleteVoList.add(comErrMsgVO[i]);
 				}
 			}
-			
+			String dupFlg="";
 			if ( insertVoList.size() > 0 ) {
-				dbDao.addmultiErrMsgS(insertVoList);
+				for (int i = 0; i < insertVoList.size(); i++) {
+					dupFlg = dbDao.searchDupChkErrCd(insertVoList.get(i));
+					String errCode = insertVoList.get(i).getErrMsgCd();
+					if ("Y".equals(dupFlg)) {
+						// Throw DAOException with ERR12356
+						throw new DAOException(new ErrorHandler("ERR12356",new String[] { errCode }).getMessage());
+					}else{
+						dbDao.addmultiErrMsgS(insertVoList);
+
+					}
+				}
 			}
 			
 			if ( updateVoList.size() > 0 ) {	

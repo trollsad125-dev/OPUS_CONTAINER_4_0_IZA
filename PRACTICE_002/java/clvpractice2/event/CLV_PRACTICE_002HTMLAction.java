@@ -14,14 +14,13 @@ package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.event;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.clt.framework.component.util.JSPUtil;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
 import com.clt.framework.core.controller.html.HTMLActionException;
 import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventResponse;
 import com.clt.framework.support.controller.HTMLActionSupport;
 import com.clt.framework.support.controller.html.FormCommand;
-import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
-import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
 
 /**
  * HTTP Parser<br>
@@ -42,8 +41,9 @@ public class CLV_PRACTICE_002HTMLAction extends HTMLActionSupport {
 	public CLV_PRACTICE_002HTMLAction() {}
 
 	/**
-	 * HTML DOM 객체의 Value를 자바 변수로 Parsing<br>
-	 * HttpRequst의 정보를 CLVPractice2Event로 파싱하여 request에 셋팅<br>
+	 * Parsing Value of HTML DOM object into Java variable<br>
+	 * Parse HttpRequest information with CLVPractice2Event and set it in request<br>
+	 * 
 	 * @param request HttpServletRequest HttpRequest
 	 * @return Event Event interface를 구현한 객체
 	 * @exception HTMLActionException
@@ -52,14 +52,17 @@ public class CLV_PRACTICE_002HTMLAction extends HTMLActionSupport {
 		
     	FormCommand command = FormCommand.fromRequest(request);
 		ClvPractice002Event event = new ClvPractice002Event();
-		
+		//Insert Delete Update when Performed in FE
 		if(command.isCommand(FormCommand.MULTI)) {
 			event.setCodeMgmtCondVOS((CodeMgmtCondVO[])getVOs(request, CodeMgmtCondVO.class,"sheet1_"));
 			event.setCodeMgmtDTLVOs((CodeMgmtDTLVO[])getVOs(request, CodeMgmtDTLVO.class,"sheet2_"));
 		}
+		//Search Code Master
 		else if(command.isCommand(FormCommand.SEARCH01)) {
 			event.setCodeMgmtCondVO((CodeMgmtCondVO)getVO(request, CodeMgmtCondVO.class));
-		}else if(command.isCommand(FormCommand.SEARCH02)){
+		}
+		//Search Code Detail
+		else if(command.isCommand(FormCommand.SEARCH02)){
 			event.setCodeMgmtDTLVO((CodeMgmtDTLVO)getVO(request, CodeMgmtDTLVO.class));
 		}
 
@@ -67,22 +70,22 @@ public class CLV_PRACTICE_002HTMLAction extends HTMLActionSupport {
 	}
 
 	/**
-	 * HttpRequest의 attribute에 업무시나리오 수행결과 값 저장<br>
-	 * ServiceCommand에서 View(JSP)로 실행결과를 전송하는 ResultSet을 request에 셋팅<br>
+	 * Save the business scenario execution result value in the attribute of HttpRequest<br>
+	 * Set ResultSet in request, which transmits execution results from ServiceCommand to View (JSP)<br>
 	 * 
 	 * @param request HttpServletRequest HttpRequest
-	 * @param eventResponse EventResponse interface를 구현한 객체
+	 * @param eventResponse EventResponse interface
 	 */
 	public void doEnd(HttpServletRequest request, EventResponse eventResponse) {
 		request.setAttribute("EventResponse", eventResponse);
 	}
 
 	/**
-	 * HttpRequest의 attribute에 HttpRequest 파싱 수행결과 값 저장<br>
-	 * HttpRequest 파싱 수행결과 값 request에 셋팅<br>
+	 * Save the result of parsing HttpRequest in the attribute of HttpRequest<br>
+	 * HttpRequest parsing result value set in request<br>
 	 * 
 	 * @param request HttpServletRequest HttpRequest
-	 * @param event Event interface를 구현한 객체
+	 * @param event Event interface
 	 */
 	public void doEnd(HttpServletRequest request, Event event) {
 		request.setAttribute("Event", event);

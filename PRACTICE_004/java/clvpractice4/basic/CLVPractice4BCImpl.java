@@ -15,14 +15,13 @@ package com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.basic;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bluecast.util.DuplicateKeyException;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.integration.CLVPractice4DBDAO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.integration.DAOException;
 import com.clt.framework.support.layer.basic.BasicCommandSupport;
 import com.clt.framework.support.view.signon.SignOnUserAccount;
-import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 
 /**
  * ALPS-CLVPractice4 Business Logic Command Interface<br>
@@ -94,6 +93,7 @@ public class CLVPractice4BCImpl extends BasicCommandSupport implements CLVPracti
 					String rLaneCd = insertVoList.get(i).getRlaneCd();
 					String jooCrrCd  = insertVoList.get(i).getJoCrrCd();
 					if ("Y".equals(dupFlg) ){
+						//Throw DAOException with ERR12357 
 						throw new DAOException(new ErrorHandler("ERR12357",new String[]{jooCrrCd,rLaneCd}).getMessage());
 					}else{
 						dbDao.addmultiJooCarrierS(insertVoList);

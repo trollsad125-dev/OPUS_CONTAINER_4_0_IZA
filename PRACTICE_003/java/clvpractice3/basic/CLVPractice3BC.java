@@ -14,15 +14,9 @@ package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.basic;
 
 import java.util.List;
 
-
-
-
-
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.DetailVO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.vo.SummaryVO;
-import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.framework.core.layer.event.EventException;
-import com.clt.framework.support.view.signon.SignOnUserAccount;
 
 /**
  * ALPS-Clvpractice3 Business Logic Command Interface<br>

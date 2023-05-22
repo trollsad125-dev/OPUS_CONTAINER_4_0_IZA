@@ -79,6 +79,7 @@ function processButtonClick() {
 }
 /**
  * reset form when click new button
+ * @param formObj
  */
 function resetForm(formObj){
 	formObj.reset();
@@ -88,6 +89,7 @@ function resetForm(formObj){
 /**
  * registering IBSheet Object as list adding process for list in case of needing
  * batch processing with other items defining list on the top of source
+ * @param sheet_obj
  */
 function setSheetObject(sheet_obj) {
 	sheetObjects[sheetCnt++] = sheet_obj;
@@ -96,6 +98,7 @@ function setSheetObject(sheet_obj) {
  * registering IBCombo Object as list param : combo_obj adding process for list
  * in case of needing batch processing with other items defining list on the top
  * of source
+ * @param combo_obj
  */
 function setComboObject(combo_obj) {
 	comboObjects[comboCnt++] = combo_obj;
@@ -110,23 +113,19 @@ function loadPage() {
 		initSheet(sheetObjects[i], i + 1);
 		ComEndConfigSheet(sheetObjects[i]);
 	}
-	////generate dopdownlist data
+	//generate dopdownlist data
 	for ( var k = 0; k < comboObjects.length; k++) {
 		initCombo(comboObjects[k], k + 1);
 	}
-	initControl();
 	
 	//auto search data after loading finish.
 	doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
 }
-/**
- * init control
- */
-function initControl() {
-	
-}
+
 /**
  * setting Combo basic info param : comboObj, comboNo initializing sheet
+ * @param comboObj
+ * @param comboNo
  */
 function initCombo(comboObj, comboNo) {
 	var formObj = document.form
@@ -181,6 +180,8 @@ function s_jo_crr_cd_OnCheckClick(comboObj, index, code) {
 /**
  * setting sheet initial values and header param : sheetObj, sheetNo adding case
  * as numbers of counting sheets
+ * @param sheetObj
+ * @param sheetNo
  */
 function initSheet(sheetObj, sheetNo) {
 	var cnt = 0;
@@ -223,6 +224,7 @@ function initSheet(sheetObj, sheetNo) {
 			SetColProperty("trd_cd", { AcceptKeys : "E|N", InputCaseSensitive : 1 });
 			SetColProperty("rlane_cd", { ComboText : rlanCombo, ComboCode : rlanCombo });
 			SetColProperty("delt_flg", { ComboText : "N|Y", ComboCode : "N|Y" });
+			//SetColProperty("cre_dt",{Format:"yyyy/MM/dd"});
 			SetWaitImageVisible(0);
 			resizeSheet();
 		}
@@ -245,7 +247,6 @@ function resizeSheet(){
  * @param sAction
  * 
  */
-
 function doActionIBSheet(sheetObj, formObj, sAction) {
 	sheetObj.ShowDebugMsg(false);
 	if (!validateForm(sheetObj, formObj, sAction)) {
@@ -256,7 +257,6 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 		formObj.f_cmd.value = SEARCH;
 		ComOpenWait(true);
 		sheetObj.DoSearch("CLV_PRACTICE_004GS.do", FormQueryString(formObj) );
-		ComOpenWait(false);
 		break;
 	case IBSAVE: // retrieve
 		formObj.f_cmd.value = MULTI;
@@ -302,6 +302,10 @@ function sheet1_OnSaveEnd() {
 
 /**
  * handling process for input validation
+ * @param sheetObj
+ * @param formObj
+ * @param sAction
+ * @returns {Boolean}
  */
 function validateForm(sheetObj, formObj, sAction) {
 	sheetObj.ShowDebugMsg(false);
@@ -323,6 +327,12 @@ function validateForm(sheetObj, formObj, sAction) {
 
 /**
  * handling when sheet1 on change
+ * @param sheetObj
+ * @param Row
+ * @param Col
+ * @param Value
+ * @param OldValue
+ * @param RaiseFlag
  */
 function sheet1_OnChange(sheetObj, Row, Col, Value, OldValue, RaiseFlag){
 	var formObj=document.form ;

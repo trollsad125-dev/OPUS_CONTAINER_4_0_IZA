@@ -135,6 +135,7 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 				param.putAll(mapVO);
 				
 				velParam.putAll(mapVO);
+				//Add CrrCds from JooCrrCd to velParam in FE
 				velParam.put("crrCds", Arrays.asList(jooCarrierVO.getJoCrrCd().split(",")));
 			 }
 			 dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAOSearchJooCrrCdsRSQL(), param, velParam);
@@ -170,6 +171,7 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 				param.putAll(mapVO);
 				
 				velParam.putAll(mapVO);
+				//Add CrrCds from JooCrrCd to velParam in FE
 				velParam.put("crrCds", Arrays.asList(summaryVO.getJoCrrCd().split(",")));
 			 }
 			 dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate)new CLVPractice3DBDAOSearchRLaneCdRSQL(), param, velParam);
@@ -205,6 +207,7 @@ public class CLVPractice3DBDAO extends DBDAOSupport {
 				param.putAll(mapVO);
 				
 				velParam.putAll(mapVO);
+				//Add CrrCds from JooCrrCd to velParam in FE
 				velParam.put("crrCds", Arrays.asList(summaryVO.getJoCrrCd().split(",")));
 				
 			 }
