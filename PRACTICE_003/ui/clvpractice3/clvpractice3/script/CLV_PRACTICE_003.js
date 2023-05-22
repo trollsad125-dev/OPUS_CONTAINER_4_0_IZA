@@ -84,7 +84,6 @@ function processButtonClick() {
 			break;
 		case "btn_DownExcel2":
 			doActionIBSheet(sheetObject1, formObj, IBDOWNEXCEL);
-			sheetObject1.RemoveAll();
 			break;
 		default:
 			break;
@@ -422,30 +421,27 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
           comboItems="";
           
           break;
+      //Download Excel 2
       case IBDOWNEXCEL:
     	  if ( sheetID == "t1sheet1"){
-              formObj.f_cmd.value=SEARCH01;
               var param = FormQueryString(formObj);
                   param += "&" + ComGetPrefixParam(sheetID+"_");
-              ComOpenWait(true);
-              var sXml=sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
-              allCurrency	  = ComGetEtcData(sXml, "currency_data");
-              sheetObj.LoadSearchData(sXml,{Sync:1} );
-              ComOpenWait(false);
+            	ComOpenWait(true);	    	
+            	formObj.f_cmd.value = SEARCH01;
+            	formObj.target = "_self"
+            	formObj.action = "CLV_PRACTICE_003DL.do?"+ param;
+            	formObj.submit();
+      			ComOpenWait(false);
           }else if ( sheetID == "t2sheet1"){
-              formObj.f_cmd.value=SEARCH02;
               var param = FormQueryString(formObj);
                   param += "&" + ComGetPrefixParam(sheetID+"_");
-              ComOpenWait(true);
-              var sXml=sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
-              sheetObj.LoadSearchData(sXml,{Sync:1} );
-              ComOpenWait(false);
+              	ComOpenWait(true);	    	
+              	formObj.f_cmd.value = SEARCH02;
+              	formObj.target = "_self"
+              	formObj.action = "CLV_PRACTICE_003DL.do?"+ param;
+              	formObj.submit();
+      			ComOpenWait(false);
           }
-    	  sheetObj.Down2Excel({
-				HiddenColumn : 1,
-				Merge : 1
-			});
-    	  
           break;
 	}	
 }

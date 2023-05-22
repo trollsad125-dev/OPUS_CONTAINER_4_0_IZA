@@ -52,7 +52,11 @@
     <url-mapping url="CLV_PRACTICE_003GS.do" screen="com.clt.framework.core.controller.DefaultViewAdapter" >
         <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.event.CLV_PRACTICE_003HTMLAction</web-action-class>
     </url-mapping>
-
+    
+	<url-mapping url="CLV_PRACTICE_003DL.do" screen="com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.event.ClvPractice003ViewAdapter" >
+        <web-action-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.event.CLV_PRACTICE_003HTMLAction</web-action-class>
+    </url-mapping>    
+    
     <event-mapping>
         <event-class>com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.event.ClvPractice003Event</event-class>
         <service-action-class>com.clt.apps.opus.esm.clv.clvtraining.CLVTrainingSC</service-action-class>
