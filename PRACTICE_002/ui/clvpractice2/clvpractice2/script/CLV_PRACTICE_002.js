@@ -20,14 +20,13 @@ document.onclick=processButtonClick;
     	            doActionIBSheet(sheetObjects[0],formObject,IBSEARCH);
         	        break;
                 case "btn_Save":
-                  if(confirm("Do you save selected codes?")){
+                	//Second, Loop all record in sheet and use sheetObject[0].GetRowStatus(i) == "I" || "D" => Perform SAVE
                 	  if((sheetObjects[0].RowCount("I")+sheetObjects[0].RowCount("U")+sheetObjects[0].RowCount("D")) >0 ){
                 		  doActionIBSheet(sheetObjects[0],formObject,IBSAVE);
                 	  } 
                 	  if((sheetObjects[1].RowCount("I")+sheetObjects[1].RowCount("U")+sheetObjects[1].RowCount("D")) >0 ) {
                 		  doActionIBSheet(sheetObjects[1],formObject,IBSAVE);
                 	  }
-                  }
         	        break;
         			/*****************grid button ************************/				
 				case "btn_rowadd_mst": //add row  
@@ -92,13 +91,22 @@ document.onclick=processButtonClick;
                
         		var HeadTitle="|SubSystem|Cd ID|Cd Name|Length|Cd Type|Table Name|Description Remark|Flag|Create User|Create Date|Update User|Update Date" ;
                 var prefix="sheet1_";
-
-                SetConfig( { SearchMode:2, MergeSheet:5, Page:20, FrozenCol:0, DataRowMerge:0 } );
-
+                //SearchMode : 2 LazyMode Get All Data and load it on screen based on Page property and scroll
+                //SearchMode : 0  Get All Data and load it on screen
+                //SearchMode : 1  Get All Data and load it on screen based on Page property
+                //MergeSheet : 5 Merge header only,1 Merge All, 2 Merge Data, 7 Merge Data and Header
+                //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
+                //Page: The Rows defined in 1 Page (Default:20)
+                //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
+                SetConfig( { SearchMode:2, MergeSheet:5, Page:1, FrozenCol:0, DataRowMerge:0 } );
+                //HeaderCheck: Use for tick all in header
+                //Sort: Allow Sort in Header
+                //ColMove: Allow Move the Column in sheet
+                //ColResize: Allow Resize Column in Sheet
                 var info    = { Sort:1, ColMove:1, HeaderCheck:1, ColResize:1 };
                 var headers = [ { Text:HeadTitle, Align:"Center"} ];
                 InitHeaders(headers, info);
-
+                
                 var cols = [ {Type:"Status",    Hidden:1, Width:10,   Align:"Center",  ColMerge:0,   SaveName:prefix+"ibflag",          KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
 	             {Type:"Combo",     Hidden:0, Width:70,   Align:"Center",  ColMerge:0,   SaveName:prefix+"ownr_sub_sys_cd", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
 	             {Type:"Text",      Hidden:0,  Width:60,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_id",      KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
@@ -130,9 +138,18 @@ document.onclick=processButtonClick;
 
                 var HeadTitle="|Cd ID|Cd Val|Display Name|Description Remark|Order" ;
                 var prefix="sheet2_";
-
+                //SearchMode : 2 LazyMode Get All Data and load it on screen based on Page property and scroll
+                //SearchMode : 0  Get All Data and load it on screen
+                //SearchMode : 1  Get All Data and load it on screen based on Page property
+                //MergeSheet : 5 Merge header only,1 Merge All, 2 Merge Data, 7 Merge Data and Header
+                //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
+                //Page: The Rows defined in 1 Page (Default:20)
+                //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
                 SetConfig( { SearchMode:2, MergeSheet:5, Page:20, FrozenCol:0, DataRowMerge:0 } );
-
+                //HeaderCheck: Use for tick all in header
+                //Sort: Allow Sort in Header
+                //ColMove: Allow Move the Column in sheet
+                //ColResize: Allow Resize Column in Sheet
                 var info    = { Sort:1, ColMove:1, HeaderCheck:0, ColResize:1 };
                 var headers = [ { Text:HeadTitle, Align:"Center"} ];
                 InitHeaders(headers, info);
@@ -242,4 +259,44 @@ document.onclick=processButtonClick;
         	ComSetObjValue(document.form1.codeid, sheetObj.GetCellValue(Row, "sheet1_intg_cd_id"));
         	doActionIBSheet(sheetObjects[1],document.form1,IBSEARCH);
     	}
+    }
+    /**
+     * Check Validate in Client Side Sheet 1
+     * @param sheetObj
+     * @param Row
+     * @param Col
+     */
+    function sheet1_OnChange(sheetObj,Row,Col){
+   	 if(Col == 2){
+			var code=sheetObj.GetCellValue(Row, Col);
+   	    for(var int=1; int < sheetObj.RowCount(); int++) {
+			var orlcode=sheetObj.GetCellValue(int, Col);
+				if(code != '' && int != Row && code == orlcode){
+   				 ComShowCodeMessage('COM131302',code);
+   				 sheetObj.SetCellValue(Row, Col,"");
+   				 return;
+   			 }
+   		 }
+   	 }
+   	 
+    }
+    /**
+     * Check Validate in Client Side Sheet 2
+     * @param sheetObj
+     * @param Row
+     * @param Col
+     */
+    function sheet2_OnChange(sheetObj,Row,Col){
+   	 if(Col == 2){
+			var code=sheetObj.GetCellValue(Row, Col);
+   	    for(var int=1; int < sheetObj.RowCount(); int++) {
+			var orlcode=sheetObj.GetCellValue(int, Col);
+				if(code != '' && int != Row && code == orlcode){
+   				 ComShowCodeMessage('COM131302',code);
+   				 sheetObj.SetCellValue(Row, Col,"");
+   				 return;
+   			 }
+   		 }
+   	 }
+   	 
     }

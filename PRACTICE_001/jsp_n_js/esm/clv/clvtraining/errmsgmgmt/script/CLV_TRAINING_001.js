@@ -157,3 +157,23 @@
      	ComOpenWait(false);
      }
 
+    /**
+     * Check Validate in Client Side Sheet 1
+     * @param sheetObj
+     * @param Row
+     * @param Col
+     */
+    function sheet1_OnChange(sheetObj,Row,Col){
+   	 if(Col == 2){
+			var code=sheetObj.GetCellValue(Row, Col);
+   	    for(var int=1; int < sheetObj.RowCount(); int++) {
+			var orlcode=sheetObj.GetCellValue(int, Col);
+				if(code != '' && int != Row && code == orlcode){
+   				 ComShowCodeMessage('COM131302',code);
+   				 sheetObj.SetCellValue(Row, Col,"");
+   				 return;
+   			 }
+   		 }
+   	 }
+   	 
+    }
