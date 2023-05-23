@@ -195,7 +195,7 @@ function initSheet(sheetObj, sheetNo) {
 			var headCount = ComCountHeadTitle(HeadTitle);
 			// (headCount, 0, 0, true);
 
-			SetConfig({SearchMode : 2, MergeSheet : 5, Page : 20, DataRowMerge : 0});
+			SetConfig({SearchMode : 2, MergeSheet : 7, Page : 20, DataRowMerge : 0});
 
 			var info = {Sort : 1, ColMove : 1, HeaderCheck : 0, ColResize : 1};
 			var headers = [ { Text : HeadTitle, Align : "Center" }];

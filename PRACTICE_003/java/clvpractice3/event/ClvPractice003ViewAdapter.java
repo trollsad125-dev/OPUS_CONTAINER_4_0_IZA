@@ -55,12 +55,12 @@ public class ClvPractice003ViewAdapter extends ViewAdapter {
     	FormCommand command = FormCommand.fromRequest(request);
  		StringBuilder strBuilder = new StringBuilder();
  		
- 		String savedName = "ContractNoInquiry.csv";  
- 		if(command.isCommand(FormCommand.SEARCH01)){
- 			savedName = "SummarySheet.csv";
- 		}else if(command.isCommand(FormCommand.SEARCH02)){
-    		savedName = "DetailSheet.csv";
- 		}
+		String savedName = "ContractNoInquiry.csv";
+		if (command.isCommand(FormCommand.SEARCH01)) {
+			savedName = "SummarySheet.csv";
+		} else if (command.isCommand(FormCommand.SEARCH02)) {
+			savedName = "DetailSheet.csv";
+		}
 		response.setContentType("application/vnd.ms.excel");
 		String strClient = request.getHeader("user-agent");
 
@@ -70,7 +70,7 @@ public class ClvPractice003ViewAdapter extends ViewAdapter {
 		} else {
 			response.setHeader("Content-Disposition", "attachment;filename="
 					+ savedName + ";");
-		}	
+		}
     	if(command.isCommand(FormCommand.SEARCH01)) {
     		List<SummaryVO> list = null;
     		SummaryVO vo = null;

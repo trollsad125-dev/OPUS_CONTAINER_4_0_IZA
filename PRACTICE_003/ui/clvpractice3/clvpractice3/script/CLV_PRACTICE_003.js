@@ -283,7 +283,7 @@ function initSheet(sheetObj, sheetNo) {
              var HeadTitle1="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Customer/S.Provider|Customer/S.Provider";
              var HeadTitle2="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Code|Name";
              var headCount=ComCountHeadTitle(HeadTitle1);
-             SetConfig( { SearchMode:0, MergeSheet:1, Page:500, DataRowMerge:0 } );
+             SetConfig( { SearchMode:0, MergeSheet:5, Page:500, DataRowMerge:0 } );
              var info    = { Sort:0, ColMove:1, HeaderCheck:1, ColResize:1 };
              var headers = [ { Text:HeadTitle1, Align:"Center"} ,  { Text:HeadTitle2, Align:"Center"}];
 			InitHeaders(headers, info);
@@ -306,6 +306,7 @@ function initSheet(sheetObj, sheetNo) {
 	                SetCountPosition();
 	                SetEditable(1);
 	                ShowSubSum([{ StdCol: prefix+"inv_no", SumCols: "7|8", CaptionText: " ", CaptionCol: 3 }]);
+	                
 	             }
 		break;
 	 case "t2sheet1": // t2sheet1 init     
@@ -424,21 +425,17 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
       //Download Excel 2
       case IBDOWNEXCEL:
     	  if ( sheetID == "t1sheet1"){
-              var param = FormQueryString(formObj);
-                  param += "&" + ComGetPrefixParam(sheetID+"_");
             	ComOpenWait(true);	    	
             	formObj.f_cmd.value = SEARCH01;
             	formObj.target = "_self"
-            	formObj.action = "CLV_PRACTICE_003DL.do?"+ param;
+            	formObj.action = "CLV_PRACTICE_003DL.do?"+ FormQueryString(formObj);
             	formObj.submit();
       			ComOpenWait(false);
           }else if ( sheetID == "t2sheet1"){
-              var param = FormQueryString(formObj);
-                  param += "&" + ComGetPrefixParam(sheetID+"_");
               	ComOpenWait(true);	    	
               	formObj.f_cmd.value = SEARCH02;
               	formObj.target = "_self"
-              	formObj.action = "CLV_PRACTICE_003DL.do?"+ param;
+              	formObj.action = "CLV_PRACTICE_003DL.do?"+ FormQueryString(formObj);
               	formObj.submit();
       			ComOpenWait(false);
           }
@@ -544,7 +541,6 @@ function t1sheet1_OnDblClick(sheetObj, Row,Col){
 		}
 
 	}else{
-		ComShowMessage("No please");
 		return;
 	}
 

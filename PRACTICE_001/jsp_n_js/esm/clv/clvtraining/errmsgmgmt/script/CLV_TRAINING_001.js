@@ -155,6 +155,5 @@
      */
     function sheet1_OnSearchEnd(sheetObj, Code, Msg, StCode, StMsg) { 
      	ComOpenWait(false);
-     	sheetObj.SetRowBackColor(3,"#ff0000");
      }
 
