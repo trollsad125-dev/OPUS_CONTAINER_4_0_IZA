@@ -53,7 +53,9 @@ function processButtonClick() {
 				ComShowCodeMessage("COM132501");
 			} else {
 				sheetObject1.Down2Excel({
+					//HiddenColumn: 1 Allow to not download hidden column in Download Excel
 					HiddenColumn : 1,
+					//Merge: 1 use to download true format merge column exactly like Sheet on UI. It will affected performance
 					Merge : 1
 				});
 			}
@@ -283,12 +285,25 @@ function initSheet(sheetObj, sheetNo) {
              var HeadTitle1="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Customer/S.Provider|Customer/S.Provider";
              var HeadTitle2="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Code|Name";
              var headCount=ComCountHeadTitle(HeadTitle1);
-             SetConfig( { SearchMode:0, MergeSheet:5, Page:500, DataRowMerge:0 } );
+             /** SearchMode :
+              *  2 : LazyMode Get All Data and load it on screen based on Page property and scroll
+              *  0 : Get All Data and load it on screen
+              *  1 : Get All Data and load it on screen based on Page property
+              */
+             //MergeSheet : 5 Merge header only,1 Merge All, 2 Merge Data, 7 Merge Data and Header
+             //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
+             //Page: The Rows defined in 1 Page (Default:20)
+             //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
+             SetConfig( { SearchMode:2, MergeSheet:5, Page:20, DataRowMerge:0 } );
+             //HeaderCheck: Use for tick all in header
+             //Sort: Allow Sort in Header
+             //ColMove: Allow Move the Column in sheet
+             //ColResize: Allow Resize Column in Sheet
              var info    = { Sort:0, ColMove:1, HeaderCheck:1, ColResize:1 };
              var headers = [ { Text:HeadTitle1, Align:"Center"} ,  { Text:HeadTitle2, Align:"Center"}];
-			InitHeaders(headers, info);
-			var prefix = "t1sheet1_";
-			  var cols = [ 
+             InitHeaders(headers, info);
+             var prefix = "t1sheet1_";
+			 var cols = [ 
 	                       {Type:"Status",    Hidden:1, Width:0,    Align:"Center",  ColMerge:1,   SaveName: prefix + "ibflag" },
 	                       {Type:"Text",      Hidden:0, Width:50,   Align:"Center",  ColMerge:0,   SaveName: prefix + "jo_crr_cd",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
 	                       {Type:"Text",      Hidden:0, Width:70,   Align:"Center",  ColMerge:0,   SaveName: prefix + "rlane_cd",       KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
@@ -303,8 +318,18 @@ function initSheet(sheetObj, sheetNo) {
 	                        ];
 	                 
 	                InitColumns(cols);
-	                SetCountPosition();
+	                /**
+	                 * Set CountPosition 
+	                 * 0: No Display
+	                 * 1: Upper Left
+	                 * 2: Upper right
+	                 * 3: Bottom left
+	                 * 4: Bottom Right
+	                 */
+	                SetCountPosition(0);
 	                SetEditable(1);
+	                //StdCol: Calculate SUM based on Column, SumCols: Calculate SUM at column 7,8
+	                //CaptionText: Name Default is Subtotal:(data_of_CaptionCol/If no CaptionCol: Get first column)
 	                ShowSubSum([{ StdCol: prefix+"inv_no", SumCols: "7|8", CaptionText: " ", CaptionCol: 3 }]);
 	                
 	             }
@@ -313,9 +338,22 @@ function initSheet(sheetObj, sheetNo) {
         with(sheetObj){
         var HeadTitle1="|Partner|Lane|Invoice No|Slip No|Approved|Rev\nExp|Item|Curr.|Revenue|Expense|Customer/S.Provider|Customer/S.Provider";
         var HeadTitle2="|Partner|Lane|Invoice No|Slip No|Approved|Rev\nExp|Item|Curr.|Revenue|Expense|Code|Name";
-
+        /** SearchMode :
+         *  2 : LazyMode Get All Data and load it on screen based on Page property and scroll
+         *  0 : Get All Data and load it on screen
+         *  1 : Get All Data and load it on screen based on Page property
+         */
+        //MergeSheet : 5 Merge header only,1 Merge All, 2 Merge Data, 7 Merge Data and Header
+        //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
+        //Page: The Rows defined in 1 Page (Default:20)
+        //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
         var headCount=ComCountHeadTitle(HeadTitle1);
-        SetConfig( { SearchMode:2, MergeSheet:7, Page:50, DataRowMerge:0 } );
+        
+        SetConfig( { SearchMode:2, MergeSheet:5, Page:20, DataRowMerge:0 } );
+        //HeaderCheck: Use for tick all in header
+        //Sort: Allow Sort in Header
+        //ColMove: Allow Move the Column in sheet
+        //ColResize: Allow Resize Column in Sheet
         var info    = { Sort:0, ColMove:1, HeaderCheck:1, ColResize:1 };
         var headers = [ { Text:HeadTitle1, Align:"Center"} ,  { Text:HeadTitle2, Align:"Center"}];
         InitHeaders(headers, info);
@@ -338,8 +376,19 @@ function initSheet(sheetObj, sheetNo) {
                 ];
          
         InitColumns(cols);
-        SetCountPosition();
+        /**
+         * Set CountPosition 
+         * 0: No Display
+         * 1: Upper Left
+         * 2: Upper right
+         * 3: Bottom left
+         * 4: Bottom Right
+         */
+        SetCountPosition(0);
         SetEditable(1);
+        //StdCol: Calculate SUM based on Column, SumCols: Calculate SUM at column 9,10
+        //CaptionText: Name Default is Subtotal:(data_of_CaptionCol/If no CaptionCol: Get first column)
+        //ShowCumulate: Calculate Sub Sum and Show it Default:0
         ShowSubSum([{ StdCol: prefix+"inv_no", SumCols: "9|10", ShowCumulate: 0, CaptionText: " ", CaptionCol: 3 }]);
 	    }
         
@@ -425,8 +474,9 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
       //Download Excel 2
       case IBDOWNEXCEL:
     	  if ( sheetID == "t1sheet1"){
-            	ComOpenWait(true);	    	
+            	ComOpenWait(true);
             	formObj.f_cmd.value = SEARCH01;
+            	//Set target for form tag _self will response displayed in the same frame(default)
             	formObj.target = "_self"
             	formObj.action = "CLV_PRACTICE_003DL.do?"+ FormQueryString(formObj);
             	formObj.submit();
@@ -453,24 +503,28 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 function jo_crr_cds_OnCheckClick(comboObj, index, code) {
   if(index==0) {          
       var bChk=comboObj.GetItemCheck(index);
+      // If we checked in ALL, Set everything to 0 (uncheck)
       if(bChk){
           for(var i=1 ; i < comboObj.GetItemCount() ; i++) {
               comboObj.SetItemCheck(i,0);
           }
       }
   } else {
+	// If we checked in anything, Set ALL to 0 (uncheck)
       var bChk=comboObj.GetItemCheck(index);
       if (bChk) {
           comboObj.SetItemCheck(0,0);
       }
   }
   var checkCnt=0;
+  //Count every check
   var count = parseInt(comboObj.GetItemCount());
   for(var i = 1 ; i <  count; i++) {
       if(comboObj.GetItemCheck(i)) {
           checkCnt++;
       }
   }
+  //If no check -> Set to check ALL
   if(checkCnt == 0) {
       comboObj.SetItemCheck(0,true, null, null, false);
   }
@@ -610,6 +664,7 @@ function GetCheckConditionPeriod(){
 
 function UF_addMonth(obj, iMonth){
 	 if (obj.value != "") {
+		//Use to get Value YYYY-DD with and subtract or add on month ("M" or "D" or "Y")
 		 obj.value=ComGetDateAdd(obj.value+"-01", "M", iMonth).substring(0, 7);
 	 }
 }
@@ -632,7 +687,7 @@ function initPeriod(){
 }
 
 /**
- * Get Date Format
+ * Convert Value Initial to YYYY-MM
  * 
  * @param sVal
  * @param sFormat
@@ -640,6 +695,7 @@ function initPeriod(){
  */
 function GetDateFormat(obj, sFormat){
 	var sVal = String(getArgValue(obj));
+	//Replace -.:/ to ""
 	sVal = sVal.replace(/\/|\-|\.|\:|\ /g,"");
 	
     if (ComIsEmpty(sVal)) return "";
@@ -667,7 +723,7 @@ function GetDateFormat(obj, sFormat){
 			retValue = sVal.substring(0,12);
 			break;
 		}
-
+	//Masked value from YYYYMM to YYYY-MM format
 	retValue = ComGetMaskedValue(retValue,sFormat);
 	return retValue;
 }
