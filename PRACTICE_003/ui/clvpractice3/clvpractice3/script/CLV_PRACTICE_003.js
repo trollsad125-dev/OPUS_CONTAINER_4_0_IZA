@@ -222,7 +222,7 @@ function initCombo(comboObj, comboNo) {
             break;
         case "trd_cd":
             with (comboObj) {
-                SetMultiSelect(0);
+                SetMultiSelect(false);
                 SetUseAutoComplete(1);
                 SetColAlign(0, "left");
                 SetDropHeight(160);
@@ -412,8 +412,18 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
               var param = FormQueryString(formObj);
                   param += "&" + ComGetPrefixParam(sheetID+"_");
               ComOpenWait(true);
+	        	/** GetSearchData
+	        	 * ObjId.GetSearchData(PageUrl, [Param])
+	        	 * Param:  Search parameter Query String, [Default=""]
+	        	 */
               var sXml=sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
               allCurrency	  = ComGetEtcData(sXml, "currency_data");
+				/**LoadSearchData
+				 * ObjId.LoadSearchData(Content, [Opt])
+				 * Content: Search XML or Search JSON string
+				 * Opt.Append: Append search result or not, Default=0
+				 * Opt.Sync  : Sync search or not, Default= 0
+				 */
               sheetObj.LoadSearchData(sXml,{Sync:1} );
               
               ComOpenWait(false);
@@ -423,8 +433,18 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
               var param = FormQueryString(formObj);
                   param += "&" + ComGetPrefixParam(sheetID+"_");
               ComOpenWait(true);
+	         /** GetSearchData
+	          * ObjId.GetSearchData(PageUrl, [Param])
+	          * Param:  Search parameter Query String, [Default=""]
+	          */              
               var sXml=sheetObj.GetSearchData("CLV_PRACTICE_003GS.do", param);
               allCurrency	  = ComGetEtcData(sXml, "currency_data");
+			/**LoadSearchData
+			  * ObjId.LoadSearchData(Content, [Opt])
+			  * Content: Search XML or Search JSON string
+			  * Opt.Append: Append search result or not, Default=0
+			  * Opt.Sync  : Sync search or not, Default= 0
+			  */
               sheetObj.LoadSearchData(sXml,{Sync:1} );
               ComOpenWait(false);
               detailFlag =1;

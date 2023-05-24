@@ -91,9 +91,11 @@ document.onclick=processButtonClick;
                
         		var HeadTitle="|SubSystem|Cd ID|Cd Name|Length|Cd Type|Table Name|Description Remark|Flag|Create User|Create Date|Update User|Update Date" ;
                 var prefix="sheet1_";
-                //SearchMode : 2 LazyMode Get All Data and load it on screen based on Page property and scroll
-                //SearchMode : 0  Get All Data and load it on screen
-                //SearchMode : 1  Get All Data and load it on screen based on Page property
+                /** SearchMode :
+                 *  2 : LazyMode Get All Data and load it on screen based on Page property and scroll
+                 *  0 : Get All Data and load it on screen
+                 *  1 : Get All Data and load it on screen based on Page property
+                 */
                 //MergeSheet : 5 Merge header only,1 Merge All, 2 Merge Data, 7 Merge Data and Header
                 //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
                 //Page: The Rows defined in 1 Page (Default:20)
@@ -106,7 +108,11 @@ document.onclick=processButtonClick;
                 var info    = { Sort:1, ColMove:1, HeaderCheck:1, ColResize:1 };
                 var headers = [ { Text:HeadTitle, Align:"Center"} ];
                 InitHeaders(headers, info);
-                
+                /**CalcLogic: Use for calculate based on other column value
+                 * Ex: If you want to reference to other column 5 minus 2 and * column 3, calcLogic be like
+                 * |5| - 2 * |3|
+                 * Beside we can use SaveName
+                 */
                 var cols = [ {Type:"Status",    Hidden:1, Width:10,   Align:"Center",  ColMerge:0,   SaveName:prefix+"ibflag",          KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
 	             {Type:"Combo",     Hidden:0, Width:70,   Align:"Center",  ColMerge:0,   SaveName:prefix+"ownr_sub_sys_cd", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
 	             {Type:"Text",      Hidden:0,  Width:60,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_id",      KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
@@ -138,9 +144,11 @@ document.onclick=processButtonClick;
 
                 var HeadTitle="|Cd ID|Cd Val|Display Name|Description Remark|Order" ;
                 var prefix="sheet2_";
-                //SearchMode : 2 LazyMode Get All Data and load it on screen based on Page property and scroll
-                //SearchMode : 0  Get All Data and load it on screen
-                //SearchMode : 1  Get All Data and load it on screen based on Page property
+                /** SearchMode :
+                 *  2 : LazyMode Get All Data and load it on screen based on Page property and scroll
+                 *  0 : Get All Data and load it on screen
+                 *  1 : Get All Data and load it on screen based on Page property
+                 */
                 //MergeSheet : 5 Merge header only,1 Merge All, 2 Merge Data, 7 Merge Data and Header
                 //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
                 //Page: The Rows defined in 1 Page (Default:20)
@@ -192,9 +200,21 @@ document.onclick=processButtonClick;
     					formObj.f_cmd.value=SEARCH01;
     					var arr1=new Array("sheet1_", "");
     		        	var sParam1=FormQueryString(formObj)+ "&" + ComGetPrefixParam(arr1);
+    		        	/** GetSearchData
+    		        	 * ObjId.GetSearchData(PageUrl, [Param])
+    		        	 * Param:  Search parameter Query String, [Default=""]
+    		        	 */
      					var sXml1=sheetObj.GetSearchData("CLV_PRACTICE_002GS.do", sParam1);
+     					ComOpenWait(true);
     					if(sXml1.length>0){
+    						/**LoadSearchData
+    						 * ObjId.LoadSearchData(Content, [Opt])
+    						 * Content: Search XML or Search JSON string
+    						 * Opt.Append: Append search result or not, Default=0
+    						 * Opt.Sync  : Sync search or not, Default= 0
+    						 */
     						sheetObj.LoadSearchData(sXml1,{Sync:1} );
+    						ComOpenWait(false);
     					}
     					sheetObjects[1].RemoveAll();
     					formObj.codeid.value='';
@@ -210,6 +230,15 @@ document.onclick=processButtonClick;
                 break;
             case IBSAVE:       //SAVE
                 formObj.f_cmd.value=MULTI;
+        		//ObjId.DoSave(PageUrl, [Param], [Col] , [Quest], [UrlEncode], [Mode], [Delim])
+        		/**
+        		 *  [Param]:	 Parameter for saving, [Default=""]
+        		 *  [Col] :		 Column to save, or SaveName [Default=Status column (-1)]
+        		 *  [Quest]:  	 display confirmation message before saving, [Default=1]
+        		 *  [UrlEncode]: encode data on IBSheet, [Default=1]
+        		 *  [Mode] : 	 How to combine strings for Query String, [Mode=1, Mode=2 (Default=1)]
+        		 *  [Delim]: 	 Set the seperator for Mode 2, [Default "|"]
+        		 */
                 sheetObj.DoSave("CLV_PRACTICE_002GS.do", FormQueryString(formObj), -1, false);
                 break;
 	 		case IBINSERT: // Row Add	

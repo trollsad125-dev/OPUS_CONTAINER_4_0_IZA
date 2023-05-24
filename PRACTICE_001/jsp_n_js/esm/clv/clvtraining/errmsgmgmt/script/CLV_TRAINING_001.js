@@ -13,7 +13,6 @@
 
 	var sheetObjects=new Array();
 	var sheetCnt=0;
-	var rowcount=0;
     document.onclick=processButtonClick;
     /**
      * Set Sheet Object into SheetObjects
@@ -90,9 +89,20 @@
             	with(sheetObj){
                 var HeadTitle="|Del|Msg Cd|Msg Type|Msg level|Message|Description" ;
                 var headCount=ComCountHeadTitle(HeadTitle);
-
+                /** SearchMode :
+                 *  2 : LazyMode Get All Data and load it on screen based on Page property and scroll
+                 *  0 : Get All Data and load it on screen
+                 *  1 : Get All Data and load it on screen based on Page property
+                 */
+                //MergeSheet : 5 Merge header only,1 Merge All, 2 Merge Data, 7 Merge Data and Header
+                //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
+                //Page: The Rows defined in 1 Page (Default:20)
+                //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
                 SetConfig( { SearchMode:2, MergeSheet:5, Page:20, FrozenCol:0, DataRowMerge:1 } );
-
+                //HeaderCheck: Use for tick all in header
+                //Sort: Allow Sort in Header
+                //ColMove: Allow Move the Column in sheet
+                //ColResize: Allow Resize Column in Sheet
                 var info    = { Sort:1, ColMove:1, HeaderCheck:0, ColResize:1 };
                 var headers = [ { Text:HeadTitle, Align:"Center"} ];
                 InitHeaders(headers, info);
@@ -125,20 +135,38 @@
 		case IBSEARCH:      //Search
 			ComOpenWait(true);
 			formObj.f_cmd.value=SEARCH;
+			//ObjId.DoSearch(PageUrl, [Param], [Opt])
+			/**
+			 * Param: FormQueryString(formObj) handle form tag from jsp
+			 * Opt: 
+			 *   Sync  : Sync search or not [Default:0]
+			 *   Append: Append search result or not, [Default=0]
+			 */
 			sheetObj.DoSearch("CLV_TRAINING_001GS.do", FormQueryString(formObj) );
 			break;
 		case IBSAVE:        //Save
         	formObj.f_cmd.value=MULTI;
+    		//ObjId.DoSave(PageUrl, [Param], [Col] , [Quest], [UrlEncode], [Mode], [Delim])
+    		/**
+    		 *  [Param]:	 Parameter for saving, [Default=""]
+    		 *  [Col] :		 Column to save, or SaveName [Default=Status column (-1)]
+    		 *  [Quest]:  	 display confirmation message before saving, [Default=1]
+    		 *  [UrlEncode]: encode data on IBSheet, [Default=1]
+    		 *  [Mode] : 	 How to combine strings for Query String, [Mode=1, Mode=2 (Default=1)]
+    		 *  [Delim]: 	 Set the seperator for Mode 2, [Default "|"]
+    		 */
             sheetObj.DoSave("CLV_TRAINING_001GS.do", FormQueryString(formObj));
 			break;
 		case IBINSERT:      // Insert
-			rowcount=sheetObj.RowCount();
 			row=sheetObj.DataInsert(-1);
 			break;
 		case IBDOWNEXCEL:	//DOWNLOAD excel
 			if(sheetObj.RowCount() < 1){
-				ComShowCodeMessage("No");
+				ComShowCodeMessage("No Column to download");
 			}else{
+				//makeHiddenSkipCol : Use to pass the DelCheck,Checkbox,...
+				//SheetDesign:1 Allow to apply IBSheet design
+				//Merge: 1 use to download true format merge column exactly like Sheet on UI. It will affected performance
 				sheetObj.Down2Excel({DownCols: makeHiddenSkipCol(sheetObj), SheetDesign:1, Merge:1});
 			}
 			break;

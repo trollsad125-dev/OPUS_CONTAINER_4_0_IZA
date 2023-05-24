@@ -155,25 +155,28 @@ function initCombo(comboObj, comboNo) {
 function s_jo_crr_cd_OnCheckClick(comboObj, index, code) {
     if(index==0) {
         var bChk=comboObj.GetItemCheck(index);
+       // If we checked in ALL, Set everything to 0 (uncheck)
         if(bChk){
             for(var i=1 ; i < comboObj.GetItemCount() ; i++) {
                 comboObj.SetItemCheck(i,0);
             }
         }
     } else {
-        //ALL 
+    	// If we checked in anything, Set ALL to 0 (uncheck)
         var bChk=comboObj.GetItemCheck(index);
         if (bChk) {
             comboObj.SetItemCheck(0,0);
         }
     }
     var checkCnt=0;
+    //Count every check
     var count = parseInt(comboObj.GetItemCount());
     for(var i = 1 ; i <  count; i++) {
         if(comboObj.GetItemCheck(i)) {
             checkCnt++;
         }
     }
+    //If no check -> Set to check ALL
     if(checkCnt == 0) {
         comboObj.SetItemCheck(0,true, null, null, false);
     }
@@ -193,14 +196,28 @@ function initSheet(sheetObj, sheetNo) {
 
 			var HeadTitle = "STS|Chk|Carrier|Rev. Lane|Vendor Code|Customer Code|Customer Code|Trade|Delete Flag|Create Date|Create User ID|Update Date|Update User ID";
 			var headCount = ComCountHeadTitle(HeadTitle);
-			// (headCount, 0, 0, true);
-
+	        /** SearchMode :
+	         *  2 : LazyMode Get All Data and load it on screen based on Page property and scroll
+	         *  0 : Get All Data and load it on screen
+	         *  1 : Get All Data and load it on screen based on Page property
+	         */
+	        //MergeSheet : 5 Merge header only,1 Merge All, 2 Merge Data, 7 Merge Data and Header
+	        //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
+	        //Page: The Rows defined in 1 Page (Default:20)
+	        //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
 			SetConfig({SearchMode : 2, MergeSheet : 7, Page : 20, DataRowMerge : 0});
-
+            //HeaderCheck: Use for tick all in header
+            //Sort: Allow Sort in Header
+            //ColMove: Allow Move the Column in sheet
+            //ColResize: Allow Resize Column in Sheet
 			var info = {Sort : 1, ColMove : 1, HeaderCheck : 0, ColResize : 1};
 			var headers = [ { Text : HeadTitle, Align : "Center" }];
 			InitHeaders(headers, info);
-
+            /**CalcLogic: Use for calculate based on other column value
+             * Ex: If you want to reference to other column 5 minus 2 and * column 3, calcLogic be like
+             * |5| - 2 * |3|
+             * Beside we can use SaveName
+             */
 			var cols = [ 
 	             { Type : "Status", Hidden : 1, Width : 50, Align : "Center", ColMerge : 0, SaveName : "ibflag" }, 
 	             { Type : "CheckBox", Hidden : 0, Width : 50, Align : "Center", ColMerge : 0, SaveName : "del_chk" }, 
@@ -257,10 +274,26 @@ function doActionIBSheet(sheetObj, formObj, sAction) {
 	case IBSEARCH: // retrieve
 		formObj.f_cmd.value = SEARCH;
 		ComOpenWait(true);
-		sheetObj.DoSearch("CLV_PRACTICE_004GS.do", FormQueryString(formObj) );
+		//ObjId.DoSearch(PageUrl, [Param], [Opt])
+		/**
+		 * Param: FormQueryString(formObj) handle form tag from jsp
+		 * Opt: 
+		 *   Sync  : Sync search or not [Default:0]
+		 *   Append: Append search result or not, [Default=0]
+		 */
+		sheetObj.DoSearch("CLV_PRACTICE_004GS.do", FormQueryString(formObj),{Sync:1} );
 		break;
 	case IBSAVE: // retrieve
 		formObj.f_cmd.value = MULTI;
+		//ObjId.DoSave(PageUrl, [Param], [Col] , [Quest], [UrlEncode], [Mode], [Delim])
+		/**
+		 *  [Param]:	 Parameter for saving, [Default=""]
+		 *  [Col] :		 Column to save, or SaveName [Default=Status column (-1)]
+		 *  [Quest]:  	 display confirmation message before saving, [Default=1]
+		 *  [UrlEncode]: encode data on IBSheet, [Default=1]
+		 *  [Mode] : 	 How to combine strings for Query String, [Mode=1, Mode=2 (Default=1)]
+		 *  [Delim]: 	 Set the seperator for Mode 2, [Default "|"]
+		 */
 		sheetObj.DoSave("CLV_PRACTICE_004GS.do", FormQueryString(formObj));
 		break;
 	case IBINSERT: //Row Add button event
