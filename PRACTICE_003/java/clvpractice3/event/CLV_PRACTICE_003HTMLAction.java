@@ -61,23 +61,40 @@ public class CLV_PRACTICE_003HTMLAction extends HTMLActionSupport {
 		if(command.isCommand(FormCommand.SEARCH01)) {
 			event.setSummaryVO((SummaryVO)getVO(request, SummaryVO .class));
 			//Set Partner Code and Joo Carrier Cd
-			event.getSummaryVO().setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
-			event.getSummaryVO().setRlaneCd(JSPUtil.getParameter(request, "rlane_cds"));
-			event.getSummaryVO().setTrdCd(JSPUtil.getParameter(request, "trd_cd"));
+			SummaryVO summaryVO = event.getSummaryVO();
+			if(summaryVO!=null){
+				summaryVO.setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
+				summaryVO.setRlaneCd(JSPUtil.getParameter(request, "rlane_cds"));
+				summaryVO.setTrdCd(JSPUtil.getParameter(request, "trd_cd"));
+			}
 		}
 		else if(command.isCommand(FormCommand.SEARCH02)) {
 			event.setDetailVO((DetailVO)getVO(request, DetailVO .class));
 			//Set Partner Code and Joo Carrier Cd
-			event.getDetailVO().setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
-			event.getDetailVO().setRlaneCd(JSPUtil.getParameter(request, "rlane_cds"));
-			event.getDetailVO().setTrdCd(JSPUtil.getParameter(request, "trd_cd"));
-		}else if(command.isCommand(FormCommand.SEARCH24)){
+			DetailVO detailVO = event.getDetailVO();
+			if(detailVO!=null){
+				detailVO.setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
+				detailVO.setRlaneCd(JSPUtil.getParameter(request, "rlane_cds"));
+				detailVO.setTrdCd(JSPUtil.getParameter(request, "trd_cd"));
+			}
+		}
+		//Get Trade Code By JooCarrierCode
+		else if(command.isCommand(FormCommand.SEARCH24)){
 			event.setSummaryVO((SummaryVO)getVO(request, SummaryVO .class));
-			event.getSummaryVO().setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
-		}else if(command.isCommand(FormCommand.SEARCH25)){
+			SummaryVO summaryVO = event.getSummaryVO();
+			if(summaryVO!=null){
+				summaryVO.setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
+
+			}
+		}
+		//Get Trade Code By JooCarrierCode and RevLane Code
+		else if(command.isCommand(FormCommand.SEARCH25)){
 			event.setSummaryVO((SummaryVO)getVO(request, SummaryVO .class));
-			event.getSummaryVO().setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
-			event.getSummaryVO().setRlaneCd(JSPUtil.getParameter(request, "rlane_cds"));
+			SummaryVO summaryVO = event.getSummaryVO();
+			if(summaryVO!=null){
+				summaryVO.setJoCrrCd(JSPUtil.getParameter(request, "jo_crr_cds"));
+				summaryVO.setRlaneCd(JSPUtil.getParameter(request, "rlane_cds"));
+			}
 		}
 
 		return  event;
