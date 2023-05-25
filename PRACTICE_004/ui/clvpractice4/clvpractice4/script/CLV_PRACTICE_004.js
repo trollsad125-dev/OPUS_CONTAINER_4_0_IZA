@@ -219,19 +219,19 @@ function initSheet(sheetObj, sheetNo) {
              * Beside we can use SaveName
              */
 			var cols = [ 
-	             { Type : "Status", Hidden : 1, Width : 50, Align : "Center", ColMerge : 0, SaveName : "ibflag" }, 
-	             { Type : "CheckBox", Hidden : 0, Width : 50, Align : "Center", ColMerge : 0, SaveName : "del_chk" }, 
-	             { Type : "Combo", Hidden : 0, Width : 70, Align : "Center", ColMerge : 0, SaveName : "jo_crr_cd", KeyField : 1, Format : "", UpdateEdit : 0, InsertEdit : 1, EditLen: 3 }, 
-	             { Type : "Combo", Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "rlane_cd", KeyField : 1, Format : "", UpdateEdit : 0, InsertEdit : 1, EditLen: 5  }, 
-	             { Type : "Text", Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "vndr_seq", KeyField : 1, Format : "", UpdateEdit : 1, InsertEdit : 1 , EditLen: 6 }, 
-	             { Type : "Text", Hidden : 0, Width : 50, Align : "Center", ColMerge : 0, SaveName : "cust_cnt_cd", KeyField : 1, Format : "", UpdateEdit : 1, InsertEdit : 1 , EditLen: 2 }, 
-	             { Type : "Text", Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "cust_seq", KeyField : 1, Format : "", UpdateEdit : 1, InsertEdit : 1 , EditLen: 6 }, 
-	             { Type : "Text", Hidden : 0, Width : 70, Align : "Center", ColMerge : 0, SaveName : "trd_cd", KeyField : 0, Format : "", UpdateEdit : 1, InsertEdit : 1	, EditLen: 3 }, 
-	             { Type : "Combo", Hidden : 0, Width : 70, Align : "Center", ColMerge : 0, SaveName : "delt_flg", KeyField : 0, Format : "", UpdateEdit : 1, InsertEdit : 1}, 
-	             { Type : "Text", Hidden : 0, Width : 150, Align : "Center", ColMerge : 0, SaveName : "cre_dt", KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0 }, 
-	             { Type : "Text", Hidden : 0, Width : 180, Align : "Left", ColMerge : 0, SaveName : "cre_usr_id", KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0 }, 
-	             { Type : "Text", Hidden : 0, Width : 150, Align : "Center", ColMerge : 0, SaveName : "upd_dt", KeyField : 0, Format : "", UpdateEdit : 0,InsertEdit : 0 }, 
-	             { Type : "Text", Hidden : 0, Width : 180, Align : "Left", ColMerge : 0, SaveName : "upd_usr_id", KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0}
+	             { Type : "Status",   Hidden : 1, Width : 50,  Align : "Center", ColMerge : 0, SaveName : "ibflag" }, 
+	             { Type : "CheckBox", Hidden : 0, Width : 50,  Align : "Center", ColMerge : 0, SaveName : "del_chk" }, 
+	             { Type : "Combo", 	  Hidden : 0, Width : 70,  Align : "Center", ColMerge : 0, SaveName : "jo_crr_cd",   KeyField : 1, Format : "", UpdateEdit : 0, InsertEdit : 1, EditLen: 3 }, 
+	             { Type : "Combo",    Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "rlane_cd",    KeyField : 1, Format : "", UpdateEdit : 0, InsertEdit : 1, EditLen: 5  }, 
+	             { Type : "Text",     Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "vndr_seq",    KeyField : 1, Format : "", UpdateEdit : 1, InsertEdit : 1 ,EditLen: 6 }, 
+	             { Type : "Text",     Hidden : 0, Width : 50,  Align : "Center", ColMerge : 0, SaveName : "cust_cnt_cd", KeyField : 1, Format : "", UpdateEdit : 1, InsertEdit : 1 ,EditLen: 2 }, 
+	             { Type : "Text", 	  Hidden : 0, Width : 100, Align : "Center", ColMerge : 0, SaveName : "cust_seq",    KeyField : 1, Format : "", UpdateEdit : 1, InsertEdit : 1, EditLen: 6 }, 
+	             { Type : "Text",     Hidden : 0, Width : 70,  Align : "Center", ColMerge : 0, SaveName : "trd_cd",      KeyField : 0, Format : "", UpdateEdit : 1, InsertEdit : 1, EditLen: 3 }, 
+	             { Type : "Combo",    Hidden : 0, Width : 70,  Align : "Center", ColMerge : 0, SaveName : "delt_flg",    KeyField : 0, Format : "", UpdateEdit : 1, InsertEdit : 1}, 
+	             { Type : "Text",     Hidden : 0, Width : 150, Align : "Center", ColMerge : 0, SaveName : "cre_dt",      KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0 }, 
+	             { Type : "Text",     Hidden : 0, Width : 180, Align : "Center", ColMerge : 0, SaveName : "cre_usr_id",  KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0 }, 
+	             { Type : "Text",     Hidden : 0, Width : 150, Align : "Center", ColMerge : 0, SaveName : "upd_dt",      KeyField : 0, Format : "", UpdateEdit : 0,InsertEdit : 0 }, 
+	             { Type : "Text",     Hidden : 0, Width : 180, Align : "Center", ColMerge : 0, SaveName : "upd_usr_id",  KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0}
 	             ];
 
 			InitColumns(cols);
