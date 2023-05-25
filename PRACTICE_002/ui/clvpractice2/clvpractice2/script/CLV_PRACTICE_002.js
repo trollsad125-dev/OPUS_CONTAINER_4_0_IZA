@@ -10,6 +10,7 @@ var sheetObjects=new Array();
 var sheetCnt=0;
 document.onclick=processButtonClick;
 msgs['PRC00002']="{?msg1} code is invalid !";
+msgs['PRC00005']="Do you want to save?";
 
     function processButtonClick(){
 
@@ -21,13 +22,16 @@ msgs['PRC00002']="{?msg1} code is invalid !";
     	            doActionIBSheet(sheetObjects[0],formObject,IBSEARCH);
         	        break;
                 case "btn_Save":
-                	//Second, Loop all record in sheet and use sheetObject[0].GetRowStatus(i) == "I" || "D" => Perform SAVE
-                	  if((sheetObjects[0].RowCount("I")+sheetObjects[0].RowCount("U")+sheetObjects[0].RowCount("D")) >0 ){
-                		  doActionIBSheet(sheetObjects[0],formObject,IBSAVE);
-                	  } 
-                	  if((sheetObjects[1].RowCount("I")+sheetObjects[1].RowCount("U")+sheetObjects[1].RowCount("D")) >0 ) {
-                		  doActionIBSheet(sheetObjects[1],formObject,IBSAVE);
-                	  }
+                	if(ComShowCodeConfirm("PRC00005")){
+                      //Second, Loop all record in sheet and use sheetObject[0].GetRowStatus(i) == "I" || "D" => Perform SAVE
+                  	  if((sheetObjects[0].RowCount("I")+sheetObjects[0].RowCount("U")+sheetObjects[0].RowCount("D")) >0 ){
+                  		  doActionIBSheet(sheetObjects[0],formObject,IBSAVE);
+                  	  } 
+                  	  if((sheetObjects[1].RowCount("I")+sheetObjects[1].RowCount("U")+sheetObjects[1].RowCount("D")) >0 ) {
+                  		  doActionIBSheet(sheetObjects[1],formObject,IBSAVE);
+                  	  }
+                	}
+
         	        break;
         			/*****************grid button ************************/				
 				case "btn_rowadd_mst": //add row  
@@ -101,12 +105,12 @@ msgs['PRC00002']="{?msg1} code is invalid !";
                 //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
                 //Page: The Rows defined in 1 Page (Default:20)
                 //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
-                SetConfig( { SearchMode:2, MergeSheet:5, Page:1, FrozenCol:0, DataRowMerge:0 } );
+                SetConfig( { SearchMode:2, MergeSheet:5 } );
                 //HeaderCheck: Use for tick all in header
                 //Sort: Allow Sort in Header
                 //ColMove: Allow Move the Column in sheet
                 //ColResize: Allow Resize Column in Sheet
-                var info    = { Sort:1, ColMove:1, HeaderCheck:1, ColResize:1 };
+                var info    = { Sort:1, ColMove:1, ColResize:1 };
                 var headers = [ { Text:HeadTitle, Align:"Center"} ];
                 InitHeaders(headers, info);
                 /**CalcLogic: Use for calculate based on other column value
@@ -154,12 +158,12 @@ msgs['PRC00002']="{?msg1} code is invalid !";
                 //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
                 //Page: The Rows defined in 1 Page (Default:20)
                 //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
-                SetConfig( { SearchMode:2, MergeSheet:5, Page:20, FrozenCol:0, DataRowMerge:0 } );
+                SetConfig( { SearchMode:2, MergeSheet:5} );
                 //HeaderCheck: Use for tick all in header
                 //Sort: Allow Sort in Header
                 //ColMove: Allow Move the Column in sheet
                 //ColResize: Allow Resize Column in Sheet
-                var info    = { Sort:1, ColMove:1, HeaderCheck:0, ColResize:1 };
+                var info    = { Sort:1, ColMove:1, HeaderCheck:0,ColResize:1 };
                 var headers = [ { Text:HeadTitle, Align:"Center"} ];
                 InitHeaders(headers, info);
 

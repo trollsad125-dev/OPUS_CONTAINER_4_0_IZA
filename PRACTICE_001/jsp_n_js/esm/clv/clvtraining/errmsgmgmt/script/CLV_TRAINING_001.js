@@ -10,7 +10,7 @@
 * 2023.04.19 
 * 1.0 Creation
 =========================================================*/
-
+msgs["PRC00001"] = "No Column to download";
 	var sheetObjects=new Array();
 	var sheetCnt=0;
     document.onclick=processButtonClick;
@@ -98,18 +98,18 @@
                 //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
                 //Page: The Rows defined in 1 Page (Default:20)
                 //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
-                SetConfig( { SearchMode:2, MergeSheet:5, Page:20, FrozenCol:0, DataRowMerge:1 } );
+                SetConfig( { SearchMode:2, MergeSheet:5 } );
                 //HeaderCheck: Use for tick all in header
                 //Sort: Allow Sort in Header
                 //ColMove: Allow Move the Column in sheet
                 //ColResize: Allow Resize Column in Sheet
-                var info    = { Sort:1, ColMove:1, HeaderCheck:0, ColResize:1 };
+                var info    = { Sort:1, ColMove:1, HeaderCheck:0,ColResize:1 };
                 var headers = [ { Text:HeadTitle, Align:"Center"} ];
                 InitHeaders(headers, info);
 
                 var cols = [ {Type:"Status",    Hidden:1, Width:30,   Align:"Center",  ColMerge:0,   SaveName:"ibflag" },
 	                     {Type:"DelCheck",  Hidden:0, Width:45,   Align:"Center",  ColMerge:1,   SaveName:"DEL",         KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-	                     {Type:"Text",      Hidden:0, Width:80,   Align:"Center",  ColMerge:0,   SaveName:"err_msg_cd",  KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
+	                     {Type:"Text",      Hidden:0, Width:80,   Align:"Center",  ColMerge:0,   SaveName:"err_msg_cd",  KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1,EditLen:8 },
 	                     {Type:"Combo",     Hidden:0, Width:80,   Align:"Center",  ColMerge:0,   SaveName:"err_tp_cd",   KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1, ComboText:"Server|UI|Both", ComboCode:"S|U|B" },
 	                     {Type:"Combo",     Hidden:0, Width:80,   Align:"Center",  ColMerge:0,   SaveName:"err_lvl_cd",  KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1, ComboText:"ERR|WARNING|INFO", ComboCode:"E|W|I" },
 	                     {Type:"Text",      Hidden:0, Width:400,  Align:"Left",    ColMerge:0,   SaveName:"err_msg",     KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1, MultiLineText:1 },
@@ -162,7 +162,7 @@
 			break;
 		case IBDOWNEXCEL:	//DOWNLOAD excel
 			if(sheetObj.RowCount() < 1){
-				ComShowCodeMessage("No Column to download");
+				ComShowCodeMessage('PRC00001');
 			}else{
 				//makeHiddenSkipCol : Use to pass the DelCheck,Checkbox,...
 				//SheetDesign:1 Allow to apply IBSheet design
@@ -174,6 +174,7 @@
     }
     /**
      * Sheet 1 when after search
+     * 
      * @param sheetObj
      * @param Code
      * @param Msg
@@ -186,11 +187,12 @@
      }
 
     /**
-     * Check Validate in Client Side Sheet 1
-     * @param sheetObj
-     * @param Row
-     * @param Col
-     */
+	 * Check Validate in Client Side Sheet 1
+	 * 
+	 * @param sheetObj
+	 * @param Row
+	 * @param Col
+	 */
     function sheet1_OnChange(sheetObj,Row,Col){
    	 if(Col == 2){
 			var code=sheetObj.GetCellValue(Row, Col);
@@ -203,5 +205,13 @@
    			 }
    		 }
    	 }
-   	 
+    }
+    /**
+     * Search when Save end
+     * 
+     * @param sheetObj
+     * @returns
+     */
+    function sheet1_OnSaveEnd(sheetObj){
+    	doActionIBSheet(sheetObjects[0], document.form, IBSEARCH);
     }

@@ -25,26 +25,15 @@
 
 <%
 	ClvPractice004Event  event = null;					//PDTO(Data Transfer Object including Parameters)
-	Exception serverException   = null;			//서버에서 발생한 에러
-	String strErrMsg = "";						//에러메세지
-	int rowCount	 = 0;						//DB ResultSet 리스트의 건수
+	Exception serverException   = null;			//Server Exception
+	String strErrMsg = "";						//Error Message
 
-	String successFlag = "";
-	String codeList  = "";
-	String pageRows  = "100";
-
-	String strUsr_id		= "";
-	String strUsr_nm		= "";
 	String rlaneCds			= "";
 	String crrCds			= "";
 	Logger log = Logger.getLogger("com.clt.apps.CLVPractice4.CLVPractice4");
 
 	try {
 	   	SignOnUserAccount account=(SignOnUserAccount)session.getAttribute(CommonWebKeys.SIGN_ON_USER_ACCOUNT);
-		strUsr_id =	account.getUsr_id();
-		strUsr_nm = account.getUsr_nm();
-
-
 		event = (ClvPractice004Event)request.getAttribute("Event");
 		serverException = (Exception)request.getAttribute(CommonWebKeys.EXCEPTION_OBJECT);
 
@@ -52,7 +41,7 @@
 			strErrMsg = new ErrorHandler(serverException).loadPopupMessage();
 		}
 
-		// 초기화면 로딩시 서버로부터 가져온 데이터 추출하는 로직추가 ..
+		// Event Response from server
 		GeneralEventResponse eventResponse = (GeneralEventResponse) request.getAttribute("EventResponse");
 		rlaneCds = eventResponse.getETCData("rlaneCds");
 		crrCds = eventResponse.getETCData("crrCds");

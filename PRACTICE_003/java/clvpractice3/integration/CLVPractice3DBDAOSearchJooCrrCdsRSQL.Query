@@ -6,7 +6,8 @@
 			<sql><![CDATA[
 SELECT JO_CRR_CD
 FROM JOO_CARRIER
-WHERE delt_flg = 'N'			]]></sql>
+WHERE delt_flg = 'N'
+GROUP BY JO_CRR_CD			]]></sql>
 			<params>
 			</params>
 		</query>

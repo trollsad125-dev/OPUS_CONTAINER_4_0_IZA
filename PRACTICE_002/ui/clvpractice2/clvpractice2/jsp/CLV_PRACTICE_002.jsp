@@ -23,11 +23,8 @@
 <%@ page import="com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.event.ClvPractice002Event"%>
 <%
 	ClvPractice002Event event = null; //PDTO(Data Transfer Object including Parameters)
-	Exception serverException = null; //서버에서 발생한 에러
-	String strErrMsg = ""; //에러메세지
-	String successFlag = "";
-	String codeList = "";
-	String pageRows = "100";
+	Exception serverException = null; //Server Exception
+	String strErrMsg = ""; //Error Message
 	String strSubSysCd		= "";
 
 	try {
@@ -38,9 +35,9 @@
 			strErrMsg = new ErrorHandler(serverException).loadPopupMessage();
 		}
 
-		// 초기화면 로딩시 서버로부터 가져온 데이터 추출하는 로직추가 ..
+		// Event Response
 		GeneralEventResponse eventResponse = (GeneralEventResponse) request.getAttribute("EventResponse");
-		//need to handle tomorrow
+		//Get SubSystem Code From ETC Data
 		strSubSysCd = eventResponse.getETCData("sub_sys_cd");
 	} catch (Exception e) {
 		out.println(e.toString());
@@ -60,9 +57,7 @@
 
 <form name="form1">
 <input type="hidden" name="f_cmd">
-<input type="hidden" name="iPage">
 <input type="hidden" name="codeid">
-<input type="hidden" name="selectedcodes">
 
 <!-- page_title_area(S) -->
 <div class="page_title_area clear">
@@ -80,7 +75,6 @@
 
    	<!-- page_location(S) -->
    	<div class="location">
-		<!-- location 내용 동적생성 (별도 코딩 불필요) -->
         <span id="navigation"></span>
    	</div>
    	<!-- page_location(E) -->

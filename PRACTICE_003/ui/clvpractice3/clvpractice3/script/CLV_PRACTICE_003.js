@@ -25,10 +25,11 @@ var ROWMARK = "|";
 var FIELDMARK=",";
 msgs['PRC00002']="'To date' must be later than 'From date'.";
 msgs['PRC00001']="There is any error in script.  Please check it again.";
-
+msgs['PRC00003']= "Year Month over 3 months, do you really want to get data?";
 
 //Event handler processing by button click event */
 document.onclick = processButtonClick;
+var is3MonthsAllowed = false;
 // Event handler processing by button name */
 function processButtonClick() {
 	/** *** setting sheet object **** */
@@ -103,9 +104,9 @@ function processButtonClick() {
  * @param formObj
  */
 function resetForm(formObj){
-	formObj.reset();
 	getCurrentSheet().RemoveAll();
 	jo_crr_cds.SetSelectIndex(0);
+	rlane_cds.SetEnable(0);
 }
 /**
  * registering IBSheet Object as list adding process for list in case of needing
@@ -294,12 +295,12 @@ function initSheet(sheetObj, sheetNo) {
              //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
              //Page: The Rows defined in 1 Page (Default:20)
              //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
-             SetConfig( { SearchMode:2, MergeSheet:5, Page:20, DataRowMerge:0 } );
+             SetConfig( { SearchMode:2, MergeSheet:5 } );
              //HeaderCheck: Use for tick all in header
              //Sort: Allow Sort in Header
              //ColMove: Allow Move the Column in sheet
              //ColResize: Allow Resize Column in Sheet
-             var info    = { Sort:0, ColMove:1, HeaderCheck:1, ColResize:1 };
+             var info    = { Sort:0, ColMove:1, HeaderCheck:0, ColResize:1 };
              var headers = [ { Text:HeadTitle1, Align:"Center"} ,  { Text:HeadTitle2, Align:"Center"}];
              InitHeaders(headers, info);
              var prefix = "t1sheet1_";
@@ -349,12 +350,12 @@ function initSheet(sheetObj, sheetNo) {
         //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
         var headCount=ComCountHeadTitle(HeadTitle1);
         
-        SetConfig( { SearchMode:2, MergeSheet:5, Page:20, DataRowMerge:0 } );
+        SetConfig( { SearchMode:2, MergeSheet:5 } );
         //HeaderCheck: Use for tick all in header
         //Sort: Allow Sort in Header
         //ColMove: Allow Move the Column in sheet
         //ColResize: Allow Resize Column in Sheet
-        var info    = { Sort:0, ColMove:1, HeaderCheck:1, ColResize:1 };
+        var info    = { Sort:0, ColMove:1, HeaderCheck:0,ColResize:1 };
         var headers = [ { Text:HeadTitle1, Align:"Center"} ,  { Text:HeadTitle2, Align:"Center"}];
         InitHeaders(headers, info);
         var prefix = "t2sheet1_";
@@ -405,8 +406,13 @@ function initSheet(sheetObj, sheetNo) {
 function doActionIBSheet(sheetObj, formObj, sAction) {
   sheetObj.ShowDebugMsg(false);
   var sheetID=sheetObj.id;
+  if(!validateForm(sheetObj,formObj,sAction)){
+	  return;
+  }
   switch (sAction) {
+
       case IBSEARCH: // retrieve
+
           if ( sheetID == "t1sheet1"){
               formObj.f_cmd.value=SEARCH01;
               var param = FormQueryString(formObj);
@@ -774,7 +780,6 @@ function showSumTotal(sheetObj,prefix,currPos,revPos,expPos){
 	        			  this["totalRev"+allCurrencyG[i]] = this["totalRev"+allCurrencyG[i]] + sheetObj.GetCellValue(arrSubSum[j], prefix + "inv_rev_act_amt");
 	        			  this["totalExp"+allCurrencyG[i]] = this["totalExp"+allCurrencyG[i]] + sheetObj.GetCellValue(arrSubSum[j], prefix + "inv_exp_act_amt");
 	        		  }
-	        		 
 	        	  }
 	        	  sheetObj.SetCellValue(sheetObj.LastRow(),currPos,allCurrencyG[i]);
 	        	  sheetObj.SetCellValue(sheetObj.LastRow(),revPos,this["totalRev"+allCurrencyG[i]]);
@@ -803,4 +808,29 @@ function t2sheet1_OnSearchEnd(sheetObj){
 function t1sheet1_OnSearchEnd(sheetObj){
 	showSumTotal(sheetObj,"t1sheet1_",6,7,8);
 }
+/**
+ * validateForm IBSearch
+ * 
+ * @param sheetObj
+ * @param formObj
+ * @param sAction
+ * @returns {Boolean}
+ */
+function validateForm(sheetObj, formObj, sAction) {
+	switch (sAction) {
+		case IBSEARCH: // retrieve
 
+			var dtFm = new Date(formObj.date_fr.value);
+			var dtTo = new Date(formObj.date_to.value);
+			var diffMonth = (dtTo.getFullYear() - dtFm.getFullYear()) * 12 + (dtTo.getMonth() - dtFm.getMonth());
+			if (diffMonth > 2 && !is3MonthsAllowed) { // check over 3 Year Month
+				if(!ComShowCodeConfirm('PRC00003')) {
+					return;
+					} else {
+						is3MonthsAllowed = true;
+					}
+			}
+			break;
+	}
+	return true;
+}

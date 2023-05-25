@@ -4,10 +4,10 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.15
+*@LastModifyDate : 2023.05.25
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.15 
+* 2023.05.25 
 * 1.0 Creation
 =========================================================*/
 package com.clt.apps.opus.esm.clv.clvtraining.clvpractice3.integration;
@@ -61,6 +61,7 @@ public class CLVPractice3DBDAOSearchJooCrrCdsRSQL implements ISQLTemplate{
 		query.append("SELECT JO_CRR_CD" ).append("\n"); 
 		query.append("FROM JOO_CARRIER" ).append("\n"); 
 		query.append("WHERE delt_flg = 'N'" ).append("\n"); 
+		query.append("GROUP BY JO_CRR_CD" ).append("\n"); 
 
 	}
 }

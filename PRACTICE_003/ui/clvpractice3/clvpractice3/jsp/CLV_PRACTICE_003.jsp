@@ -25,25 +25,14 @@
 
 <%
 	ClvPractice003Event  event = null;					//PDTO(Data Transfer Object including Parameters)
-	Exception serverException   = null;			//서버에서 발생한 에러
-	String strErrMsg = "";						//에러메세지
-	int rowCount	 = 0;						//DB ResultSet 리스트의 건수
+	Exception serverException   = null;			//Server Exception
+	String strErrMsg = "";						//Error Message
 
-	String successFlag = "";
-	String codeList  = "";
-	String pageRows  = "100";
-
-	String strUsr_id		= "";
-	String strUsr_nm		= "";
 	Logger log = Logger.getLogger("com.clt.apps.CLVPractice3.CLVPractice3");
 	String joCrrCdComboItems	= "";
 	String currencyData 		= "";
 	try {
 	   	SignOnUserAccount account=(SignOnUserAccount)session.getAttribute(CommonWebKeys.SIGN_ON_USER_ACCOUNT);
-		strUsr_id =	account.getUsr_id();
-		strUsr_nm = account.getUsr_nm();
-
-
 		event = (ClvPractice003Event)request.getAttribute("Event");
 		serverException = (Exception)request.getAttribute(CommonWebKeys.EXCEPTION_OBJECT);
 
@@ -73,7 +62,6 @@
 </script>
 <form name="form">
 <input type="hidden" name="f_cmd">
-<input type="hidden" name="pagerows">
 	<!-- page_title_area(S) -->
 	<div class="page_title_area clear">
 	

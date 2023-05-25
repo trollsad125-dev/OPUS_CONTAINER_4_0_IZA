@@ -205,12 +205,12 @@ function initSheet(sheetObj, sheetNo) {
 	        //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
 	        //Page: The Rows defined in 1 Page (Default:20)
 	        //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
-			SetConfig({SearchMode : 2, MergeSheet : 7, Page : 20, DataRowMerge : 0});
+			SetConfig({SearchMode : 2, MergeSheet : 5});
             //HeaderCheck: Use for tick all in header
             //Sort: Allow Sort in Header
             //ColMove: Allow Move the Column in sheet
             //ColResize: Allow Resize Column in Sheet
-			var info = {Sort : 1, ColMove : 1, HeaderCheck : 0, ColResize : 1};
+			var info = {Sort : 1, ColMove : 1, HeaderCheck:0, ColResize : 1};
 			var headers = [ { Text : HeadTitle, Align : "Center" }];
 			InitHeaders(headers, info);
             /**CalcLogic: Use for calculate based on other column value
