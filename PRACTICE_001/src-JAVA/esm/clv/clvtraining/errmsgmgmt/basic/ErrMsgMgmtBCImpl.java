@@ -86,7 +86,7 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 				for (int i = 0; i < insertVoList.size(); i++) {
 					dupFlg = dbDao.searchDupChkErrCd(insertVoList.get(i));
 					String errCode = insertVoList.get(i).getErrMsgCd();
-					if ("Y".equals(dupFlg)) {
+					if ("1".equalsIgnoreCase(dupFlg)) {
 						// Throw DAOException with ERR12356
 						throw new DAOException(new ErrorHandler("ERR12356",new String[] { errCode }).getMessage());
 					}else{
