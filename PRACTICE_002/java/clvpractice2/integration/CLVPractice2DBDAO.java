@@ -272,7 +272,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	public String[] searchSubSystemCodeList() throws DAOException {
 		String[] list = null;
 		try {
-			DBRowSet dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate) new CLVPractice2DBDAOsearchSubSystemCdRSQL(), null, null);
+			DBRowSet dbRowset = new SQLExecuter("").executeQuery((ISQLTemplate) new CLVPractice2DBDAOSearchSubSystemCdRSQL(), null, null);
 			list = new String[dbRowset.getRowCount()];
 			int idx = 0;
 			while(dbRowset.next()){

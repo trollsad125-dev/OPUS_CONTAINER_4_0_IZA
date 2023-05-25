@@ -23,7 +23,7 @@ import com.clt.framework.support.db.ISQLTemplate;
  * @since J2EE 1.6
  */
 
-public class CLVPractice2DBDAOsearchSubSystemCdRSQL implements ISQLTemplate{
+public class CLVPractice2DBDAOSearchSubSystemCdRSQL implements ISQLTemplate{
 
 	private StringBuffer query = new StringBuffer();
 	
@@ -37,7 +37,7 @@ public class CLVPractice2DBDAOsearchSubSystemCdRSQL implements ISQLTemplate{
 	  * CLVPractice2DBDAOsearchSubSystemCd
 	  * </pre>
 	  */
-	public CLVPractice2DBDAOsearchSubSystemCdRSQL(){
+	public CLVPractice2DBDAOSearchSubSystemCdRSQL(){
 		setQuery();
 		params = new HashMap<String,String[]>();
 		query.append("/*").append("\n"); 
