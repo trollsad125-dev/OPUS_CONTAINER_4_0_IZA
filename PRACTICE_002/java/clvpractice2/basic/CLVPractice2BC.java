@@ -70,5 +70,5 @@ public interface CLVPractice2BC {
 	 * @exception EventException
 	 */
 	public void multiCodeMgmtDtl(CodeMgmtDTLVO[] codeMgmtDtlVO,SignOnUserAccount account) throws EventException;
-	
+
 }

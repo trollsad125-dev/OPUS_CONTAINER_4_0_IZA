@@ -18,6 +18,7 @@ import java.util.List;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration.CLVPractice2DBDAO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.integration.DAOException;
@@ -222,5 +223,5 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}
 	}
-	
+
 }

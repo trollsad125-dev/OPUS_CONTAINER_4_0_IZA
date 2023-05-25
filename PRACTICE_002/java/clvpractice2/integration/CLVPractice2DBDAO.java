@@ -503,4 +503,5 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 
 		return dupFlg;
 	}
+	
 }

@@ -119,7 +119,10 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 				eventResponse = searchCodeMgmt(e);
 			} else if (e.getFormCommand().isCommand(FormCommand.MULTI)) {
 				eventResponse = multiCodeMgmt(e);
-			} else if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
+			}else if(e.getFormCommand().isCommand(FormCommand.MULTI01)){
+				eventResponse=multiCodeMgmtDtl(e);
+			}
+			else if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
 				eventResponse = getSystemCode(e);
 			} else if (e.getFormCommand().isCommand(FormCommand.SEARCH02)) {
 				eventResponse = searchCodeDtl(e);
@@ -285,11 +288,36 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 			if(event.getCodeMgmtCondVOS()!=null){
 				command.multiCodeMgmt(event.getCodeMgmtCondVOS(),account);
 			}
+
+			commit();
+		} catch(EventException ex) {
+			rollback();
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		} catch(Exception ex) {
+			rollback();
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}
+		return eventResponse;
+	}
+	/**
+	 * CLV_Practice_002 : Insert Update Delete Code Management
+	 *
+	 * @param Event e
+	 * @return EventResponse
+	 * @exception EventException
+	 */
+	
+	private EventResponse multiCodeMgmtDtl(Event e) throws EventException {
+		// PDTO(Data Transfer Object including Parameters)
+		GeneralEventResponse eventResponse = new GeneralEventResponse();
+		ClvPractice002Event event = (ClvPractice002Event)e;
+		CLVPractice2BC command = new CLVPractice2BCImpl();
+		
+		try{
+			begin();
 			if(event.getCodeMgmtDTLVOs()!=null){
 				command.multiCodeMgmtDtl(event.getCodeMgmtDTLVOs(), account);
 			}
-			
-			eventResponse.setUserMessage(new ErrorHandler("XXXXXXXXX").getUserMessage());
 			commit();
 		} catch(EventException ex) {
 			rollback();
@@ -625,4 +653,5 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		}	
 		return eventResponse;
 	}
+	
 }

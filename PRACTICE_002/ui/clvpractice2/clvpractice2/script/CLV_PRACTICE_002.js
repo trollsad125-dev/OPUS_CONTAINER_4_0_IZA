@@ -9,6 +9,7 @@
 var sheetObjects=new Array();
 var sheetCnt=0;
 document.onclick=processButtonClick;
+msgs['PRC00002']="{?msg1} code is invalid !";
 
     function processButtonClick(){
 
@@ -113,26 +114,26 @@ document.onclick=processButtonClick;
                  * |5| - 2 * |3|
                  * Beside we can use SaveName
                  */
-                var cols = [ {Type:"Status",    Hidden:1, Width:10,   Align:"Center",  ColMerge:0,   SaveName:prefix+"ibflag",          KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-	             {Type:"Combo",     Hidden:0, Width:70,   Align:"Center",  ColMerge:0,   SaveName:prefix+"ownr_sub_sys_cd", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-	             {Type:"Text",      Hidden:0,  Width:60,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_id",      KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
-	             {Type:"Text",      Hidden:0,  Width:200,  Align:"Left",    ColMerge:0,   SaveName:prefix+"intg_cd_nm",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-	             {Type:"Text",      Hidden:0,  Width:50,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_len",     KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-	             {Type:"Combo",     Hidden:0, Width:100,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_tp_cd",   KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-	             {Type:"Text",      Hidden:0,  Width:150,  Align:"Left",    ColMerge:0,   SaveName:prefix+"mng_tbl_nm",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
-	             {Type:"Text",      Hidden:0,  Width:350,  Align:"Left",    ColMerge:0,   SaveName:prefix+"intg_cd_desc",    KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-	             {Type:"Combo",     Hidden:0, Width:40,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_use_flg", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-	             {Type:"Text",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:prefix+"cre_usr_id",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
-	             {Type:"Date",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:prefix+"cre_dt",          KeyField:0,   CalcLogic:"",   Format:"Ymd",         PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
-	             {Type:"Text",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:prefix+"upd_usr_id",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
-	             {Type:"Date",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:prefix+"upd_dt",          KeyField:0,   CalcLogic:"",   Format:"Ymd",         PointCount:0,   UpdateEdit:0,   InsertEdit:0 } ];
+                var cols = [ {Type:"Status",    Hidden:1, Width:10,   Align:"Center",  ColMerge:0,   SaveName:"ibflag",          KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+	             {Type:"Combo",     Hidden:0, Width:70,   Align:"Center",  ColMerge:0,   SaveName:"ownr_sub_sys_cd", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+	             {Type:"Text",      Hidden:0,  Width:60,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_id",      KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
+	             {Type:"Text",      Hidden:0,  Width:200,  Align:"Left",    ColMerge:0,   SaveName:"intg_cd_nm",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+	             {Type:"Text",      Hidden:0,  Width:50,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_len",     KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+	             {Type:"Combo",     Hidden:0, Width:100,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_tp_cd",   KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+	             {Type:"Text",      Hidden:0,  Width:150,  Align:"Left",    ColMerge:0,   SaveName:"mng_tbl_nm",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
+	             {Type:"Text",      Hidden:0,  Width:350,  Align:"Left",    ColMerge:0,   SaveName:"intg_cd_desc",    KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+	             {Type:"Combo",     Hidden:0, Width:40,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_use_flg", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+	             {Type:"Text",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:"cre_usr_id",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
+	             {Type:"Date",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:"cre_dt",          KeyField:0,   CalcLogic:"",   Format:"Ymd",         PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
+	             {Type:"Text",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:"upd_usr_id",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:0 },
+	             {Type:"Date",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:"upd_dt",          KeyField:0,   CalcLogic:"",   Format:"Ymd",         PointCount:0,   UpdateEdit:0,   InsertEdit:0 } ];
                          
                 InitColumns(cols);
             	var tmp=subSysCd.substring(1,subSysCd.length-1).split(", ");
             	
-            	SetColProperty(prefix+"ownr_sub_sys_cd", {ComboText:tmp.join("|"), ComboCode:tmp.join("|")} );
-            	SetColProperty(prefix+"intg_cd_tp_cd", {ComboText:"General Code|Table Code", ComboCode:"G|T"} );
-            	SetColProperty(prefix+"intg_cd_use_flg", {ComboText:"Y|N", ComboCode:"Y|N"} );
+            	SetColProperty("ownr_sub_sys_cd", {ComboText:tmp.join("|"), ComboCode:tmp.join("|")} );
+            	SetColProperty("intg_cd_tp_cd", {ComboText:"General Code|Table Code", ComboCode:"G|T"} );
+            	SetColProperty("intg_cd_use_flg", {ComboText:"Y|N", ComboCode:"Y|N"} );
             	SetEditable(1);
 	            SetSheetHeight(240);
             	
@@ -162,12 +163,12 @@ document.onclick=processButtonClick;
                 var headers = [ { Text:HeadTitle, Align:"Center"} ];
                 InitHeaders(headers, info);
 
-                var cols = [ {Type:"Status",    Hidden:1, Width:10,   Align:"Center",  ColMerge:0,   SaveName:prefix+"ibflag",              KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-			     {Type:"Text",      Hidden:0, Width:50,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_id",          KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
-			     {Type:"Text",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_val_ctnt",    KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
-			     {Type:"Text",      Hidden:0,  Width:200,  Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_val_dp_desc", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-			     {Type:"Text",      Hidden:0,  Width:600,  Align:"Left",    ColMerge:0,   SaveName:prefix+"intg_cd_val_desc",    KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-			     {Type:"Text",      Hidden:0,  Width:50,   Align:"Center",  ColMerge:0,   SaveName:prefix+"intg_cd_val_dp_seq",  KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 } ];
+                var cols = [ {Type:"Status",    Hidden:1, Width:10,   Align:"Center",  ColMerge:0,   SaveName:"ibflag",              KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+			     {Type:"Text",      Hidden:1, Width:50,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_id",          KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
+			     {Type:"Text",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_val_ctnt",    KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
+			     {Type:"Text",      Hidden:0,  Width:200,  Align:"Center",  ColMerge:0,   SaveName:"intg_cd_val_dp_desc", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+			     {Type:"Text",      Hidden:0,  Width:600,  Align:"Left",    ColMerge:0,   SaveName:"intg_cd_val_desc",    KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+			     {Type:"Text",      Hidden:0,  Width:50,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_val_dp_seq",  KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 } ];
                  
                 InitColumns(cols);
                 SetEditable(1);
@@ -199,7 +200,7 @@ document.onclick=processButtonClick;
                     if ( sheetObj.id == "sheet1" ) {
     					formObj.f_cmd.value=SEARCH01;
     					var arr1=new Array("sheet1_", "");
-    		        	var sParam1=FormQueryString(formObj)+ "&" + ComGetPrefixParam(arr1);
+    		        	var sParam1=FormQueryString(formObj);
     		        	/** GetSearchData
     		        	 * ObjId.GetSearchData(PageUrl, [Param])
     		        	 * Param:  Search parameter Query String, [Default=""]
@@ -221,7 +222,7 @@ document.onclick=processButtonClick;
                     } else if ( sheetObj.id == "sheet2" ) {
     					formObj.f_cmd.value=SEARCH02;
     					var arr2=new Array("sheet2_", "");
-    		        	var sParam2=FormQueryString(formObj)+ "&" + ComGetPrefixParam(arr2);
+    		        	var sParam2=FormQueryString(formObj);
      					var sXml2=sheetObj.GetSearchData("CLV_PRACTICE_002GS.do", sParam2);
     					if(sXml2.length>0){
     						sheetObj.LoadSearchData(sXml2,{Sync:1} );
@@ -229,7 +230,15 @@ document.onclick=processButtonClick;
                     }
                 break;
             case IBSAVE:       //SAVE
-                formObj.f_cmd.value=MULTI;
+            	var arrPrefix = "";
+            	if(sheetObj.id == "sheet1"){
+            		formObj.f_cmd.value=MULTI;
+            	}else{
+            		formObj.f_cmd.value = MULTI01;
+            	}
+                
+                var param = FormQueryString(formObj);
+                
         		//ObjId.DoSave(PageUrl, [Param], [Col] , [Quest], [UrlEncode], [Mode], [Delim])
         		/**
         		 *  [Param]:	 Parameter for saving, [Default=""]
@@ -239,35 +248,33 @@ document.onclick=processButtonClick;
         		 *  [Mode] : 	 How to combine strings for Query String, [Mode=1, Mode=2 (Default=1)]
         		 *  [Delim]: 	 Set the seperator for Mode 2, [Default "|"]
         		 */
-                sheetObj.DoSave("CLV_PRACTICE_002GS.do", FormQueryString(formObj), -1, false);
+                sheetObj.DoSave("CLV_PRACTICE_002GS.do", param,-1,false);
                 break;
 	 		case IBINSERT: // Row Add	
 	 			with (sheetObj) {
 		 			sheetObj.DataInsert(-1);
 		 			if ( sheetObj.id == "sheet1" ) {
 		 				sheetObjects[1].RemoveAll();
-		 				
 		 			}
 		 			if ( sheetObj.id == "sheet2" ) {
 		 				if( sheetObj.SearchRows()== 0 ){
-		 					SetCellValue(LastRow(), "sheet2_intg_cd_id",sheetObjects[0].GetCellValue(sheetObjects[0].GetSelectRow(),"sheet1_intg_cd_id"));
+		 					SetCellValue(LastRow(), "intg_cd_id",sheetObjects[0].GetCellValue(sheetObjects[0].GetSelectRow(),"intg_cd_id"));
 		 				} else {
-		 					SetCellValue(LastRow(), "sheet2_intg_cd_id",sheetObj.GetCellValue(1, "sheet2_intg_cd_id"));
+		 					SetCellValue(LastRow(), "intg_cd_id",sheetObj.GetCellValue(1, "intg_cd_id"));
 		 				}
 		 			}
 		 			return true;
 	 			}
  		 		break;	
             case MODIFY01: // Row Delete
-            	var sheetprefix=sheetObj.id+"_";
             	var j=sheetObj.GetSelectRow();
-            	sheetObj.SetCellValue(j, sheetprefix+"ibflag","D");
+            	sheetObj.SetCellValue(j, "ibflag","D");
             	sheetObj.SetRowHidden(j,1);
             	if( sheetObj.id == "sheet1" ){
-            		var codeid=sheetObj.GetCellValue(j, "sheet1_intg_cd_id");
+            		var codeid=sheetObj.GetCellValue(j, "intg_cd_id");
             		if( sheetObjects[1].RowCount()> 0 && codeid==document.form1.codeid.value){
             		      for(i=sheetObjects[1].LastRow();i>0;i--){
-            		    	  sheetObjects[1].SetCellValue(i, "sheet2_ibflag","D");
+            		    	  sheetObjects[1].SetCellValue(i, "ibflag","D");
             		    	  sheetObjects[1].SetRowHidden(i,1);
             		        }
             		}
@@ -284,8 +291,8 @@ document.onclick=processButtonClick;
      * @param Col
      */
     function sheet1_OnDblClick(sheetObj, Row, Col) {
-    	if(sheetObj.GetCellValue(Row,"sheet1_ibflag") !== "I"){
-        	ComSetObjValue(document.form1.codeid, sheetObj.GetCellValue(Row, "sheet1_intg_cd_id"));
+    	if(sheetObj.GetCellValue(Row,"ibflag") !== "I"){
+        	ComSetObjValue(document.form1.codeid, sheetObj.GetCellValue(Row, "intg_cd_id"));
         	doActionIBSheet(sheetObjects[1],document.form1,IBSEARCH);
     	}
     }
@@ -315,17 +322,30 @@ document.onclick=processButtonClick;
      * @param Row
      * @param Col
      */
-    function sheet2_OnChange(sheetObj,Row,Col){
-   	 if(Col == 2){
-			var code=sheetObj.GetCellValue(Row, Col);
-   	    for(var int=1; int < sheetObj.RowCount(); int++) {
-			var orlcode=sheetObj.GetCellValue(int, Col);
-				if(code != '' && int != Row && code == orlcode){
-   				 ComShowCodeMessage('COM131302',code);
-   				 sheetObj.SetCellValue(Row, Col,"");
-   				 return;
-   			 }
-   		 }
-   	 }
-   	 
+    function sheet2_OnChange(sheetObj, Row, Col) {
+	var formObj = document.form1;
+	var colName = sheetObj.ColSaveName(Col);
+	if (Col == 2) {
+		var code = sheetObj.GetCellValue(Row, Col);
+		for (var int = 1; int < sheetObj.RowCount(); int++) {
+			var orlcode = sheetObj.GetCellValue(int, Col);
+			if (code != '' && int != Row && code == orlcode) {
+				ComShowCodeMessage('COM131302', code);
+				sheetObj.SetCellValue(Row, Col, "");
+				return;
+			}
+		}
+	}
+
+}
+    /**
+	 * After Save, Do Search
+	 * 
+	 * @param sheetObj
+	 * @param Row
+	 * @param Col
+	 */
+    function sheet1_OnSaveEnd(sheetObj,Row,Col){
+    	doActionIBSheet(sheetObj,document.form1,IBSEARCH);
+
     }

@@ -54,8 +54,9 @@ public class CLV_PRACTICE_002HTMLAction extends HTMLActionSupport {
 		ClvPractice002Event event = new ClvPractice002Event();
 		//Insert Delete Update when Performed in FE
 		if(command.isCommand(FormCommand.MULTI)) {
-			event.setCodeMgmtCondVOS((CodeMgmtCondVO[])getVOs(request, CodeMgmtCondVO.class,"sheet1_"));
-			event.setCodeMgmtDTLVOs((CodeMgmtDTLVO[])getVOs(request, CodeMgmtDTLVO.class,"sheet2_"));
+			event.setCodeMgmtCondVOS((CodeMgmtCondVO[])getVOs(request, CodeMgmtCondVO.class));
+		}else if(command.isCommand(FormCommand.MULTI01)){
+			event.setCodeMgmtDTLVOs((CodeMgmtDTLVO[])getVOs(request, CodeMgmtDTLVO.class));
 		}
 		//Search Code Master
 		else if(command.isCommand(FormCommand.SEARCH01)) {

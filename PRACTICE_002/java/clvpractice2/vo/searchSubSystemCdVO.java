@@ -35,11 +35,11 @@ import com.clt.framework.component.util.JSPUtil;
  * @see AbstractValueObject
  */
 
-public class searchSubSystemCdVO extends AbstractValueObject {
+public class SearchSubSystemCdVO extends AbstractValueObject {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Collection<searchSubSystemCdVO> models = new ArrayList<searchSubSystemCdVO>();
+	private Collection<SearchSubSystemCdVO> models = new ArrayList<SearchSubSystemCdVO>();
 	
 	/* VO Data Value( C:Creation, U:Update, D:Delete ) */
 	private String ibflag = null;
@@ -54,9 +54,9 @@ public class searchSubSystemCdVO extends AbstractValueObject {
 	/*	테이블 컬럼에 대응되는 멤버변수를 저장하는 Hashtable */
 	private HashMap<String, String> hashFields = new LinkedHashMap<String, String>();
 	
-	public searchSubSystemCdVO() {}
+	public SearchSubSystemCdVO() {}
 
-	public searchSubSystemCdVO(String ibflag, String pagerows, String subSysCd) {
+	public SearchSubSystemCdVO(String ibflag, String pagerows, String subSysCd) {
 		this.ibflag = ibflag;
 		this.subSysCd = subSysCd;
 		this.pagerows = pagerows;
@@ -156,7 +156,7 @@ public class searchSubSystemCdVO extends AbstractValueObject {
 	 * @param request
 	 * @return searchSubSystemCdVO[]
 	 */
-	public searchSubSystemCdVO[] fromRequestGrid(HttpServletRequest request) {
+	public SearchSubSystemCdVO[] fromRequestGrid(HttpServletRequest request) {
 		return fromRequestGrid(request, "");
 	}
 
@@ -166,8 +166,8 @@ public class searchSubSystemCdVO extends AbstractValueObject {
 	 * @param prefix
 	 * @return searchSubSystemCdVO[]
 	 */
-	public searchSubSystemCdVO[] fromRequestGrid(HttpServletRequest request, String prefix) {
-		searchSubSystemCdVO model = null;
+	public SearchSubSystemCdVO[] fromRequestGrid(HttpServletRequest request, String prefix) {
+		SearchSubSystemCdVO model = null;
 		
 		String[] tmp = request.getParameterValues(prefix + "ibflag");
   		if(tmp == null)
@@ -181,7 +181,7 @@ public class searchSubSystemCdVO extends AbstractValueObject {
 			String[] pagerows = (JSPUtil.getParameter(request, prefix	+ "pagerows", length));
 			
 			for (int i = 0; i < length; i++) {
-				model = new searchSubSystemCdVO();
+				model = new SearchSubSystemCdVO();
 				if (ibflag[i] != null)
 					model.setIbflag(ibflag[i]);
 				if (subSysCd[i] != null)
@@ -201,8 +201,8 @@ public class searchSubSystemCdVO extends AbstractValueObject {
 	 * VO 배열을 반환
 	 * @return searchSubSystemCdVO[]
 	 */
-	public searchSubSystemCdVO[] getsearchSubSystemCdVOs(){
-		searchSubSystemCdVO[] vos = (searchSubSystemCdVO[])models.toArray(new searchSubSystemCdVO[models.size()]);
+	public SearchSubSystemCdVO[] getsearchSubSystemCdVOs(){
+		SearchSubSystemCdVO[] vos = (SearchSubSystemCdVO[])models.toArray(new SearchSubSystemCdVO[models.size()]);
 		return vos;
 	}
 	
