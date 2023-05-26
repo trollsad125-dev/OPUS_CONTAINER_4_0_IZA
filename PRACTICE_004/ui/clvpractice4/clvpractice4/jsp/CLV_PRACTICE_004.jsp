@@ -50,7 +50,7 @@
 	}
 %>
 <script language="javascript">
-	var rlanCombo = "|<%=rlaneCds%>";
+	var rlanCombo = "<%=rlaneCds%>";
 	var crrCombo = "All|<%=crrCds%>";
 	var crrComboIns = "<%=crrCds%>";
 	function setupPage(){

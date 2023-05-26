@@ -29,10 +29,12 @@
 	String strErrMsg = "";						
 
 	Logger log = Logger.getLogger("com.clt.apps.CLVTraining.ErrMsgMgmt");
-
+	String strUsr_id = "";
+	String strUsr_nm = "";
 	try {
 	   	SignOnUserAccount account=(SignOnUserAccount)session.getAttribute(CommonWebKeys.SIGN_ON_USER_ACCOUNT);
-
+		strUsr_id =	account.getUsr_id();
+		strUsr_nm = account.getUsr_nm();
 		event = (ClvTraining001Event)request.getAttribute("Event");
 		serverException = (Exception)request.getAttribute(CommonWebKeys.EXCEPTION_OBJECT);
 		

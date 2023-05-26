@@ -6,15 +6,21 @@
 *@version    : 1.0
 *@since      : 2023/04/05
 =========================================================*/
-var sheetObjects=new Array();
-var sheetCnt=0;
-document.onclick=processButtonClick;
 msgs['PRC00002']="{?msg1} code is invalid !";
 msgs['PRC00005']="Do you want to save?";
 
-    function processButtonClick(){
+//Common Global variable
+var sheetObjects=new Array();
+var sheetCnt=0;
+document.onclick=processButtonClick;
 
-         var formObject=document.form1;
+   /**
+    * When user clicked on Client Side
+    * 
+    */
+   function processButtonClick(){
+
+         var formObject=document.form;
     	try {
     		var srcName=ComGetEvent("name");
             switch(srcName) {
@@ -31,7 +37,6 @@ msgs['PRC00005']="Do you want to save?";
                   		  doActionIBSheet(sheetObjects[1],formObject,IBSAVE);
                   	  }
                 	}
-
         	        break;
         			/*****************grid button ************************/				
 				case "btn_rowadd_mst": //add row  
@@ -64,6 +69,7 @@ msgs['PRC00005']="Do you want to save?";
     }
     /**
      * JSP will call loadPage
+     * 
      */
     function loadPage() {
         for(i=0;i<sheetObjects.length;i++){
@@ -83,7 +89,7 @@ msgs['PRC00005']="Do you want to save?";
     }
 
     /**
-     * init Sheet
+     * Init Sheet
      * 
      * @param sheetObj
      * @param sheetNo
@@ -95,7 +101,6 @@ msgs['PRC00005']="Do you want to save?";
         	with(sheetObj){
                
         		var HeadTitle="|SubSystem|Cd ID|Cd Name|Length|Cd Type|Table Name|Description Remark|Flag|Create User|Create Date|Update User|Update Date" ;
-                var prefix="sheet1_";
                 /** SearchMode :
                  *  2 : LazyMode Get All Data and load it on screen based on Page property and scroll
                  *  0 : Get All Data and load it on screen
@@ -121,7 +126,7 @@ msgs['PRC00005']="Do you want to save?";
                 var cols = 
                [ {Type:"Status",    Hidden:1,  Width:10,   Align:"Center",  ColMerge:0,   SaveName:"ibflag",          KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
 	             {Type:"Combo",     Hidden:0,  Width:70,   Align:"Center",  ColMerge:0,   SaveName:"ownr_sub_sys_cd", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-	             {Type:"Text",      Hidden:0,  Width:60,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_id",      KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
+	             {Type:"Text",      Hidden:0,  Width:60,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_id",      KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1, EditLen:20 },
 	             {Type:"Text",      Hidden:0,  Width:200,  Align:"Left",    ColMerge:0,   SaveName:"intg_cd_nm",      KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
 	             {Type:"Text",      Hidden:0,  Width:50,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_len",     KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
 	             {Type:"Combo",     Hidden:0,  Width:100,  Align:"Center",  ColMerge:0,   SaveName:"intg_cd_tp_cd",   KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
@@ -149,7 +154,6 @@ msgs['PRC00005']="Do you want to save?";
         	with(sheetObj){
 
                 var HeadTitle="|Cd ID|Cd Val|Display Name|Description Remark|Order" ;
-                var prefix="sheet2_";
                 /** SearchMode :
                  *  2 : LazyMode Get All Data and load it on screen based on Page property and scroll
                  *  0 : Get All Data and load it on screen
@@ -170,8 +174,8 @@ msgs['PRC00005']="Do you want to save?";
 
                 var cols = 
                [ {Type:"Status",    Hidden:1,  Width:10,   Align:"Center",  ColMerge:0,   SaveName:"ibflag",              KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
-			     {Type:"Text",      Hidden:1,  Width:50,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_id",          KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
-			     {Type:"Text",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_val_ctnt",    KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1 },
+			     {Type:"Text",      Hidden:1,  Width:50,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_id",          KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
+			     {Type:"Text",      Hidden:0,  Width:80,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_val_ctnt",    KeyField:1,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:0,   InsertEdit:1, EditLen:20 },
 			     {Type:"Text",      Hidden:0,  Width:200,  Align:"Center",  ColMerge:0,   SaveName:"intg_cd_val_dp_desc", KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
 			     {Type:"Text",      Hidden:0,  Width:600,  Align:"Left",    ColMerge:0,   SaveName:"intg_cd_val_desc",    KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 },
 			     {Type:"Text",      Hidden:0,  Width:50,   Align:"Center",  ColMerge:0,   SaveName:"intg_cd_val_dp_seq",  KeyField:0,   CalcLogic:"",   Format:"",            PointCount:0,   UpdateEdit:1,   InsertEdit:1 } ];
@@ -185,7 +189,7 @@ msgs['PRC00005']="Do you want to save?";
     }
     
     /**
-     * Resize Sheet
+     * Resize Sheet 2
      * 
      */
     function resizeSheet(){
@@ -200,19 +204,17 @@ msgs['PRC00005']="Do you want to save?";
      * @param sAction
      */
     function doActionIBSheet(sheetObj,formObj,sAction) {
-        sheetObj.ShowDebugMsg(false);
         switch(sAction) {
            case IBSEARCH:      //Search
                     if ( sheetObj.id == "sheet1" ) {
+                    	ComOpenWait(true);
     					formObj.f_cmd.value=SEARCH01;
-    					var arr1=new Array("sheet1_", "");
     		        	var sParam1=FormQueryString(formObj);
     		        	/** GetSearchData
     		        	 * ObjId.GetSearchData(PageUrl, [Param])
     		        	 * Param:  Search parameter Query String, [Default=""]
     		        	 */
      					var sXml1=sheetObj.GetSearchData("CLV_PRACTICE_002GS.do", sParam1);
-     					ComOpenWait(true);
     					if(sXml1.length>0){
     						/**LoadSearchData
     						 * ObjId.LoadSearchData(Content, [Opt])
@@ -221,13 +223,12 @@ msgs['PRC00005']="Do you want to save?";
     						 * Opt.Sync  : Sync search or not, Default= 0
     						 */
     						sheetObj.LoadSearchData(sXml1,{Sync:1} );
-    						ComOpenWait(false);
     					}
     					sheetObjects[1].RemoveAll();
     					formObj.codeid.value='';
+    					ComOpenWait(false);
                     } else if ( sheetObj.id == "sheet2" ) {
     					formObj.f_cmd.value=SEARCH02;
-    					var arr2=new Array("sheet2_", "");
     		        	var sParam2=FormQueryString(formObj);
      					var sXml2=sheetObj.GetSearchData("CLV_PRACTICE_002GS.do", sParam2);
     					if(sXml2.length>0){
@@ -236,7 +237,6 @@ msgs['PRC00005']="Do you want to save?";
                     }
                 break;
             case IBSAVE:       //SAVE
-            	var arrPrefix = "";
             	if(sheetObj.id == "sheet1"){
             		formObj.f_cmd.value=MULTI;
             	}else{
@@ -258,11 +258,17 @@ msgs['PRC00005']="Do you want to save?";
                 break;
 	 		case IBINSERT: // Row Add	
 	 			with (sheetObj) {
-		 			sheetObj.DataInsert(-1);
+
 		 			if ( sheetObj.id == "sheet1" ) {
+		 				sheetObj.DataInsert(-1);
 		 				sheetObjects[1].RemoveAll();
 		 			}
 		 			if ( sheetObj.id == "sheet2" ) {
+		 				if(sheetObjects[0].GetCellValue(sheetObjects[0].GetSelectRow(),"intg_cd_id") == ""){
+		 					ComShowMessage("The Master Table Cd Id is Null, Please fill it!");
+		 					return;
+		 				}
+		 				sheetObj.DataInsert(-1);
 		 				if( sheetObj.SearchRows()== 0 ){
 		 					SetCellValue(LastRow(), "intg_cd_id",sheetObjects[0].GetCellValue(sheetObjects[0].GetSelectRow(),"intg_cd_id"));
 		 				} else {
@@ -278,7 +284,7 @@ msgs['PRC00005']="Do you want to save?";
             	sheetObj.SetRowHidden(j,1);
             	if( sheetObj.id == "sheet1" ){
             		var codeid=sheetObj.GetCellValue(j, "intg_cd_id");
-            		if( sheetObjects[1].RowCount()> 0 && codeid==document.form1.codeid.value){
+            		if( sheetObjects[1].RowCount()> 0 && codeid==document.form.codeid.value){
             		      for(i=sheetObjects[1].LastRow();i>0;i--){
             		    	  sheetObjects[1].SetCellValue(i, "ibflag","D");
             		    	  sheetObjects[1].SetRowHidden(i,1);
@@ -298,17 +304,19 @@ msgs['PRC00005']="Do you want to save?";
      */
     function sheet1_OnDblClick(sheetObj, Row, Col) {
     	if(sheetObj.GetCellValue(Row,"ibflag") !== "I"){
-        	ComSetObjValue(document.form1.codeid, sheetObj.GetCellValue(Row, "intg_cd_id"));
-        	doActionIBSheet(sheetObjects[1],document.form1,IBSEARCH);
+        	ComSetObjValue(document.form.codeid, sheetObj.GetCellValue(Row, "intg_cd_id"));
+        	doActionIBSheet(sheetObjects[1],document.form,IBSEARCH);
     	}
     }
     /**
      * Check Validate in Client Side Sheet 1
+     * 
      * @param sheetObj
      * @param Row
      * @param Col
      */
     function sheet1_OnChange(sheetObj,Row,Col){
+     var colName=sheetObj.ColSaveName(Col);
    	 if(Col == 2){
 			var code=sheetObj.GetCellValue(Row, Col);
    	    for(var int=1; int < sheetObj.RowCount(); int++) {
@@ -320,16 +328,17 @@ msgs['PRC00005']="Do you want to save?";
    			 }
    		 }
    	 }
-   	 
+
     }
     /**
      * Check Validate in Client Side Sheet 2
+     * 
      * @param sheetObj
      * @param Row
      * @param Col
      */
     function sheet2_OnChange(sheetObj, Row, Col) {
-	var formObj = document.form1;
+	var formObj = document.form;
 	var colName = sheetObj.ColSaveName(Col);
 	if (Col == 2) {
 		var code = sheetObj.GetCellValue(Row, Col);
@@ -339,19 +348,14 @@ msgs['PRC00005']="Do you want to save?";
 				ComShowCodeMessage('COM131302', code);
 				sheetObj.SetCellValue(Row, Col, "");
 				return;
+				}
 			}
 		}
-	}
-
-}
-    /**
-	 * After Save, Do Search
-	 * 
-	 * @param sheetObj
-	 * @param Row
-	 * @param Col
-	 */
-    function sheet1_OnSaveEnd(sheetObj,Row,Col){
-    	doActionIBSheet(sheetObj,document.form1,IBSEARCH);
-
     }
+	/**
+	 * Sheet 1 When After Save 
+	 * 
+	 */
+	function sheet1_OnSaveEnd(sheetObj) { 
+		doActionIBSheet(sheetObj, document.form, IBSEARCH);
+	}

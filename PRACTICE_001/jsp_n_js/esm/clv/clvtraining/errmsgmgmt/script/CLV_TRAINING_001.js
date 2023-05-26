@@ -11,11 +11,13 @@
 * 1.0 Creation
 =========================================================*/
 msgs["PRC00001"] = "No Column to download";
+
 	var sheetObjects=new Array();
 	var sheetCnt=0;
     document.onclick=processButtonClick;
     /**
      * Set Sheet Object into SheetObjects
+     * 
      * @param sheet_obj
      * @returns
      */
@@ -24,13 +26,15 @@ msgs["PRC00001"] = "No Column to download";
      }
     /**
      * resize Sheet
+     * 
      * @returns
      */
     function resizeSheet(){
-      	         ComResizeSheet(sheetObjects[0]);
+    	ComResizeSheet(sheetObjects[0]);
       }
      /**
       * Load Page and Call IBSearch
+      * 
       * @returns
       */
      function loadPage() {
@@ -41,10 +45,11 @@ msgs["PRC00001"] = "No Column to download";
 			doActionIBSheet(sheetObjects[i],document.form,IBSEARCH)
 		}
  	}
-/**
- * Process when Click any button
- * @returns
- */
+	/**
+	 * Process when Click any button
+	 * 
+	 * @returns
+	 */
     function processButtonClick(){
         var sheetObject1=sheetObjects[0];
         /*******************************************************/
@@ -75,12 +80,13 @@ msgs["PRC00001"] = "No Column to download";
    		}
    	}
     }
-/**
- * init Sheet
- * @param sheetObj
- * @param sheetNo
- * @returns
- */
+	/**
+	 * init Sheet
+	 * 
+	 * @param sheetObj
+	 * @param sheetNo
+	 * @returns
+	 */
     function initSheet(sheetObj,sheetNo) {
         var cnt=0;
 		var sheetID=sheetObj.id;
@@ -124,13 +130,13 @@ msgs["PRC00001"] = "No Column to download";
         }
     }
 
-/**
- * Do Action IBSHEET 
- * @param sheetObj
- * @param formObj
- * @param sAction
- * @returns
- */
+	/**
+	 * Do Action IBSHEET 
+	 * @param sheetObj
+	 * @param formObj
+	 * @param sAction
+	 * @returns
+	 */
     function doActionIBSheet(sheetObj,formObj,sAction) {
         switch(sAction) {
 		case IBSEARCH:      //Search

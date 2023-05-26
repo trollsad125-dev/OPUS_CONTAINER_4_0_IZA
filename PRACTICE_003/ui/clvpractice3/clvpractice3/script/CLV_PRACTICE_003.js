@@ -10,7 +10,10 @@
 * 2023.05.11 
 * 1.0 Creation
 =========================================================*/
-    
+msgs['PRC00002']="'To date' must be later than 'From date'.";
+msgs['PRC00001']="There is any error in script.  Please check it again.";
+msgs['PRC00003']= "Year Month over 3 months, do you really want to get data?";
+
 // common global variable
 var sheetObjects = new Array();
 var sheetCnt = 0;
@@ -23,9 +26,6 @@ var summaryFlag = 0;
 var detailFlag=0
 var ROWMARK = "|";
 var FIELDMARK=",";
-msgs['PRC00002']="'To date' must be later than 'From date'.";
-msgs['PRC00001']="There is any error in script.  Please check it again.";
-msgs['PRC00003']= "Year Month over 3 months, do you really want to get data?";
 
 //Event handler processing by button click event */
 document.onclick = processButtonClick;
@@ -101,6 +101,7 @@ function processButtonClick() {
 }
 /**
  * rest form when click new button
+ * 
  * @param formObj
  */
 function resetForm(formObj){
@@ -111,6 +112,7 @@ function resetForm(formObj){
 /**
  * registering IBSheet Object as list adding process for list in case of needing
  * batch processing with other items defining list on the top of source
+ * 
  * @param sheet_obj
  */
 function setSheetObject(sheet_obj) {
@@ -119,7 +121,7 @@ function setSheetObject(sheet_obj) {
 }
 
 /**
- * Load after everything done using onLoad
+ * Get Current Sheet
  */
 function getCurrentSheet(){
     var sheetObj=null;
@@ -136,6 +138,7 @@ function getCurrentSheet(){
  * registering IBCombo Object as list param : combo_obj adding process for list
  * in case of needing batch processing with other items defining list on the top
  * of source
+ * 
  * @param combo_obj
  */
 function setComboObject(combo_obj) {
@@ -145,6 +148,7 @@ function setComboObject(combo_obj) {
  * registering IBTab Object as list
  * adding process for list in case of needing batch processing with other items
  * defining list on the top of source
+ * 
  * @param tab_obj
  */
 function setTabObject(tab_obj){
@@ -153,6 +157,7 @@ function setTabObject(tab_obj){
 /**
  * initializing Tab
  * setting Tab items
+ * 
  * @param tabObj
  * @param tabNo
  */
@@ -169,6 +174,7 @@ function initTab(tabObj , tabNo) {
 /**
  * Event when clicking Tab
  * activating selected tab items
+ * 
  * @param tabObj
  * @param nItem
  */
@@ -274,18 +280,19 @@ function loadPage() {
 /**
  * setting sheet initial values and header param : sheetObj, sheetNo adding case
  * as numbers of counting sheets
+ * 
  * @param sheetObj
  * @param sheetNo
  */
 function initSheet(sheetObj, sheetNo) {
 	var cnt = 0;
+	//Init date_fr and date_to
 	initPeriod();
 	switch (sheetObj.id) {
 	 case "t1sheet1": // t1sheet1 init   
          with(sheetObj){
              var HeadTitle1="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Customer/S.Provider|Customer/S.Provider";
              var HeadTitle2="|Partner|Lane|Invoice No|Slip No|Approved|Curr.|Revenue|Expense|Code|Name";
-             var headCount=ComCountHeadTitle(HeadTitle1);
              /** SearchMode :
               *  2 : LazyMode Get All Data and load it on screen based on Page property and scroll
               *  0 : Get All Data and load it on screen
@@ -348,7 +355,6 @@ function initSheet(sheetObj, sheetNo) {
         //FrozenCol: Froze the Column in Sheet, it can't affect by horizontal scroll
         //Page: The Rows defined in 1 Page (Default:20)
         //DataRowMerge: Use with MergeSheet if the data of the row 1 and row 2 is duplicate data -> Merged
-        var headCount=ComCountHeadTitle(HeadTitle1);
         
         SetConfig( { SearchMode:2, MergeSheet:5 } );
         //HeaderCheck: Use for tick all in header
@@ -399,6 +405,7 @@ function initSheet(sheetObj, sheetNo) {
 
 /**
  * Do Action in IB Sheet 
+ * 
  * @param sheetObj
  * @param formObj
  * @param sAction
@@ -795,6 +802,7 @@ function showSumTotal(sheetObj,prefix,currPos,revPos,expPos){
 }
 /**
  * Calculate Total when t2sheet1 end
+ * 
  * @param sheetObj
  */
 function t2sheet1_OnSearchEnd(sheetObj){
@@ -803,6 +811,7 @@ function t2sheet1_OnSearchEnd(sheetObj){
 
 /**
  * Calculate Total when t1sheet1 end
+ * 
  * @param sheetObj
  */
 function t1sheet1_OnSearchEnd(sheetObj){

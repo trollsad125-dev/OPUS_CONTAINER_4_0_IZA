@@ -55,7 +55,7 @@
 	}
 </script>
 
-<form name="form1">
+<form name="form">
 <input type="hidden" name="f_cmd">
 <input type="hidden" name="codeid">
 

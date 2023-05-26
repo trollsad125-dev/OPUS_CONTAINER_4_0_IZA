@@ -81,6 +81,7 @@ function processButtonClick() {
 }
 /**
  * reset form when click new button
+ * 
  * @param formObj
  */
 function resetForm(formObj){
@@ -91,6 +92,7 @@ function resetForm(formObj){
 /**
  * registering IBSheet Object as list adding process for list in case of needing
  * batch processing with other items defining list on the top of source
+ * 
  * @param sheet_obj
  */
 function setSheetObject(sheet_obj) {
@@ -100,6 +102,7 @@ function setSheetObject(sheet_obj) {
  * registering IBCombo Object as list param : combo_obj adding process for list
  * in case of needing batch processing with other items defining list on the top
  * of source
+ * 
  * @param combo_obj
  */
 function setComboObject(combo_obj) {
@@ -107,6 +110,7 @@ function setComboObject(combo_obj) {
 }
 /**
  * Load after everything done using onLoad
+ * 
  */
 function loadPage() {
 	//generate Grid Layout
@@ -126,6 +130,7 @@ function loadPage() {
 
 /**
  * setting Combo basic info param : comboObj, comboNo initializing sheet
+ * 
  * @param comboObj
  * @param comboNo
  */
@@ -185,6 +190,7 @@ function s_jo_crr_cd_OnCheckClick(comboObj, index, code) {
 /**
  * setting sheet initial values and header param : sheetObj, sheetNo adding case
  * as numbers of counting sheets
+ * 
  * @param sheetObj
  * @param sheetNo
  */
@@ -229,9 +235,9 @@ function initSheet(sheetObj, sheetNo) {
 	             { Type : "Text",     Hidden : 0, Width : 70,  Align : "Center", ColMerge : 0, SaveName : "trd_cd",      KeyField : 0, Format : "", UpdateEdit : 1, InsertEdit : 1, EditLen: 3 }, 
 	             { Type : "Combo",    Hidden : 0, Width : 70,  Align : "Center", ColMerge : 0, SaveName : "delt_flg",    KeyField : 0, Format : "", UpdateEdit : 1, InsertEdit : 1}, 
 	             { Type : "Text",     Hidden : 0, Width : 150, Align : "Center", ColMerge : 0, SaveName : "cre_dt",      KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0 }, 
-	             { Type : "Text",     Hidden : 0, Width : 180, Align : "Center", ColMerge : 0, SaveName : "cre_usr_id",  KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0 }, 
+	             { Type : "Text",     Hidden : 0, Width : 180, Align : "Left", ColMerge : 0, SaveName : "cre_usr_id",  KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0 }, 
 	             { Type : "Text",     Hidden : 0, Width : 150, Align : "Center", ColMerge : 0, SaveName : "upd_dt",      KeyField : 0, Format : "", UpdateEdit : 0,InsertEdit : 0 }, 
-	             { Type : "Text",     Hidden : 0, Width : 180, Align : "Center", ColMerge : 0, SaveName : "upd_usr_id",  KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0}
+	             { Type : "Text",     Hidden : 0, Width : 180, Align : "Left", ColMerge : 0, SaveName : "upd_usr_id",  KeyField : 0, Format : "", UpdateEdit : 0, InsertEdit : 0}
 	             ];
 
 			InitColumns(cols);
@@ -252,6 +258,7 @@ function initSheet(sheetObj, sheetNo) {
 
 /**
  * Resize Sheet
+ * 
  */
 function resizeSheet(){
     ComResizeSheet(sheetObjects[0]);
@@ -357,6 +364,7 @@ function validateForm(sheetObj, formObj, sAction) {
 
 /**
  * handling when sheet1 on change
+ * 
  * @param sheetObj
  * @param Row
  * @param Col

@@ -40,7 +40,7 @@
 			strErrMsg = new ErrorHandler(serverException).loadPopupMessage();
 		}
 
-		// 초기화면 로딩시 서버로부터 가져온 데이터 추출하는 로직추가 ..
+		//Event Response from Server Side
 		GeneralEventResponse eventResponse = (GeneralEventResponse) request.getAttribute("EventResponse");
 		joCrrCdComboItems  	= eventResponse.getETCData("jo_crr_cds");
 		currencyData = eventResponse.getETCData("currency_data");
@@ -96,8 +96,9 @@
 					<col width="100" />						
 					<col width="70" />	
 					<col width="100" />				
-					<col width="70" />					
-					<col width="*" />				
+					<col width="70" />
+					<col width="70" />
+					<col width="80" />							
 			   </colgroup> 
 			   <tbody>
 			   		<tr>
