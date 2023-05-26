@@ -1,16 +1,16 @@
 /*=========================================================
 *Copyright(c) 2023 CyberLogitec
-*@FileName : CLVPractice2DBDAOsearchSubSystemCdRSQL.java
+*@FileName : CLVPractice2DBDAOSearchSubSystemCdRSQL.java
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.05.05
+*@LastModifyDate : 2023.05.26
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.05.05 
+* 2023.05.26 
 * 1.0 Creation
 =========================================================*/
-package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration ;
+package com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration;
 
 import java.util.HashMap;
 import org.apache.log4j.Logger;
@@ -34,15 +34,15 @@ public class CLVPractice2DBDAOSearchSubSystemCdRSQL implements ISQLTemplate{
 	
 	/**
 	  * <pre>
-	  * CLVPractice2DBDAOsearchSubSystemCd
+	  * CLVPractice2DBDAOSearchSubSystemCd
 	  * </pre>
 	  */
 	public CLVPractice2DBDAOSearchSubSystemCdRSQL(){
 		setQuery();
 		params = new HashMap<String,String[]>();
 		query.append("/*").append("\n"); 
-		query.append("Path : com.clt.apps.opus.esm.clv.clvpractice2.clvpractice2.integration ").append("\n"); 
-		query.append("FileName : CLVPractice2DBDAOsearchSubSystemCdRSQL").append("\n"); 
+		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration").append("\n"); 
+		query.append("FileName : CLVPractice2DBDAOSearchSubSystemCdRSQL").append("\n"); 
 		query.append("*/").append("\n"); 
 	}
 	
@@ -58,9 +58,10 @@ public class CLVPractice2DBDAOSearchSubSystemCdRSQL implements ISQLTemplate{
 	 * Query 생성
 	 */
 	public void setQuery(){
-		query.append("SELECT INTG_CD_VAL_CTNT SUB_SYS_CD" ).append("\n"); 
-		query.append("FROM COM_INTG_CD_DTL" ).append("\n"); 
-		query.append("ORDER BY INTG_CD_VAL_DP_DESC" ).append("\n"); 
+		query.append("SELECT OWNR_SUB_SYS_CD SUB_SYS_CD" ).append("\n"); 
+		query.append("FROM COM_INTG_CD" ).append("\n"); 
+		query.append("GROUP BY OWNR_SUB_SYS_CD" ).append("\n"); 
+		query.append("ORDER BY OWNR_SUB_SYS_CD" ).append("\n"); 
 
 	}
 }

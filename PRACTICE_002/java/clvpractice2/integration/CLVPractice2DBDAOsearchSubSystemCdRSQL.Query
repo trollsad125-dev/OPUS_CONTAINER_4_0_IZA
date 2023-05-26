@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sqls>
 	<querys>
-		<query name="CLVPractice2DBDAOsearchSubSystemCdRSQL">
-			<desc><![CDATA[CLVPractice2DBDAOsearchSubSystemCd]]></desc>
+		<query name="CLVPractice2DBDAOSearchSubSystemCdRSQL">
+			<desc><![CDATA[CLVPractice2DBDAOSearchSubSystemCd]]></desc>
 			<sql><![CDATA[
-SELECT INTG_CD_VAL_CTNT SUB_SYS_CD
-FROM COM_INTG_CD_DTL
-ORDER BY INTG_CD_VAL_DP_DESC			]]></sql>
+SELECT OWNR_SUB_SYS_CD SUB_SYS_CD
+FROM COM_INTG_CD
+GROUP BY OWNR_SUB_SYS_CD
+ORDER BY OWNR_SUB_SYS_CD			]]></sql>
 			<params>
 			</params>
 		</query>
