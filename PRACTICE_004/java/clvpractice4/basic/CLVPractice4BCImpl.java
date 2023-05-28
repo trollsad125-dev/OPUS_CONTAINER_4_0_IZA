@@ -96,18 +96,18 @@ public class CLVPractice4BCImpl extends BasicCommandSupport implements CLVPracti
 						//Throw DAOException with ERR12357 
 						throw new DAOException(new ErrorHandler("ERR12357",new String[]{jooCrrCd,rLaneCd}).getMessage());
 					}else{
-						dbDao.addmultiJooCarrierS(insertVoList);
+						dbDao.addMultiJooCarrierS(insertVoList);
 					}
 				}
 
 			}
 			
 			if ( updateVoList.size() > 0 ) {
-				dbDao.modifymultiJooCarrierS(updateVoList);
+				dbDao.modifyMultiJooCarrierS(updateVoList);
 			}
 			
 			if ( deleteVoList.size() > 0 ) {
-				dbDao.removemultiJooCarrierS(deleteVoList);
+				dbDao.removeMultiJooCarrierS(deleteVoList);
 			}
 		} catch(DAOException ex) {
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);

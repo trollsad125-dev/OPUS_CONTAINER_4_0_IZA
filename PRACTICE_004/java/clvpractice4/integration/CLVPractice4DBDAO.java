@@ -85,7 +85,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public void addmultiJooCarrier(JooCarrierVO jooCarrierVO) throws DAOException,Exception {
+	public void addMultiJooCarrier(JooCarrierVO jooCarrierVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
 		//velocity parameter
@@ -117,7 +117,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int modifymultiJooCarrier(JooCarrierVO jooCarrierVO) throws DAOException,Exception {
+	public int modifyMultiJooCarrier(JooCarrierVO jooCarrierVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
 		//velocity parameter
@@ -152,7 +152,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int removemultiJooCarrier(JooCarrierVO jooCarrierVO) throws DAOException,Exception {
+	public int removeMultiJooCarrier(JooCarrierVO jooCarrierVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
 		//velocity parameter
@@ -187,7 +187,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] addmultiJooCarrierS(List<JooCarrierVO> jooCarrierVO) throws DAOException,Exception {
+	public int[] addMultiJooCarrierS(List<JooCarrierVO> jooCarrierVO) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
@@ -215,7 +215,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] modifymultiJooCarrierS(List<JooCarrierVO> jooCarrierVO) throws DAOException,Exception {
+	public int[] modifyMultiJooCarrierS(List<JooCarrierVO> jooCarrierVO) throws DAOException,Exception {
 		int updCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
@@ -244,7 +244,7 @@ public class CLVPractice4DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] removemultiJooCarrierS(List<JooCarrierVO> jooCarrierVO) throws DAOException,Exception {
+	public int[] removeMultiJooCarrierS(List<JooCarrierVO> jooCarrierVO) throws DAOException,Exception {
 		int delCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
