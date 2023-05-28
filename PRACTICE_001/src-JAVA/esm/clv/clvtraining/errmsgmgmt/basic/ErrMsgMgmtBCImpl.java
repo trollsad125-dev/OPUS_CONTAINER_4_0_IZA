@@ -89,19 +89,20 @@ public class ErrMsgMgmtBCImpl extends BasicCommandSupport implements ErrMsgMgmtB
 					if ("1".equalsIgnoreCase(dupFlg)) {
 						// Throw DAOException with ERR12356
 						throw new DAOException(new ErrorHandler("ERR12356",new String[] { errCode }).getMessage());
-					}else{
-						dbDao.addmultiErrMsgS(insertVoList);
-
 					}
+				}
+				//Check Duplication Error Message
+				if(!"1".equalsIgnoreCase(dupFlg)){
+					dbDao.addMultiErrMsgS(insertVoList);
 				}
 			}
 			
 			if ( updateVoList.size() > 0 ) {	
-				dbDao.modifymultiErrMsgS(updateVoList);
+				dbDao.modifyMultiErrMsgS(updateVoList);
 			}
 			
 			if ( deleteVoList.size() > 0 ) {
-				dbDao.removemultiErrMsgS(deleteVoList);
+				dbDao.removeMultiErrMsgS(deleteVoList);
 			}
 		} catch(DAOException ex) {
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);

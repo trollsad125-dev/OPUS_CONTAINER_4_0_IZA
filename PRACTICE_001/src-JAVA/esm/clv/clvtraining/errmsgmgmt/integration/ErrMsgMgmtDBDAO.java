@@ -81,7 +81,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public void addmultiErrMsg(ComErrMsgVO comErrMsgVO) throws DAOException,Exception {
+	public void addMultiErrMsg(ComErrMsgVO comErrMsgVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
 		//velocity parameter
@@ -113,7 +113,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int modifymultiErrMsg(ComErrMsgVO comErrMsgVO) throws DAOException,Exception {
+	public int modifyMultiErrMsg(ComErrMsgVO comErrMsgVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
 		//velocity parameter
@@ -148,7 +148,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int removemultiErrMsg(ComErrMsgVO comErrMsgVO) throws DAOException,Exception {
+	public int removeMultiErrMsg(ComErrMsgVO comErrMsgVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
 		//velocity parameter
@@ -183,7 +183,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] addmultiErrMsgS(List<ComErrMsgVO> comErrMsgVO) throws DAOException,Exception {
+	public int[] addMultiErrMsgS(List<ComErrMsgVO> comErrMsgVO) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
@@ -214,7 +214,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] modifymultiErrMsgS(List<ComErrMsgVO> comErrMsgVO) throws DAOException,Exception {
+	public int[] modifyMultiErrMsgS(List<ComErrMsgVO> comErrMsgVO) throws DAOException,Exception {
 		int updCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
@@ -243,7 +243,7 @@ public class ErrMsgMgmtDBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] removemultiErrMsgS(List<ComErrMsgVO> comErrMsgVO) throws DAOException,Exception {
+	public int[] removeMultiErrMsgS(List<ComErrMsgVO> comErrMsgVO) throws DAOException,Exception {
 		int delCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");

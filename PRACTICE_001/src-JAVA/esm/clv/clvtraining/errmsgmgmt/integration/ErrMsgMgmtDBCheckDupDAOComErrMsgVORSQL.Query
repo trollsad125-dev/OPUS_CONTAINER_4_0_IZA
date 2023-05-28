@@ -7,8 +7,8 @@
 SELECT                                                                
    	1                                                          
 FROM com_err_msg                                                      
-WHERE lang_tp_cd = 'ENG' AND
-      err_msg_cd LIKE '%'||@[err_msg_cd]||'%'			]]></sql>
+WHERE lang_tp_cd = 'ENG' 
+AND   err_msg_cd = @[err_msg_cd]			]]></sql>
 			<params>
 				<param name="err_msg_cd" type="12" value="" out="N"/>
 			</params>

@@ -4,13 +4,13 @@
 *@FileTitle : 
 *Open Issues :
 *Change history :
-*@LastModifyDate : 2023.04.24
+*@LastModifyDate : 2023.05.28
 *@LastModifier : 
 *@LastVersion : 1.0
-* 2023.04.24 
+* 2023.05.28 
 * 1.0 Creation
 =========================================================*/
-package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration ;
+package com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration;
 
 import java.util.HashMap;
 import org.apache.log4j.Logger;
@@ -50,7 +50,7 @@ public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
 		params.put("err_msg_cd",new String[]{arrTmp[0],arrTmp[1]});
 
 		query.append("/*").append("\n"); 
-		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration ").append("\n"); 
+		query.append("Path : com.clt.apps.opus.esm.clv.clvtraining.errmsgmgmt.integration").append("\n"); 
 		query.append("FileName : ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL").append("\n"); 
 		query.append("*/").append("\n"); 
 	}
@@ -70,8 +70,8 @@ public class ErrMsgMgmtDBCheckDupDAOComErrMsgVORSQL implements ISQLTemplate{
 		query.append("SELECT                                                                " ).append("\n"); 
 		query.append("   	1                                                          " ).append("\n"); 
 		query.append("FROM com_err_msg                                                      " ).append("\n"); 
-		query.append("WHERE lang_tp_cd = 'ENG' AND" ).append("\n"); 
-		query.append("      err_msg_cd LIKE '%'||@[err_msg_cd]||'%'" ).append("\n"); 
+		query.append("WHERE lang_tp_cd = 'ENG' " ).append("\n"); 
+		query.append("AND   err_msg_cd = @[err_msg_cd]" ).append("\n"); 
 
 	}
 }
