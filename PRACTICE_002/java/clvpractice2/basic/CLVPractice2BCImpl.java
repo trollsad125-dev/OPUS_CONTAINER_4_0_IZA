@@ -18,7 +18,6 @@ import java.util.List;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.integration.CLVPractice2DBDAO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
-import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.EventException;
 import com.clt.framework.core.layer.integration.DAOException;
@@ -71,7 +70,6 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 	 */
 	public void multiCodeMgmt(CodeMgmtCondVO[] codeMgmtCondVO, SignOnUserAccount account) throws EventException{
 		try {
-			String errFlg = "";
 			String dupFlg = "";
 			String intgCdId = "";
 			List<CodeMgmtCondVO> insertVoList = new ArrayList<CodeMgmtCondVO>();
@@ -101,30 +99,28 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 				for( int i=0; i<insertVoList.size(); i++ ){
 					dupFlg = dbDao.searchDupChkCodeMgmtCond(insertVoList.get(i));
 					if ("Y".equals(dupFlg) ){
-						errFlg = "Y";
 						intgCdId = insertVoList.get(i).getIntgCdId();
+						//Throw Exception with ERR12356 code with Id in it.
+						throw new DAOException(new ErrorHandler("ERR12356",new String[]{intgCdId}).getMessage());
 					}
 				}
 				// Check Error Flag Duplication
-				if( !"Y".equals(errFlg) ){
-					dbDao.addmultiCodeMgmtS(insertVoList);
-				}else{
-					//Throw Exception with ERR12356 code with Id in it.
-					throw new DAOException(new ErrorHandler("ERR12356",new String[]{intgCdId}).getMessage());
+				if( !"Y".equals(dupFlg) ){
+					dbDao.addMultiCodeMgmtS(insertVoList);
 				}
 				
 			}
 			
 			if ( updateVoList.size() > 0 ) {
-				dbDao.modifymultiCodeMgmtS(updateVoList);
+				dbDao.modifyMultiCodeMgmtS(updateVoList);
 			}
 			
 			if ( deleteVoList.size() > 0 ) {
 				//Delete Detail code List in Line 95
 				if(deleteDetailVoList.size() > 0){
-					dbDao.removemultiCodeDtlS(deleteDetailVoList);
+					dbDao.removeMultiCodeDtlS(deleteDetailVoList);
 				}
-				dbDao.removemultiCodeMgmtS(deleteVoList);
+				dbDao.removeMultiCodeMgmtS(deleteVoList);
 			}
 		}
 		catch(DAOException ex) {
@@ -173,7 +169,6 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 	@Override
 	public void multiCodeMgmtDtl(CodeMgmtDTLVO[] codeMgmtDtlVO, SignOnUserAccount account) throws EventException {
 		try {
-			String errFlg = "";
 			String dupFlg = "";
 			String intgCdId = "";
 			List<CodeMgmtDTLVO> insertVoList = new ArrayList<CodeMgmtDTLVO>();
@@ -194,27 +189,23 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 				for( int i=0; i<insertVoList.size(); i++ ){
 					dupFlg = dbDao.searchDupChkCodeMgmtDtl(insertVoList.get(i));
 					if ("Y".equals(dupFlg) ){
-						errFlg = "Y";
 						intgCdId = insertVoList.get(i).getIntgCdValCtnt();
-						break;
+						throw new DAOException(new ErrorHandler("ERR12356",new String[]{intgCdId}).getMessage());
 					}
 				}
 				// Check Error Flag Duplication
-				if( !"Y".equals(errFlg) ){
-					dbDao.addmultiCodeDtlS(insertVoList);
-				}else{
-					//Throw Exception with ERR12356 code with Id in it.
-					throw new DAOException(new ErrorHandler("ERR12356",new String[]{intgCdId}).getMessage());
+				if( !"Y".equals(dupFlg) ){
+					dbDao.addMultiCodeDtlS(insertVoList);
 				}
 				
 			}
 			
 			if ( updateVoList.size() > 0 ) {
-				dbDao.modifymultiCodeDtlS(updateVoList);
+				dbDao.modifyMultiCodeDtlS(updateVoList);
 			}
 			
 			if ( deleteVoList.size() > 0 ) {
-				dbDao.removemultiCodeDtlS(deleteVoList);
+				dbDao.removeMultiCodeDtlS(deleteVoList);
 			}
 		} 
 		catch(DAOException ex) {
@@ -223,5 +214,16 @@ public class CLVPractice2BCImpl extends BasicCommandSupport implements CLVPracti
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}
 	}
+	@Override
+	public String chkDuplCodeMgmt(CodeMgmtCondVO codeMgmtCondVO) throws EventException {
+		try {
+			String duplicateMaster =  dbDao.searchDupChkCodeMgmtCond(codeMgmtCondVO);
 
+			return duplicateMaster;
+		} catch(DAOException ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		} catch (Exception ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}
+	}
 }

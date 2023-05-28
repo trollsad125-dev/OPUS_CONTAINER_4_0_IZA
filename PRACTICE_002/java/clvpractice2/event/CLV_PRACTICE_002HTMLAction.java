@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtCondVO;
 import com.clt.apps.opus.esm.clv.clvtraining.clvpractice2.vo.CodeMgmtDTLVO;
+import com.clt.apps.opus.esm.clv.clvtraining.clvpractice4.vo.JooCarrierVO;
 import com.clt.framework.core.controller.html.HTMLActionException;
 import com.clt.framework.core.layer.event.Event;
 import com.clt.framework.core.layer.event.EventResponse;
@@ -65,6 +66,8 @@ public class CLV_PRACTICE_002HTMLAction extends HTMLActionSupport {
 		//Search Code Detail
 		else if(command.isCommand(FormCommand.SEARCH02)){
 			event.setCodeMgmtDTLVO((CodeMgmtDTLVO)getVO(request, CodeMgmtDTLVO.class));
+		}else if(command.isCommand(FormCommand.COMMAND01) ) {//check invalid Code Master
+			event.setCodeMgmtCondVO((CodeMgmtCondVO)getVO(request, CodeMgmtCondVO.class));
 		}
 
 		return  event;

@@ -121,11 +121,12 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 				eventResponse = multiCodeMgmt(e);
 			}else if(e.getFormCommand().isCommand(FormCommand.MULTI01)){
 				eventResponse=multiCodeMgmtDtl(e);
-			}
-			else if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
+			}else if (e.getFormCommand().isCommand(FormCommand.DEFAULT)) {
 				eventResponse = getSystemCode(e);
 			} else if (e.getFormCommand().isCommand(FormCommand.SEARCH02)) {
 				eventResponse = searchCodeDtl(e);
+			}else if (e.getFormCommand().isCommand(FormCommand.COMMAND01)) {
+				eventResponse = chkExistsCodeMaster(e);
 			}
 		}
 		//Practice 3
@@ -653,5 +654,29 @@ public class CLVTrainingSC extends ServiceCommandSupport {
 		}	
 		return eventResponse;
 	}
-	
+	/**
+	 * checking duplicate data Code Mgmt Practice 2
+	 * 
+	 * @param Event e
+	 * @return EventResponse
+	 * @exception EventException
+	 */
+	private EventResponse chkExistsCodeMaster(Event e) throws EventException {
+		// PDTO(Data Transfer Object including Parameters)
+		GeneralEventResponse eventResponse = new GeneralEventResponse();
+		ClvPractice002Event event = (ClvPractice002Event) e;
+		CLVPractice2BC command = new CLVPractice2BCImpl();
+
+		try {
+			String isExisted  = command.chkDuplCodeMgmt(event.getCodeMgmtCondVO());
+			
+			eventResponse.setETCData("ISEXIST", "Y".equalsIgnoreCase(isExisted) ? "Y" : "N");
+		} catch (EventException ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(), ex);
+		} catch (Exception ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(), ex);
+		}
+		return eventResponse;
+	}
+
 }

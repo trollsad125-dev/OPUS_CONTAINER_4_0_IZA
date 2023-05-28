@@ -95,10 +95,10 @@
 					<col width="100" />				
 					<col width="100" />						
 					<col width="70" />	
-					<col width="100" />				
+					<col width="70" />				
 					<col width="70" />
 					<col width="70" />
-					<col width="80" />							
+					<col width="70" />							
 			   </colgroup> 
 			   <tbody>
 			   		<tr>

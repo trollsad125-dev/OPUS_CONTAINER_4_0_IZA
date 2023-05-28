@@ -13,6 +13,7 @@ msgs['PRC00005']="Do you want to save?";
 var sheetObjects=new Array();
 var sheetCnt=0;
 document.onclick=processButtonClick;
+var chkSuccessMst = false;
 
    /**
     * When user clicked on Client Side
@@ -227,13 +228,17 @@ document.onclick=processButtonClick;
     					sheetObjects[1].RemoveAll();
     					formObj.codeid.value='';
     					ComOpenWait(false);
+    					chkSuccessMst = false;
                     } else if ( sheetObj.id == "sheet2" ) {
+                    	ComOpenWait(true);
+
     					formObj.f_cmd.value=SEARCH02;
     		        	var sParam2=FormQueryString(formObj);
      					var sXml2=sheetObj.GetSearchData("CLV_PRACTICE_002GS.do", sParam2);
     					if(sXml2.length>0){
     						sheetObj.LoadSearchData(sXml2,{Sync:1} );
     					}
+    					ComOpenWait(false);
                     }
                 break;
             case IBSAVE:       //SAVE
@@ -315,32 +320,47 @@ document.onclick=processButtonClick;
      * @param Row
      * @param Col
      */
-    function sheet1_OnChange(sheetObj,Row,Col){
+    function sheet1_OnChange(sheetObj,Row,Col,Value,OldValue){
+     var formObj = document.form;
      var colName=sheetObj.ColSaveName(Col);
-   	 if(Col == 2){
+   	 if(colName == "intg_cd_id"){
 			var code=sheetObj.GetCellValue(Row, Col);
    	    for(var int=1; int < sheetObj.RowCount(); int++) {
 			var orlcode=sheetObj.GetCellValue(int, Col);
 				if(code != '' && int != Row && code == orlcode){
+				 chkSuccessMst=true;
+	   			 sheetObj.SetCellValue(Row, Col,"");
    				 ComShowCodeMessage('COM131302',code);
-   				 sheetObj.SetCellValue(Row, Col,"");
    				 return;
    			 }
-   		 }
-   	 }
-
+   		}
+		if (chkSuccessMst == false) {
+			formObj.f_cmd.value = COMMAND01;
+			var sParam = FormQueryString(formObj) + "&intg_cd_id=" + Value;
+			var sXml = sheetObj.GetSearchData("CLV_PRACTICE_002GS.do", sParam,{sync : 1});
+			var flag = ComGetEtcData(sXml, "ISEXIST");
+			if (flag == 'Y') {
+				ComShowCodeMessage('COM131302', code);
+				sheetObj.SetCellValue(Row, Col, OldValue, 0);
+				sheetObj.SelectCell(Row, Col);
+				chkSuccessMst=false;
+				return;
+			}
+		}
+	}
     }
     /**
-     * Check Validate in Client Side Sheet 2
-     * 
-     * @param sheetObj
-     * @param Row
-     * @param Col
-     */
-    function sheet2_OnChange(sheetObj, Row, Col) {
+	 * Check Validate in Client Side Sheet 2
+	 * 
+	 * @param sheetObj
+	 * @param Row
+	 * @param Col
+	 */
+    function sheet2_OnChange(sheetObj, Row, Col,Value,OldValue) {
 	var formObj = document.form;
 	var colName = sheetObj.ColSaveName(Col);
-	if (Col == 2) {
+	var intgCdIdValue = sheetObj.GetCellValue(Row,"intg_cd_id");
+	if (colName == "intg_cd_val_ctnt") {
 		var code = sheetObj.GetCellValue(Row, Col);
 		for (var int = 1; int < sheetObj.RowCount(); int++) {
 			var orlcode = sheetObj.GetCellValue(int, Col);
@@ -348,8 +368,8 @@ document.onclick=processButtonClick;
 				ComShowCodeMessage('COM131302', code);
 				sheetObj.SetCellValue(Row, Col, "");
 				return;
-				}
-			}
+			  }
+	     }
 		}
     }
 	/**

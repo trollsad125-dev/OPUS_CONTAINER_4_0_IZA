@@ -82,7 +82,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public void addmultiCodeMgmt(CodeMgmtCondVO codeMgmtCondVO) throws DAOException,Exception {
+	public void addMultiCodeMgmt(CodeMgmtCondVO codeMgmtCondVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
 		//velocity parameter
@@ -114,7 +114,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int modifymultiCodeMgmt(CodeMgmtCondVO codeMgmtCondVO) throws DAOException,Exception {
+	public int modifyMultiCodeMgmt(CodeMgmtCondVO codeMgmtCondVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
 		//velocity parameter
@@ -149,7 +149,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int removemultiCodeMgmt(CodeMgmtCondVO codeMgmtCondVO) throws DAOException,Exception {
+	public int removeMultiCodeMgmt(CodeMgmtCondVO codeMgmtCondVO) throws DAOException,Exception {
 		//query parameter
 		Map<String, Object> param = new HashMap<String, Object>();
 		//velocity parameter
@@ -184,7 +184,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] addmultiCodeMgmtS(List<CodeMgmtCondVO> codeMgmtCondVO) throws DAOException,Exception {
+	public int[] addMultiCodeMgmtS(List<CodeMgmtCondVO> codeMgmtCondVO) throws DAOException,Exception {
 		int insCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
@@ -212,7 +212,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] modifymultiCodeMgmtS(List<CodeMgmtCondVO> codeMgmtCondVO) throws DAOException,Exception {
+	public int[] modifyMultiCodeMgmtS(List<CodeMgmtCondVO> codeMgmtCondVO) throws DAOException,Exception {
 		int updCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
@@ -241,7 +241,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] removemultiCodeMgmtS(List<CodeMgmtCondVO> codeMgmtCondVO) throws DAOException,Exception {
+	public int[] removeMultiCodeMgmtS(List<CodeMgmtCondVO> codeMgmtCondVO) throws DAOException,Exception {
 		int delCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
@@ -332,7 +332,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] addmultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO)
+	public int[] addMultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO)
 			throws DAOException, Exception {
 		int insCnt[] = null;
 		try {
@@ -362,7 +362,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] modifymultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO) throws DAOException, Exception {
+	public int[] modifyMultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO) throws DAOException, Exception {
 		int updCnt[] = null;
 		try {
 			SQLExecuter sqlExe = new SQLExecuter("");
@@ -391,7 +391,7 @@ public class CLVPractice2DBDAO extends DBDAOSupport {
 	 * @exception DAOException
 	 * @exception Exception
 	 */
-	public int[] removemultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO)
+	public int[] removeMultiCodeDtlS(List<CodeMgmtDTLVO> codeMgmtDtlVO)
 			throws DAOException, Exception {
 		int delCnt[] = null;
 		try {

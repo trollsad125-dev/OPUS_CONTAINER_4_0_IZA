@@ -70,5 +70,14 @@ public interface CLVPractice2BC {
 	 * @exception EventException
 	 */
 	public void multiCodeMgmtDtl(CodeMgmtDTLVO[] codeMgmtDtlVO,SignOnUserAccount account) throws EventException;
-
+	
+	/**
+	 * Check Duplicate Code Master
+	 * 
+	 * @param CodeMgmtCondVO	codeMgmtCondVO
+	 * @return List<CodeMgmtCondVO>
+	 * @exception EventException
+	 */
+	public String chkDuplCodeMgmt(CodeMgmtCondVO codeMgmtCondVO) throws EventException;
+	
 }
